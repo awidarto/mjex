@@ -1,127 +1,51 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-<head>
+<html lang="en">
+  <head>
+    <!--includes meta tags, title and more header definitions-->
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    {{ HTML::style('fonts/OpenSans.css') }}
 
-    <title>Girder - A Simple CSS Grid Built with Sass</title>
-    <meta name="viewport" content="width=device-width">
-    <meta name="author" content="comfypixel.com" />
-    <meta name="description" content="A CSS grid built with Sass. Its responsive, modular and semantic." />
+    <title>{{ Config::get('site.name')}}</title>
 
-    <!-- Example page using Girder.css with presentational classes. Some redundant styles are expected, separated and expanded to make CSS inspection-friendly  -->
-    {{ HTML::style('css/girder.css')}}
-    {{ HTML::style('css/example.css')}}
+    <!-- Furatto core CSS -->
+    {{ HTML::style('css/normalize.css') }}
+    {{ HTML::style('css/furatto.min.css') }}
+    {{ HTML::style('css/examples.css') }}
 
-    <script src="//use.edgefonts.net/source-sans-pro;pt-sans-narrow;lato:n1,n3,n9,i9.js"></script>
-
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-</head>
+  </head>
 
-<body class="examples">
-    <main class="container">
+<body>
+    <nav class="navigation-bar ">
+       <ul class="brand-section">
+         <li class="brand-name">
+          <a href="#" class="menu-trigger" id="trigger">{{ Config::get('site.name')}}</a>
+         </li>
+         <li class="menu-toggle">
+          <a href="#"></a>
+         </li>
+       </ul>
+       <ul class="pull-right">
+         <li class="divider"></li>
+         <li><a href="{{ URL::to('track') }}">Track Order</a></li>
+         <li class="divider"></li>
+         <li><a href="{{ URL::to('login') }}">Login</a></li>
+         <li class="divider"></li>
+         <li><a href="#" class="button danger three-d">Sign Up</a></li>
+       </ul>
+    </nav>
 
-        <section class="top-content row">
-            <h2 role="brand">
-                <a href="/Girder"><img src="img/girder-logo-blacksm.png">Girder</a>
-            </h2>
-            <nav class="center-small">
-                <a href="guide.html">Guide</a>
-                <a class="activated" href="example-css.html">Examples</a>
-                <a href="http://ghost.fredmaya.com">Blog</a>
-            </nav>
+    @yield('content')
 
-            <div class="top-wrapper row">
-                <header role="banner">
-                    <h2><strong>Simple</strong> &amp; <strong>Powerful</strong></h2>
-                    <span>Examples of Girder CSS</span>
-                </header>
-            </div>
-        </section>
+<!--includes javascript at the bottom so the page loads faster-->
+{{ HTML::script('js/jquery-1.11.0.min.js')}}
+{{ HTML::script('js/furatto.min.js')}}
 
-        <section class="sample-grid equal-units row">
-            <div class="unit fourth"> <img src="https://lh3.googleusercontent.com/-kcFPzB7t2ss/UIli8OwlDjI/AAAAAAAAHrM/s8H1wQoiLw4/s506-o/Inception.jpg" alt="">  <small>By Joel Tjintjelaar <a href="https://plus.google.com/u/0/+JoelTjintjelaar/posts">*</a></small></div>
-
-            <div class="unit fourth"> <img src="https://lh3.googleusercontent.com/-Mu7kEUoE4u8/UQFjOnELLPI/AAAAAAAAWd8/FDppHCA5E_4/s506-o/by+Joel++Tjintjelaar.jpg" alt=""> <small>By Joel Tjintjelaar <a href="https://plus.google.com/u/0/+JoelTjintjelaar/posts">*</a></small></div>
-
-            <div class="unit fourth"> <img src="https://lh4.googleusercontent.com/-TmmcL-72614/UAW9Qn64n6I/AAAAAAAAHRc/-3HvdrXoc8g/s506-o/Shape-Of-Light-XIV.jpg" alt=""> <small>By Joel Tjintjelaar <a href="https://plus.google.com/u/0/+JoelTjintjelaar/posts">*</a></small></div>
-
-            <div class="unit fourth"> <img src="https://lh4.googleusercontent.com/-TpIIfWQtiuA/T9NSC3h9lXI/AAAAAAAAGc8/QMhdQc8J4F0/s506-o/Shaping-The-Light-X-in-Berlin-Shell-Haus-WEB.jpg" alt="">  <small>By Joel Tjintjelaar <a href="https://plus.google.com/u/0/+JoelTjintjelaar/posts">*</a></small></div>
-        </section>
-
-        <div class="caption row no-gutters">
-            <p>Inspect these basic examples</p>
-        </div>
-
-        <section class="features row">
-            <div class="unit third">
-                <h2>Simple</h2>
-                <p>Conscise but well commented. No excess stuff, only the essentials.</p>
-            </div>
-            <div class="unit third">
-                <h2>Flexible</h2>
-                <p>It uses flexible grid units based on page sections like "half" &amp; "two-thirds".</p>
-            </div>
-            <div class="unit third">
-                <h2>Responsive</h2>
-                <p>The grid likes relative units, it supports Breakpoint() and you can build mobile-first.</p>
-            </div>
-        </section>
-
-        <section class="content row">
-            <div class="main-wrapper">
-            <div class="setup row">
-                <a name="setup"></a>
-                <h2>Setup</h2>
-                <p>Copy the Scss folder and files directly into your project's path. Get them from <a href="https://github.com/unmaya/Girder">Github</a> or from the <a href="https://github.com/unmaya/Girder/archive/v0.9.5.zip">downloaded examples</a>.</p>
-                <p>With <a href="http://bower.io/">Bower</a> just use: <strong>"bower install girder --save"</strong> and add a reference to either <b>scss/_girder.scss</b> or <b>girder.css</b> inside the components folder.</p>
-
-                <section class="unit half">
-                    <h3>Using Scss</h3>
-                    <p>@import the <b>_girder.scss</b> partial which should reside next to its modules in your project.</p>
-                </section>
-
-                <section class="unit half">
-                    <h3>Standard CSS</h3>
-                    <p>Simply include <b>girder.css</b> in your document along with the site's styles. (Like this page)</p>
-                </section>
-
-                <p>For more tips on using Sass and Girder check out the <a href="http://ghost.fredmaya.com">journal</a>.</p>
-            </div>
-
-            <footer>
-                <p class="credits center-small">
-                    <a name="links"></a>
-                    <small>Made by Comfypixel - <a href="https://github.com/unmaya/Girder">Suggestions</a> welcome!<br>
-                        &copy; 2014 - Open Source Under <a href="http://opensource.org/licenses/MIT">MIT</a> license </small>
-                </p>
-                <p class="links center-small">
-                    <strong><a href="http://comfypixel.com">Website</a> - <a href="https://twitter.com/unmaya">Twitter</a> - <a href="https://github.com/unmaya">Github</a></strong>
-                </p>
-            </footer>
-            </div>
-        </section>
-    </main>
-
-<!--[if lt IE 8]>
-    <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a></p>
-<![endif]-->
-{{--
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-272608-12', 'comfypixel.com');
-  ga('send', 'pageview');
-</script>
---}}
 </body>
 </html>

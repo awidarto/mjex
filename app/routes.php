@@ -15,3 +15,11 @@ Route::get('/', function()
 {
 	return View::make('home');
 });
+
+Route::get('track/{id?}',function($id = null){
+    return View::make('track');
+});
+
+Route::get('login',function($id = null){
+    return View::make('login');
+});
