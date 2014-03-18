@@ -13,6 +13,8 @@ class Helpers {
             $thumbnail = 'nopic';
         }
 
+        $thumbnail = URL::to('/').'/storage/receiver_thumb/th_'.$delivery_id.'.jpg';
+
         return $thumbnail;
     }
 }
