@@ -17,7 +17,10 @@
       {{ $order['status'] }}
     </p>
     <p>
-      <img src="{{ Helpers::get_thumbnail($order['delivery_id']) }}" alt="{{ $order['delivery_id'] }}">
+      <img src="{{ Helpers::get_thumbnail($order['delivery_id']) }}" alt="{{ $order['delivery_id'] }}"><br />
+      {{ $order['recipient_name'] }}<br />
+      {{ $order['delivery_note'] }}
+
     </p>
   </div>
 </div>
