@@ -17,7 +17,7 @@
       {{ $order['status'] }}
     </p>
     <p>
-      {{ Helpers::get_thumbnail($order['delivery_id']) }}
+      <img src="{{ Helpers::get_thumbnail($order['delivery_id']) }}" alt="{{ $order['delivery_id'] }}">
     </p>
   </div>
 </div>
