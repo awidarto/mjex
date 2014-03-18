@@ -17,7 +17,19 @@ Route::get('/', function()
 });
 
 Route::get('track/{id?}',function($id = null){
-    return View::make('track');
+    return View::make('track')->with('ordernumber',$id);
+});
+
+Route::post('track',function(){
+    $in = Input::get();
+
+    $idvar = '%'.$in['ordernumber'];
+
+    $order = Order::where('delivery_id','like', $idvar)->first();
+
+
+
+    return View::make('trackresult')->with('order',$order);
 });
 
 Route::get('login',function($id = null){
