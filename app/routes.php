@@ -23,15 +23,22 @@ Route::get('track/{id?}',function($id = null){
 Route::post('track',function(){
     $in = Input::get();
 
-    $idvar = '%'.$in['ordernumber'];
+    $idvar = '%'.$in['phone'].'%';
 
-    $order = Order::where('delivery_id','like', $idvar)->first();
+    $order = Order::where('delivery_order_active.phone','like', $idvar)
+                ->orWhere('delivery_order_active.mobile1','like',$idvar)
+                ->orWhere('delivery_order_active.mobile2','like',$idvar)
+                ->join('members', 'members.id', '=', 'merchant_id')
+                ->get()->toArray();
 
-
-
-    return View::make('trackresult')->with('order',$order);
+    return View::make('tracklist')->with('order',$order);
 });
 
 Route::get('login',function($id = null){
     return View::make('login');
 });
+
+Route::post('login',function(){
+
+});
+

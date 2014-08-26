@@ -7,11 +7,9 @@
     <h3>Order Status</h3>
     <hr />
     <form action="{{ URL::to('track')}}" method="post" accept-charset="utf-8">
-      <label for="ordernumber">Order Number</label>
-      <input type="text" name="ordernumber" id="ordernumber" value="{{ $ordernumber }}" />
-      <label for="phone">Phone:</label>
+      <label for="phone">Phone / Mobile Number:</label>
       <input type="text" name="phone" id="phone" value="" />
-      <input type="submit" name="phone" id="" value="Track" class="button" />
+      <input type="submit" name="track" id="" value="Track" class="button" />
     </form>
   </div>
 </div>
