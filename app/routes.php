@@ -17,7 +17,20 @@ Route::get('/', function()
 });
 
 Route::get('track/{id?}',function($id = null){
-    return View::make('track')->with('ordernumber',$id);
+    if(is_null($id)){
+        return View::make('track')->with('ordernumber',$id);
+    }else{
+
+        $idvar = '%'.$id.'%';
+
+        $order = Order::where('delivery_order_active.phone','like', $idvar)
+                    ->orWhere('delivery_order_active.mobile1','like',$idvar)
+                    ->orWhere('delivery_order_active.mobile2','like',$idvar)
+                    ->join('members', 'members.id', '=', 'merchant_id')
+                    ->get()->toArray();
+
+        return View::make('tracklist')->with('order',$order)->with('phone',$id);
+    }
 });
 
 Route::post('track',function(){
@@ -31,12 +44,12 @@ Route::post('track',function(){
                 ->join('members', 'members.id', '=', 'merchant_id')
                 ->get()->toArray();
 
-    return View::make('tracklist')->with('order',$order);
+    return View::make('tracklist')->with('order',$order)->with('phone',$in['phone']);
 });
 
-Route::get('item/{did}',function($did){
+Route::get('item/{did}/{phone}',function($did,$phone){
     $order = Order::where('delivery_id',$did)->first()->toArray();
-    return View::make('trackresult')->with('order',$order);
+    return View::make('trackresult')->with('order',$order)->with('phone',$phone);
 });
 
 Route::get('login',function($id = null){

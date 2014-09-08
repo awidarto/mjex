@@ -7,6 +7,11 @@ div.track-list-item a {
     padding: 10px 14px;
     border-bottom: thin solid #CCC;
     line-height: 1.1em;
+    text-decoration: none;
+}
+
+div.track-list-item a:hover {
+    background-color: #ccc;
 }
 
 span.tdate, span.tid, span.tmerchant{

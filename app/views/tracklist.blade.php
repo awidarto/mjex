@@ -4,7 +4,7 @@
 
 @foreach($order as $r)
     <div class="track-list-item">
-        <a href="{{ URL::to('item/'.$r['delivery_id']) }}">
+        <a href="{{ URL::to('item/'.$r['delivery_id'].'/'.$phone ) }}">
             {{-- print_r($r) --}}
             <span class="tdate">{{ $r['assignment_date']}}</span>
             <span class="tmerchant">{{ $r['merchantname']}}</span>

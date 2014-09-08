@@ -4,6 +4,7 @@
 
 <div class="row">
   <div class="login-form">
+    <a href="{{ URL::to('track/'.$phone) }}">&laquo; Back to Track List</a>
     <h3>Order Status</h3>
     <hr />
     <p>
