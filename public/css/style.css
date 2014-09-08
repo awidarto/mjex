@@ -1,0 +1,22 @@
+div.track-list-item, div.track-list-item a {
+    display: block;
+}
+
+div.track-list-item a {
+    display: block;
+    padding: 10px 14px;
+    border-bottom: thin solid #CCC;
+    line-height: 1.1em;
+}
+
+span.tdate, span.tid, span.tmerchant{
+    display: block;
+}
+
+span.tdate{
+    font-size: .8em;
+}
+
+span.tid{
+    font-size: .82em;
+}
