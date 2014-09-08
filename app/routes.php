@@ -34,6 +34,11 @@ Route::post('track',function(){
     return View::make('tracklist')->with('order',$order);
 });
 
+Route::get('item/{did}',function($did){
+    $order = Order::where('delivery_id',$did)->first()->toArray();
+    return View::make('trackresult')->with('order',$order);
+});
+
 Route::get('login',function($id = null){
     return View::make('login');
 });

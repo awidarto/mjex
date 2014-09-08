@@ -6,8 +6,10 @@
   <div class="login-form">
     <h3>Order Status</h3>
     <hr />
-    <h4>{{ $order['delivery_id'] }}</h4>
     <p>
+      No Kode Toko :<br />
+      {{ short_id($order['merchant_trans_id']) }}
+      <br />
       Delivered to :<br />
       {{ $order['recipient_name'] }}<br />
       {{ $order['shipping_address'] }}
@@ -18,8 +20,12 @@
       {{ $order['deliverytime'] }}
     </p>
     <p>
+      @if( $order['status'] == 'delivered' || ($order['status'] == 'pending' && $order['pending_count'] > 0) )
       <img src="{{ Helpers::get_thumbnail($order['delivery_id']) }}" alt="{{ $order['delivery_id'] }}"><br />
+      @endif
+      Recipient<br />
       {{ $order['recipient_name'] }}<br />
+      Note :<br />
       {{ $order['delivery_note'] }}
 
     </p>
