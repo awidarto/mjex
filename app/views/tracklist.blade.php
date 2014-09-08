@@ -8,7 +8,7 @@
             {{-- print_r($r) --}}
             <span class="tdate">{{ $r['assignment_date']}}</span>
             <span class="tmerchant">{{ $r['merchantname']}}</span>
-            <span class="tid"> ID ( ends with ) : {{ $r['merchant_trans_id'] }}</span>
+            <span class="tid"> Kode Toko (akhiran) : {{ short_id($r['merchant_trans_id']) }}</span>
         </a>
     </div>
 @endforeach

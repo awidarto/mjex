@@ -42,3 +42,11 @@ Route::post('login',function(){
 
 });
 
+function short_id($id){
+    if(strlen($id) > 10){
+        return substr($id, -10);
+    }else{
+        return $id;
+    }
+}
+
