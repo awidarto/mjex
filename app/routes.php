@@ -43,6 +43,8 @@ Route::post('track',function(){
                 ->orWhere('delivery_order_active.mobile2','like',$idvar)
                 ->join('members', 'members.id', '=', 'merchant_id')
                 ->orderBy('assignment_date','desc')
+                ->take(3)
+                ->skip(0)
                 ->get()->toArray();
 
     return View::make('tracklist')->with('order',$order)->with('phone',$in['phone']);
