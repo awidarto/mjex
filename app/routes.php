@@ -71,7 +71,7 @@ Route::post('track',function(){
 
     $idvar = normalphone($in['phone'],'all');
 
-
+    print_r($idvar);
 
     $order = Order::where('delivery_order_active.phone','like', $idvar['international'])
                 ->orWhere('delivery_order_active.mobile1','like',$idvar['international'])
@@ -85,11 +85,15 @@ Route::post('track',function(){
                 ->orWhere('delivery_order_active.mobile1','like','%'.$idvar['number'].'%')
                 ->orWhere('delivery_order_active.mobile2','like','%'.$idvar['number'].'%')
 
-                ->join('members', 'members.id', '=', 'merchant_id')
+                ->leftJoin('members', 'members.id', '=', 'merchant_id')
                 ->orderBy('assignment_date','desc')
                 ->take(3)
                 ->skip(0)
                 ->get()->toArray();
+
+    $queries = DB::getQueryLog();
+
+    print_r($queries);
 
     return View::make('tracklist')->with('order',$order)->with('phone',$idvar['number'])->with('more',null);
 });
@@ -108,7 +112,7 @@ Route::post('login',function(){
 });
 
 Route::get('phonetest',function(){
-    $numbers = array('0543536536546','6276876875687','+62896756456');
+    $numbers = array('85275520101','0543536536546','6276876875687','+62896756456');
     foreach($numbers as $number){
         print(normalphone($number))."\r\n";
         print(normalphone($number,'local'))."\r\n";
