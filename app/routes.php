@@ -32,9 +32,9 @@ Route::get('track/{id?}/{more?}',function($id = null,$more = null){
                         ->orWhere('delivery_order_active.mobile1','like',$idvar['local'])
                         ->orWhere('delivery_order_active.mobile2','like',$idvar['local'])
 
-                        ->orWhere('delivery_order_active.phone','like', '%'.$idvar['number'])
-                        ->orWhere('delivery_order_active.mobile1','like','%'.$idvar['number'])
-                        ->orWhere('delivery_order_active.mobile2','like','%'.$idvar['number'])
+                        ->orWhere('delivery_order_active.phone','like', '%'.$idvar['number'].'%')
+                        ->orWhere('delivery_order_active.mobile1','like','%'.$idvar['number'].'%')
+                        ->orWhere('delivery_order_active.mobile2','like','%'.$idvar['number'].'%')
                         ->join('members', 'members.id', '=', 'merchant_id')
                         ->orderBy('assignment_date','desc')
                         ->take(3)
@@ -52,9 +52,9 @@ Route::get('track/{id?}/{more?}',function($id = null,$more = null){
                         ->orWhere('delivery_order_active.mobile1','like',$idvar['local'])
                         ->orWhere('delivery_order_active.mobile2','like',$idvar['local'])
 
-                        ->orWhere('delivery_order_active.phone','like', '%'.$idvar['number'])
-                        ->orWhere('delivery_order_active.mobile1','like','%'.$idvar['number'])
-                        ->orWhere('delivery_order_active.mobile2','like','%'.$idvar['number'])
+                        ->orWhere('delivery_order_active.phone','like', '%'.$idvar['number'].'%')
+                        ->orWhere('delivery_order_active.mobile1','like','%'.$idvar['number'].'%')
+                        ->orWhere('delivery_order_active.mobile2','like','%'.$idvar['number'].'%')
                         ->join('members', 'members.id', '=', 'merchant_id')
                         ->orderBy('assignment_date','desc')
                         ->get()->toArray();
@@ -81,9 +81,9 @@ Route::post('track',function(){
                 ->orWhere('delivery_order_active.mobile1','like',$idvar['local'])
                 ->orWhere('delivery_order_active.mobile2','like',$idvar['local'])
 
-                ->orWhere('delivery_order_active.phone','like', '%'.$idvar['number'])
-                ->orWhere('delivery_order_active.mobile1','like','%'.$idvar['number'])
-                ->orWhere('delivery_order_active.mobile2','like','%'.$idvar['number'])
+                ->orWhere('delivery_order_active.phone','like', '%'.$idvar['number'].'%')
+                ->orWhere('delivery_order_active.mobile1','like','%'.$idvar['number'].'%')
+                ->orWhere('delivery_order_active.mobile2','like','%'.$idvar['number'].'%')
 
                 ->join('members', 'members.id', '=', 'merchant_id')
                 ->orderBy('assignment_date','desc')
