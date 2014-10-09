@@ -99,6 +99,16 @@ Route::get('phonetest',function(){
 
 });
 
+Route::get('tpath/{delivery_id}',function($delivery_id){
+    $fullpath = public_path().Config::get('ks.thumb_path').'th_'.$delivery_id.'.jpg';
+    print $fullpath;
+    if(file_exists($fullpath)){
+        print 'exist';
+    }else{
+        print 'not exist';
+    }
+});
+
 function short_id($id){
     if(strlen($id) > 10){
         return substr($id, -10);
