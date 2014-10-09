@@ -21,21 +21,40 @@ Route::get('track/{id?}/{more?}',function($id = null,$more = null){
         return View::make('track')->with('ordernumber',$id);
     }else{
 
-        $idvar = '%'.$id.'%';
-
         if(is_null($more)){
-            $order = Order::where('delivery_order_active.phone','like', $idvar)
-                        ->orWhere('delivery_order_active.mobile1','like',$idvar)
-                        ->orWhere('delivery_order_active.mobile2','like',$idvar)
+            $idvar = normalphone($id,'all');
+
+            $order = Order::where('delivery_order_active.phone','like', $idvar['international'])
+                        ->orWhere('delivery_order_active.mobile1','like',$idvar['international'])
+                        ->orWhere('delivery_order_active.mobile2','like',$idvar['international'])
+
+                        ->orWhere('delivery_order_active.phone','like', $idvar['local'])
+                        ->orWhere('delivery_order_active.mobile1','like',$idvar['local'])
+                        ->orWhere('delivery_order_active.mobile2','like',$idvar['local'])
+
+                        ->orWhere('delivery_order_active.phone','like', '%'.$idvar['number'])
+                        ->orWhere('delivery_order_active.mobile1','like','%'.$idvar['number'])
+                        ->orWhere('delivery_order_active.mobile2','like','%'.$idvar['number'])
                         ->join('members', 'members.id', '=', 'merchant_id')
                         ->orderBy('assignment_date','desc')
                         ->take(3)
                         ->skip(0)
                         ->get()->toArray();
         }else{
-            $order = Order::where('delivery_order_active.phone','like', $idvar)
-                        ->orWhere('delivery_order_active.mobile1','like',$idvar)
-                        ->orWhere('delivery_order_active.mobile2','like',$idvar)
+
+            $idvar = normalphone($id,'all');
+
+            $order = Order::where('delivery_order_active.phone','like', $idvar['international'])
+                        ->orWhere('delivery_order_active.mobile1','like',$idvar['international'])
+                        ->orWhere('delivery_order_active.mobile2','like',$idvar['international'])
+
+                        ->orWhere('delivery_order_active.phone','like', $idvar['local'])
+                        ->orWhere('delivery_order_active.mobile1','like',$idvar['local'])
+                        ->orWhere('delivery_order_active.mobile2','like',$idvar['local'])
+
+                        ->orWhere('delivery_order_active.phone','like', '%'.$idvar['number'])
+                        ->orWhere('delivery_order_active.mobile1','like','%'.$idvar['number'])
+                        ->orWhere('delivery_order_active.mobile2','like','%'.$idvar['number'])
                         ->join('members', 'members.id', '=', 'merchant_id')
                         ->orderBy('assignment_date','desc')
                         ->get()->toArray();
@@ -48,18 +67,31 @@ Route::get('track/{id?}/{more?}',function($id = null,$more = null){
 Route::post('track',function(){
     $in = Input::get();
 
-    $idvar = '%'.$in['phone'].'%';
+    //$idvar = '%'.$in['phone'].'%';
 
-    $order = Order::where('delivery_order_active.phone','like', $idvar)
-                ->orWhere('delivery_order_active.mobile1','like',$idvar)
-                ->orWhere('delivery_order_active.mobile2','like',$idvar)
+    $idvar = normalphone($in['phone'],'all');
+
+
+
+    $order = Order::where('delivery_order_active.phone','like', $idvar['international'])
+                ->orWhere('delivery_order_active.mobile1','like',$idvar['international'])
+                ->orWhere('delivery_order_active.mobile2','like',$idvar['international'])
+
+                ->orWhere('delivery_order_active.phone','like', $idvar['local'])
+                ->orWhere('delivery_order_active.mobile1','like',$idvar['local'])
+                ->orWhere('delivery_order_active.mobile2','like',$idvar['local'])
+
+                ->orWhere('delivery_order_active.phone','like', '%'.$idvar['number'])
+                ->orWhere('delivery_order_active.mobile1','like','%'.$idvar['number'])
+                ->orWhere('delivery_order_active.mobile2','like','%'.$idvar['number'])
+
                 ->join('members', 'members.id', '=', 'merchant_id')
                 ->orderBy('assignment_date','desc')
                 ->take(3)
                 ->skip(0)
                 ->get()->toArray();
 
-    return View::make('tracklist')->with('order',$order)->with('phone',$in['phone'])->with('more',null);
+    return View::make('tracklist')->with('order',$order)->with('phone',$idvar['number'])->with('more',null);
 });
 
 Route::get('item/{did}/{phone}/{more?}',function($did,$phone,$more = null){
@@ -75,6 +107,15 @@ Route::post('login',function(){
 
 });
 
+Route::get('phonetest',function(){
+    $numbers = array('0543536536546','6276876875687','+62896756456');
+    foreach($numbers as $number){
+        print(normalphone($number))."\r\n";
+        print(normalphone($number,'local'))."\r\n";
+        print_r(normalphone($number,'all'))."\r\n";
+    }
+});
+
 function short_id($id){
     if(strlen($id) > 10){
         return substr($id, -10);
@@ -83,3 +124,25 @@ function short_id($id){
     }
 }
 
+function normalphone($phone,$type = 'international', $country = '+62'){
+    $countrynum = str_replace('+', '', $country);
+    //print($countrynum);
+    if($type == 'international'){
+        $phone = preg_replace('/^[0]/', $country, $phone);
+        return $phone;
+    }else if($type == 'local'){
+        $phone = preg_replace('/^\+['.$countrynum.']|^['.$countrynum.']/', '0', $phone);
+        return $phone;
+    }else if($type == 'all'){
+        $phones = array();
+        $phones['international'] = preg_replace('/^0/', $country, $phone);
+
+        $count = 1;
+
+        $phones['local'] = str_replace(array($country,$countrynum), '0', $phone,$count);
+        //$phones['number'] = preg_replace('/^\+'.$countrynum.'|^'.$countrynum.'/', '', $phone);
+        $phones['number'] = str_replace(array($country,$countrynum), '', $phone,$count);
+        return $phones;
+    }
+
+}
