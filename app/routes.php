@@ -25,25 +25,29 @@ Route::get('track/{id?}/{more?}',function($id = null,$more = null){
             $idvar = phonenumber( trim($id),'21','62' );
             //print_r($idvar);
 
-            $order = Order::where('delivery_order_active.phone','like', '%'.$idvar)
-                        ->orWhere('delivery_order_active.mobile1','like','%'.$idvar)
-                        ->orWhere('delivery_order_active.mobile2','like','%'.$idvar)
-                        ->leftJoin('members', 'members.id', '=', 'merchant_id')
-                        ->orderBy('assignment_date','desc')
-                        ->take(3)
-                        ->skip(0)
-                        ->get()->toArray();
+            $sql = "`delivery_order_active`.`phone` LIKE  '%s' OR  `delivery_order_active`.`mobile1` LIKE  '%s' OR  `delivery_order_active`.`mobile2` LIKE  '%s' ";
+
+            $sql = sprintf($sql, '%'.$idvar,'%'.$idvar,'%'.$idvar);
+
+            $order = Order::whereRaw($sql)
+                ->leftJoin('members', 'members.id', '=', 'merchant_id')
+                ->orderBy('assignment_date','desc')
+                ->take(3)
+                ->skip(0)
+                ->get()->toArray();
         }else{
 
             $idvar = phonenumber( trim($id),'21','62' );
-            //print_r($idvar);
+    //print_r($idvar);
 
-            $order = Order::where('delivery_order_active.phone','like', '%'.$idvar)
-                        ->orWhere('delivery_order_active.mobile1','like','%'.$idvar)
-                        ->orWhere('delivery_order_active.mobile2','like','%'.$idvar)
-                        ->leftJoin('members', 'members.id', '=', 'merchant_id')
-                        ->orderBy('assignment_date','desc')
-                        ->get()->toArray();
+            $sql = "`delivery_order_active`.`phone` LIKE  '%s' OR  `delivery_order_active`.`mobile1` LIKE  '%s' OR  `delivery_order_active`.`mobile2` LIKE  '%s' ";
+
+            $sql = sprintf($sql, '%'.$idvar,'%'.$idvar,'%'.$idvar);
+
+            $order = Order::whereRaw($sql)
+                ->leftJoin('members', 'members.id', '=', 'merchant_id')
+                ->orderBy('assignment_date','desc')
+                ->get()->toArray();
         }
 
         return View::make('tracklist')->with('order',$order)->with('phone',$id)->with('more',$more);
@@ -57,11 +61,11 @@ Route::post('track',function(){
 
     $idvar = phonenumber( trim($in['phone']),'21','62' );
     //print_r($idvar);
+    $sql = "`delivery_order_active`.`phone` LIKE  '%s' OR  `delivery_order_active`.`mobile1` LIKE  '%s' OR  `delivery_order_active`.`mobile2` LIKE  '%s' ";
 
-    $order = Order::where('delivery_order_active.phone','like', '%'.$idvar)
-                ->orWhere('delivery_order_active.mobile1','like','%'.$idvar)
-                ->orWhere('delivery_order_active.mobile2','like','%'.$idvar)
+    $sql = sprintf($sql, '%'.$idvar,'%'.$idvar,'%'.$idvar);
 
+    $order = Order::whereRaw($sql)
                 ->leftJoin('members', 'members.id', '=', 'merchant_id')
                 ->orderBy('assignment_date','desc')
                 ->take(3)
