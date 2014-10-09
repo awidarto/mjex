@@ -22,12 +22,12 @@ Route::get('track/{id?}/{more?}',function($id = null,$more = null){
     }else{
 
         if(is_null($more)){
-            $idvar = '%'.phonenumber( trim($id),'21','62' ).'%';
+            $idvar = phonenumber( trim($id),'21','62' );
             //print_r($idvar);
 
             $sql = "`delivery_order_active`.`phone` LIKE  '%s' OR  `delivery_order_active`.`mobile1` LIKE  '%s' OR  `delivery_order_active`.`mobile2` LIKE  '%s' ";
 
-            $sql = sprintf($sql, $idvar,$idvar,$idvar);
+            $sql = sprintf($sql, '%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%');
 
             $order = Order::whereRaw($sql)
                 ->leftJoin('members', 'members.id', '=', 'merchant_id')
@@ -37,12 +37,12 @@ Route::get('track/{id?}/{more?}',function($id = null,$more = null){
                 ->get()->toArray();
         }else{
 
-            $idvar = '%'.phonenumber( trim($id),'21','62' ).'%';
+            $idvar = phonenumber( trim($id),'21','62' );
     //print_r($idvar);
 
             $sql = "`delivery_order_active`.`phone` LIKE  '%s' OR  `delivery_order_active`.`mobile1` LIKE  '%s' OR  `delivery_order_active`.`mobile2` LIKE  '%s' ";
 
-            $sql = sprintf($sql, $idvar,$idvar,$idvar);
+            $sql = sprintf($sql, '%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%');
 
             $order = Order::whereRaw($sql)
                 ->leftJoin('members', 'members.id', '=', 'merchant_id')
@@ -63,7 +63,7 @@ Route::post('track',function(){
     //print_r($idvar);
     $sql = "`delivery_order_active`.`phone` LIKE  '%s' OR  `delivery_order_active`.`mobile1` LIKE  '%s' OR  `delivery_order_active`.`mobile2` LIKE  '%s' ";
 
-    $sql = sprintf($sql, $idvar,$idvar,$idvar);
+    $sql = sprintf($sql, '%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%');
 
     $order = Order::whereRaw($sql)
                 ->leftJoin('members', 'members.id', '=', 'merchant_id')
