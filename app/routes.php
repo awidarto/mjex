@@ -70,7 +70,7 @@ Route::post('track',function(){
 
     $queries = DB::getQueryLog();
 
-    //print_r($queries);
+    print_r($queries);
 
     return View::make('tracklist')->with('order',$order)->with('phone',$idvar)->with('more',null);
 });
