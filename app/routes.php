@@ -13,7 +13,7 @@
 
 Route::get('/', function()
 {
-	return View::make('home');
+	return View::make('track');
 });
 
 Route::get('track/{id?}/{more?}',function($id = null,$more = null){
