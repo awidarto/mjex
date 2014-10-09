@@ -71,7 +71,7 @@ Route::post('track',function(){
 
     $idvar = normalphone(trim($in['phone']),'all');
 
-    print_r($idvar);
+    //print_r($idvar);
 
     $order = Order::where('delivery_order_active.phone','like', $idvar['international'])
                 ->orWhere('delivery_order_active.mobile1','like',$idvar['international'])
@@ -93,7 +93,7 @@ Route::post('track',function(){
 
     $queries = DB::getQueryLog();
 
-    print_r($queries);
+    //print_r($queries);
 
     return View::make('tracklist')->with('order',$order)->with('phone',$idvar['number'])->with('more',null);
 });
