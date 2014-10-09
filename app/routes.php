@@ -50,6 +50,8 @@ Route::get('track/{id?}/{more?}',function($id = null,$more = null){
                 ->get()->toArray();
         }
 
+        print_r($order);
+
         return View::make('tracklist')->with('order',$order)->with('phone',$id)->with('more',$more);
     }
 });
@@ -75,6 +77,8 @@ Route::post('track',function(){
     $queries = DB::getQueryLog();
 
     print_r($queries);
+
+        print_r($order);
 
     return View::make('tracklist')->with('order',$order)->with('phone',$idvar)->with('more',null);
 });
