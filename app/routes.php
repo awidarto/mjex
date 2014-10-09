@@ -22,7 +22,7 @@ Route::get('track/{id?}/{more?}',function($id = null,$more = null){
     }else{
 
         if(is_null($more)){
-            $idvar = normalphone($id,'all');
+            $idvar = normalphone(trim($id),'all');
 
             $order = Order::where('delivery_order_active.phone','like', $idvar['international'])
                         ->orWhere('delivery_order_active.mobile1','like',$idvar['international'])
@@ -69,7 +69,7 @@ Route::post('track',function(){
 
     //$idvar = '%'.$in['phone'].'%';
 
-    $idvar = normalphone($in['phone'],'all');
+    $idvar = normalphone(trim($in['phone']),'all');
 
     print_r($idvar);
 
