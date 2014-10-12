@@ -1,7 +1,10 @@
 @extends('layout.front')
 
 @section('content')
-
+    <div class="track-list-item">
+        <p>Klik untuk melihat rincian
+        </p>
+    </div>
 @foreach($order as $r)
     <div class="track-list-item">
         <a href="{{ URL::to('item/'.$r['delivery_id'].'/'.$phone.'/'.$more ) }}">

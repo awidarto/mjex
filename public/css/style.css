@@ -2,7 +2,7 @@ div.track-list-item, div.track-list-item a {
     display: block;
 }
 
-div.track-list-item a {
+div.track-list-item a, div.track-list-item p {
     display: block;
     padding: 10px 14px;
     border-bottom: thin solid #CCC;
@@ -12,6 +12,13 @@ div.track-list-item a {
 
 div.track-list-item a:hover {
     background-color: #ccc;
+}
+
+div.track-list-item p {
+    background-color: #eee;
+    border-bottom: none;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 span.tdate, span.tid, span.tmerchant{
