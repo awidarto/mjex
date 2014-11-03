@@ -16,13 +16,18 @@
       {{ $order['shipping_address'] }}
     </p>
     <p>
-      Status :<br />
+      Delivery Status :<br />
       {{ $order['status'] }}<br />
       {{ $order['deliverytime'] }}
     </p>
     <p>
+      Pickup & Warehouse :<br />
+      {{ $order['pickup_status'] }}<br />
+      {{ $order['warehouse_status'] }}
+    </p>
+    <p>
       @if( $order['status'] == 'delivered' || ($order['status'] == 'pending' && $order['pending_count'] > 0) )
-      <img src="{{ Helpers::get_thumbnail($order['delivery_id']) }}" alt="{{ $order['delivery_id'] }}"><br />
+      <img class="responsive" src="{{ Helpers::get_fullpic($order['delivery_id']) }}" alt="{{ $order['delivery_id'] }}"><br />
       @endif
       Recipient<br />
       {{ $order['recipient_name'] }}<br />
