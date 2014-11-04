@@ -37,7 +37,7 @@
         $point = $order['latitude'].','.$order['longitude']
       ?>
       <br />
-      <img class="responsive" src="https://maps.googleapis.com/maps/api/staticmap?center={{$point}}&zoom=13&size=600x300&maptype=roadmap&markers=color:green%7C{{$point}}" alt="{{ $order['delivery_id'] }}"><br />
+      <img class="responsive" src="https://maps.googleapis.com/maps/api/staticmap?center={{$point}}&zoom=13&size=600x300&maptype=roadmap&markers=color:green%7C{{$point}}&key={{ Config::get('ks.static_map_key')}}" alt="{{ $order['delivery_id'] }}"><br />
       @endif
 
     </p>
