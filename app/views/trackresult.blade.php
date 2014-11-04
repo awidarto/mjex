@@ -21,9 +21,8 @@
       {{ $order['deliverytime'] }}
     </p>
     <p>
-      Pickup & Warehouse :<br />
-      {{ $order['pickup_status'] }}<br />
-      {{ $order['warehouse_status'] }}
+      Package Status :<br />
+      {{ $order['pickup_status'] }}
     </p>
     <p>
       @if( $order['status'] == 'delivered' || ($order['status'] == 'pending' && $order['pending_count'] > 0) )
@@ -34,7 +33,15 @@
       Note :<br />
       {{ $order['delivery_note'] }}
 
+      @if( $order['latitude'] != '' && $order['longitude'] )
+      <?php
+        $point = $order['latitude'].','.$order['longitude']
+      ?>
+      <img class="responsive" src="https://maps.googleapis.com/maps/api/staticmap?center={{$point}}&zoom=13&size=600x300&maptype=roadmap&markers=color:green%7C{{$point}}" alt="{{ $order['delivery_id'] }}"><br />
+      @endif
+
     </p>
+
   </div>
 </div>
 
