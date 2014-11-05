@@ -27,11 +27,11 @@
       {{ $order['pickup_status'] }}
     </p>
     <p>
+      Recipient & Note :<br />
+      {{ $order['delivery_note'] }}<br />
       @if( $order['status'] == 'delivered' || ($order['status'] == 'pending' && $order['pending_count'] > 0) )
       <img class="responsive" src="{{ Helpers::get_fullpic($order['delivery_id']) }}" alt="{{ $order['delivery_id'] }}"><br />
       @endif
-      Recipient & Note :<br />
-      {{ $order['delivery_note'] }}
       @if( $order['latitude'] != '' && $order['longitude'] )
       <?php
         $point = $order['latitude'].','.$order['longitude']
