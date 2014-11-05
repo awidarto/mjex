@@ -43,7 +43,7 @@
           @foreach($pics as $pic)
               <li style="background:url({{ $pic }})">
                 <div class="caption">
-                  <p>{{ str_replace(URL::to('/'), '', $pic) }}</p>
+                  <p>{{ str_replace(URL::to('/').'/storage/receiver_pic/', '', $pic) }}</p>
                 </div>
               </li>
           @endforeach
