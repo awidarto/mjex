@@ -43,7 +43,7 @@ class Helpers {
         if(is_array($files) && count($files) > 0){
             foreach($files as $file){
                 if(preg_match('/_sign/', $file) == false){
-                    $thumbnail[] = URL::to('/').Config::get('ks.picture_path').$file;
+                    $thumbnail[] = URL::to('/').$file;
                 }
             }
         }else{
