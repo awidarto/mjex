@@ -28,9 +28,7 @@
       @if( $order['status'] == 'delivered' || ($order['status'] == 'pending' && $order['pending_count'] > 0) )
       <img class="responsive" src="{{ Helpers::get_fullpic($order['delivery_id']) }}" alt="{{ $order['delivery_id'] }}"><br />
       @endif
-      Recipient<br />
-      {{ $order['recipient_name'] }}<br />
-      Note :<br />
+      Recipient & Note :<br />
       {{ $order['delivery_note'] }}
       @if( $order['latitude'] != '' && $order['longitude'] )
       <?php
