@@ -24,7 +24,7 @@
     </p>
     <p>
       Package Status :<br />
-      {{ $order['pickup_status'] }}
+      {{ $order['pickup_status'] }} dari toko online
     </p>
     <p>
       Recipient & Note :<br />
