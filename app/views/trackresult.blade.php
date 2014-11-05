@@ -43,7 +43,7 @@
           @foreach($pics as $pic)
               <li style="background:url({{ $pic }})">
                 <div class="caption">
-                  <p>{{ $pic }}</p>
+                  <p>{{ str_replace(URL::to('/').public_path(), '', $pic) }}</p>
                 </div>
               </li>
           @endforeach
