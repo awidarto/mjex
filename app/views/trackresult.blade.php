@@ -1,7 +1,11 @@
 @extends('layout.front')
 
 @section('content')
-
+<style type="text/css">
+  .arrow {
+    font-size: 48px;
+  }
+</style>
 <div class="row">
   <div class="login-form">
     <a href="{{ URL::to('track/'.$phone.'/'.$more) }}">&laquo; Back to Track List</a>
