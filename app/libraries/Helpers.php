@@ -43,6 +43,7 @@ class Helpers {
         if(is_array($files) && count($files) > 0){
             foreach($files as $file){
                 if(preg_match('/_sign/', $file) == false){
+                    $file = str_replace(public_path(), '', $file);
                     $thumbnail[] = URL::to('/').$file;
                 }
             }
