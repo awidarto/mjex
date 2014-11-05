@@ -32,6 +32,37 @@ class Helpers {
         return $thumbnail;
     }
 
+    public static function get_multifullpic($delivery_id){
+
+        $fullpath = public_path().Config::get('ks.picture_path').$delivery_id.'*.jpg';
+
+        $files = glob($fullpath);
+
+        $thumbnail = array();
+
+        if(is_array($files) && count($files) > 0){
+            foreach($files as $file){
+                if(preg_match('/_sign/', $file) == false){
+                    $thumbnail[] = URL::to('/').Config::get('ks.picture_path').$file;
+                }
+            }
+        }else{
+
+            $fullpath = public_path().Config::get('ks.picture_path').$delivery_id.'.jpg';
+
+            if(file_exists($fullpath)){
+                $thumbnail[] = URL::to('/').Config::get('ks.picture_path').$delivery_id.'.jpg';
+                //$thumbnail = sprintf('<img style="cursor:pointer;" class="thumb" alt="'.$delivery_id.'" src="%s?'.time().'" />',$thumbnail);
+            }else{
+                //$thumbnail = 'nopic';
+                $thumbnail[] = URL::to('img/th_nopic.jpg');
+            }
+
+        }
+
+        return $thumbnail;
+    }
+
     public static function get_signpic($delivery_id){
         $fullpath = public_path().Config::get('ks.picture_path').$delivery_id.'_sign.jpg';
 
