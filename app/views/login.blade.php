@@ -15,7 +15,7 @@
     <br />
     --}}
     <form action="{{ URL::to('login')}}" method="post" accept-charset="utf-8">
-      <label for="phone">Phone / Mobile Number:</label>
+      <label for="phone">Phone / Mobile Number / No Invoice Toko:</label>
       <input type="text" name="" id="phone" value="" />
       <label for="password">Password:</label>
       <input type="password" name="" id="password" value="" />
