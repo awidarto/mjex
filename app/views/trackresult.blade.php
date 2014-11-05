@@ -38,12 +38,12 @@
         @if(count($pics) <= 1)
           <img class="responsive" src="{{ Helpers::get_fullpic($order['delivery_id']) }}" alt="{{ $order['delivery_id'] }}">
         @else(count($pics) > 1)
-          <ul>
+          <ul class="suraido-container" data-suraido>
           @foreach($pics as $pic)
               <li style="background:url({{ $pic }})">
-              <div class="caption">
-                <p>{{ $pic }}</p>
-              </div>
+                <div class="caption">
+                  <p>{{ $pic }}</p>
+                </div>
               </li>
           @endforeach
           </ul>
