@@ -12,17 +12,20 @@
         <hr />
         <p>
             Tanggal : {{ $reportdate }}<br />
+            Total : {{ $total }}<br />
+            Delivered : {{ $total_delivered }}<br />
+            Pending : {{ $total_pending }}<br />
+            Order with Photo : {{ $total_pics }}<br />
+            Order with Sign : {{ $total_sign }}<br />
+            Order with Note : {{ $total_notes }}<br />
         </p>
     </div>
 </div>
+
 @foreach($order as $r)
     <div class="track-list-item">
         <a href="{{ URL::to('item/'.$r['delivery_id'].'/'.$device.'/'.$more ) }}">
             {{-- print_r($r) --}}
-            <?php
-                $pics = (Helpers::picexists($r['delivery_id']))?Helpers::picexists($r['delivery_id']):'Tidak ada';
-                $sign = (Helpers::signexists($r['delivery_id']))?'Ada':'Tidak Ada';
-            ?>
             <span class="tdate">{{ $r['assignment_date']}}</span>
             <span class="tmerchant">{{ $r['merchantname']}}</span>
             <span class="tid"> Kode Toko (akhiran) : {{ short_id($r['merchant_trans_id']) }}</span>

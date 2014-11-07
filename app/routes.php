@@ -64,7 +64,7 @@ Route::group(array('prefix'=>'c'),function(){
                     ->get()->toArray();
             }
 
-            return View::make('c.tracklist')->with('order',$order)->with('phone',$id)->with('more',$more);
+            return View::make('c.tracklist')->with('order',$order)->with('device',$id)->with('more',$more);
         }
     });
 
@@ -92,6 +92,41 @@ Route::group(array('prefix'=>'c'),function(){
                     ->orderBy('assignment_date','desc')
                     ->get()->toArray();
 
+        $total = 0;
+        $total_delivered = 0;
+        $total_pending = 0;
+        $total_pics = 0;
+        $total_sign = 0;
+        $total_notes = 0;
+
+        for($i = 0;$i < count($order);$i++){
+            $total++;
+            if($order[$i]['status'] == 'delivered'){
+                $total_delivered++;
+            }elseif($order[$i]['status'] == 'pending'){
+                $total_pending++;
+            }
+
+            if($p = Helpers::picexists($order[$i]['delivery_id'])){
+                $order[$i]['pics'] = $p;
+                $total_pics++;
+            }else{
+                $order[$i]['pics'] = 'Tidak ada';
+            }
+
+            if(Helpers::signexists($order[$i]['delivery_id'])){
+                $order[$i]['sign'] = 'Ada';
+                $total_sign++;
+            }else{
+                $order[$i]['sign'] = 'Tidak Ada';
+            }
+
+            if($order[$i]['delivery_note'] != ''){
+                $total_notes++;
+            }
+
+        }
+
         $queries = DB::getQueryLog();
 
         $log = array_merge($in, array( 'c'=>'trackdetail' ));
@@ -100,6 +135,12 @@ Route::group(array('prefix'=>'c'),function(){
         return View::make('c.tracklist')
             ->with('reportdate',$asdate)
             ->with('order',$order)
+            ->with('total', $total )
+            ->with('total_delivered',$total_delivered )
+            ->with('total_pending',$total_pending )
+            ->with('total_pics',$total_pics )
+            ->with('total_sign',$total_sign )
+            ->with('total_notes',$total_notes )
             ->with('device',$idvar)
             ->with('more',null);
     });
