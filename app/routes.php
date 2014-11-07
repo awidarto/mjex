@@ -109,6 +109,10 @@ Route::group(array('prefix'=>'c'),function(){
         $total_sign = 0;
         $total_notes = 0;
 
+        $total_no_pics = 0;
+        $total_no_sign = 0;
+        $total_no_notes = 0;
+
         for($i = 0;$i < count($order);$i++){
             $total++;
             $order[$i]['sign'] = '';
@@ -131,6 +135,7 @@ Route::group(array('prefix'=>'c'),function(){
 
             }else{
                 $order[$i]['pics'] = 'Tidak ada';
+                $total_no_pics++;
             }
 
             if(Helpers::signexists($order[$i]['delivery_id'])){
@@ -143,6 +148,7 @@ Route::group(array('prefix'=>'c'),function(){
                 }
             }else{
                 $order[$i]['sign'] = 'Tidak Ada';
+                $total_no_sign++;
             }
 
             if($order[$i]['delivery_note'] != ''){
@@ -152,6 +158,8 @@ Route::group(array('prefix'=>'c'),function(){
                 }elseif($order[$i]['status'] == 'pending'){
                     $total_pending_notes++;
                 }
+            }else{
+                $total_no_notes++;
             }
 
         }
@@ -179,6 +187,11 @@ Route::group(array('prefix'=>'c'),function(){
             ->with('total_pics',$total_pics )
             ->with('total_sign',$total_sign )
             ->with('total_notes',$total_notes )
+
+            ->with('total_no_pics',$total_no_pics )
+            ->with('total_no_sign',$total_no_sign )
+            ->with('total_no_notes',$total_no_notes )
+
             ->with('device',$idvar)
             ->with('more',null);
     });
