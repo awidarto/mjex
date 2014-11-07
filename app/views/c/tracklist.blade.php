@@ -12,12 +12,50 @@
         <hr />
         <p>
             Tanggal : {{ $reportdate }}<br />
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Total</th>
+                        <th>Delivered</th>
+                        <th>Pending</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Order</td>
+                        <td>{{ $total }}</td>
+                        <td>{{ $total_delivered }}</td>
+                        <td>{{ $total_pending }}</td>
+                    </tr>
+                    <tr>
+                        <td>Photo</td>
+                        <td>{{ $total_pics }}</td>
+                        <td>{{ $total_delivered_pics }}</td>
+                        <td>{{ $total_pending_pics }}</td>
+                    </tr>
+                    <tr>
+                        <td>Sign</td>
+                        <td>{{ $total_sign }}</td>
+                        <td>{{ $total_delivered_sign }}</td>
+                        <td>{{ $total_pending_sign }}</td>
+                    </tr>
+                    <tr>
+                        <td>Notes</td>
+                        <td>{{ $total_notes }}</td>
+                        <td>{{ $total_delivered_notes }}</td>
+                        <td>{{ $total_pending_notes }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            {{--
             Total : {{ $total }}<br />
             Delivered : {{ $total_delivered }}<br />
             Pending : {{ $total_pending }}<br />
             Order with Photo : {{ $total_pics }}<br />
             Order with Sign : {{ $total_sign }}<br />
             Order with Note : {{ $total_notes }}<br />
+            --}}
         </p>
     </div>
 </div>

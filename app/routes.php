@@ -95,6 +95,16 @@ Route::group(array('prefix'=>'c'),function(){
         $total = 0;
         $total_delivered = 0;
         $total_pending = 0;
+
+        $total_delivered_pics = 0;
+        $total_pending_pics = 0;
+
+        $total_delivered_sign = 0;
+        $total_pending_sign = 0;
+
+        $total_delivered_notes = 0;
+        $total_pending_notes = 0;
+
         $total_pics = 0;
         $total_sign = 0;
         $total_notes = 0;
@@ -113,6 +123,12 @@ Route::group(array('prefix'=>'c'),function(){
             if($p = Helpers::picexists($order[$i]['delivery_id'])){
                 $order[$i]['pics'] = $p;
                 $total_pics++;
+                if($order[$i]['status'] == 'delivered'){
+                    $total_delivered_pics++;
+                }elseif($order[$i]['status'] == 'pending'){
+                    $total_pending_pics++;
+                }
+
             }else{
                 $order[$i]['pics'] = 'Tidak ada';
             }
@@ -120,12 +136,22 @@ Route::group(array('prefix'=>'c'),function(){
             if(Helpers::signexists($order[$i]['delivery_id'])){
                 $order[$i]['sign'] = 'Ada';
                 $total_sign++;
+                if($order[$i]['status'] == 'delivered'){
+                    $total_delivered_sign++;
+                }elseif($order[$i]['status'] == 'pending'){
+                    $total_pending_sign++;
+                }
             }else{
                 $order[$i]['sign'] = 'Tidak Ada';
             }
 
             if($order[$i]['delivery_note'] != ''){
                 $total_notes++;
+                if($order[$i]['status'] == 'delivered'){
+                    $total_delivered_notes++;
+                }elseif($order[$i]['status'] == 'pending'){
+                    $total_pending_notes++;
+                }
             }
 
         }
@@ -141,6 +167,15 @@ Route::group(array('prefix'=>'c'),function(){
             ->with('total', $total )
             ->with('total_delivered',$total_delivered )
             ->with('total_pending',$total_pending )
+            ->with('total_delivered_pics',$total_delivered_pics )
+            ->with('total_pending_pics',$total_pending_pics )
+
+            ->with('total_delivered_sign',$total_delivered_sign )
+            ->with('total_pending_sign',$total_pending_sign )
+
+            ->with('total_delivered_notes',$total_delivered_notes )
+            ->with('total_pending_notes',$total_pending_notes )
+
             ->with('total_pics',$total_pics )
             ->with('total_sign',$total_sign )
             ->with('total_notes',$total_notes )
