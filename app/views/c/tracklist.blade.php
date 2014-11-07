@@ -75,7 +75,7 @@
 
 @foreach($order as $r)
     <div class="track-list-item">
-        <a href="{{ URL::to('item/'.$r['delivery_id'].'/'.$device.'/'.$more ) }}">
+        <a href="{{ URL::to('c/item/'.$r['delivery_id'].'/'.$device.'/'.$more ) }}">
             {{-- print_r($r) --}}
             <span class="tdate">{{ $r['assignment_date']}}</span>
             <span class="tmerchant">{{ $r['merchantname']}}</span>
