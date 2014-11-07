@@ -28,43 +28,148 @@ Route::group(array('prefix'=>'c'),function(){
             return View::make('c.track')->with('ordernumber',$id);
         }else{
 
-            if(is_null($more)){
-                $idvar = phonenumber( trim($id),'21','62' );
-                //print_r($idvar);
+            $idvar = trim($id);
 
-                if(date('G',time()) <= 3){
-                    $asdate = date( 'Y-m-d',time() - ( 6 * 60 * 60 )  );
-                }else{
-                    $asdate = date('Y-m-d',time());
-                }
-
-
-                $sql = " `delivery_order_active`.`assignment_date` = '%s' AND (`delivery_order_active`.`phone` LIKE  '%s' OR  `delivery_order_active`.`mobile1` LIKE  '%s' OR  `delivery_order_active`.`mobile2` LIKE  '%s' OR  `delivery_order_active`.`merchant_trans_id` LIKE  '%s' )  ";
-
-                $sql = sprintf($sql,'%'.$asdate.'%', '%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%');
-
-                $order = Order::whereRaw($sql)
-                    ->leftJoin('members', 'members.id', '=', 'merchant_id')
-                    ->orderBy('assignment_date','desc')
-                    ->take(3)
-                    ->skip(0)
-                    ->get()->toArray();
+            if(date('G',time()) <= 3){
+                $asdate = date( 'Y-m-d',time() - ( 3 * 60 * 60 )  );
             }else{
-
-                $idvar = phonenumber( trim($id),'21','62' );
-        //print_r($idvar);
-
-                $sql = "`delivery_order_active`.`phone` LIKE  '%s' OR  `delivery_order_active`.`mobile1` LIKE  '%s' OR  `delivery_order_active`.`mobile2` LIKE  '%s' OR  `delivery_order_active`.`merchant_trans_id` LIKE  '%s'  ";
-
-                $sql = sprintf($sql, '%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%');
-
-                $order = Order::whereRaw($sql)
-                    ->leftJoin('members', 'members.id', '=', 'merchant_id')
-                    ->orderBy('assignment_date','desc')
-                    ->get()->toArray();
+                $asdate = date('Y-m-d',time());
             }
 
-            return View::make('c.tracklist')->with('order',$order)->with('device',$id)->with('more',$more);
+            //print_r($idvar);
+            //$sql = "`delivery_order_active`.`phone` LIKE  '%s%' OR  `delivery_order_active`.`mobile1` LIKE  '%s' OR  `delivery_order_active`.`mobile2` LIKE  '%s' OR  `delivery_order_active`.`merchant_trans_id` LIKE  '%s' ";
+            $sql = "`delivery_order_active`.`assignment_date` = '%s' AND (`devices`.`identifier` LIKE  '%s' OR  `couriers`.`fullname` LIKE  '%s' ) ";
+
+            $sql = sprintf($sql, $asdate, '%'.$idvar.'%','%'.$idvar.'%');
+
+            $order = Order::whereRaw($sql)
+                        ->leftJoin('devices', 'devices.id', '=', 'device_id')
+                        ->leftJoin('couriers', 'couriers.id', '=', 'courier_id')
+                        ->leftJoin('members', 'members.id', '=', 'merchant_id')
+                        ->orderBy('assignment_date','desc')
+                        ->get()->toArray();
+
+            $total = 0;
+            $total_delivered = 0;
+            $total_pending = 0;
+            $total_other = 0;
+
+            $total_delivered_pics = 0;
+            $total_pending_pics = 0;
+
+            $total_delivered_sign = 0;
+            $total_pending_sign = 0;
+
+            $total_delivered_notes = 0;
+            $total_pending_notes = 0;
+
+            $total_pics = 0;
+            $total_sign = 0;
+            $total_notes = 0;
+
+            $total_no_pics = 0;
+            $total_no_sign = 0;
+            $total_no_notes = 0;
+
+            $total_other_pics = 0;
+            $total_other_sign = 0;
+            $total_other_notes = 0;
+
+            for($i = 0;$i < count($order);$i++){
+                $total++;
+                $order[$i]['sign'] = '';
+                $order[$i]['pics'] = '';
+
+                if($order[$i]['status'] == 'delivered'){
+                    $total_delivered++;
+                }elseif($order[$i]['status'] == 'pending'){
+                    $total_pending++;
+                }else{
+                    $total_other++;
+                }
+
+                if($p = Helpers::picexists($order[$i]['delivery_id'])){
+                    $order[$i]['pics'] = $p;
+                    $total_pics++;
+                    if($order[$i]['status'] == 'delivered'){
+                        $total_delivered_pics++;
+                    }elseif($order[$i]['status'] == 'pending'){
+                        $total_pending_pics++;
+                    }else{
+                        $total_other_pics++;
+                    }
+
+                }else{
+                    $order[$i]['pics'] = 'Tidak ada';
+                    $total_no_pics++;
+                }
+
+                if(Helpers::signexists($order[$i]['delivery_id'])){
+                    $order[$i]['sign'] = 'Ada';
+                    $total_sign++;
+                    if($order[$i]['status'] == 'delivered'){
+                        $total_delivered_sign++;
+                    }elseif($order[$i]['status'] == 'pending'){
+                        $total_pending_sign++;
+                    }else{
+                        $total_other_sign++;
+                    }
+                }else{
+                    $order[$i]['sign'] = 'Tidak Ada';
+                    $total_no_sign++;
+                }
+
+                if($order[$i]['delivery_note'] != ''){
+                    $total_notes++;
+                    if($order[$i]['status'] == 'delivered'){
+                        $total_delivered_notes++;
+                    }elseif($order[$i]['status'] == 'pending'){
+                        $total_pending_notes++;
+                    }else{
+                        $total_other_notes++;
+                    }
+                }else{
+                    $total_no_notes++;
+                }
+
+            }
+
+            $queries = DB::getQueryLog();
+
+            $log = array_merge($in, array( 'c'=>'trackdetail' ));
+            Helpers::log($log);
+
+            return View::make('c.tracklist')
+                ->with('reportdate',$asdate)
+                ->with('order',$order)
+                ->with('total', $total )
+                ->with('total_delivered',$total_delivered )
+                ->with('total_pending',$total_pending )
+                ->with('total_other',$total_other )
+
+                ->with('total_delivered_pics',$total_delivered_pics )
+                ->with('total_pending_pics',$total_pending_pics )
+
+                ->with('total_delivered_sign',$total_delivered_sign )
+                ->with('total_pending_sign',$total_pending_sign )
+
+                ->with('total_delivered_notes',$total_delivered_notes )
+                ->with('total_pending_notes',$total_pending_notes )
+
+                ->with('total_other_pics',$total_other_pics )
+                ->with('total_other_sign',$total_other_sign )
+                ->with('total_other_notes',$total_other_notes )
+
+                ->with('total_pics',$total_pics )
+                ->with('total_sign',$total_sign )
+                ->with('total_notes',$total_notes )
+
+                ->with('total_no_pics',$total_no_pics )
+                ->with('total_no_sign',$total_no_sign )
+                ->with('total_no_notes',$total_no_notes )
+
+                ->with('device',$idvar)
+                ->with('more',null);
         }
     });
 
