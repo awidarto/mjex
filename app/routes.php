@@ -101,6 +101,9 @@ Route::group(array('prefix'=>'c'),function(){
 
         for($i = 0;$i < count($order);$i++){
             $total++;
+            $order[$i]['sign'] = '';
+            $order[$i]['pics'] = '';
+
             if($order[$i]['status'] == 'delivered'){
                 $total_delivered++;
             }elseif($order[$i]['status'] == 'pending'){
