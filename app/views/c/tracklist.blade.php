@@ -5,6 +5,11 @@
         <p>Klik untuk melihat rincian
         </p>
     </div>
+
+    <div>
+        <h6>Summary</h6>
+        Tanggal : {{ $reportdate }}<br />
+    </div>
 @foreach($order as $r)
     <div class="track-list-item">
         <a href="{{ URL::to('item/'.$r['delivery_id'].'/'.$phone.'/'.$more ) }}">

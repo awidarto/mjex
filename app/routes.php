@@ -81,9 +81,9 @@ Route::group(array('prefix'=>'c'),function(){
 
         //print_r($idvar);
         //$sql = "`delivery_order_active`.`phone` LIKE  '%s%' OR  `delivery_order_active`.`mobile1` LIKE  '%s' OR  `delivery_order_active`.`mobile2` LIKE  '%s' OR  `delivery_order_active`.`merchant_trans_id` LIKE  '%s' ";
-        $sql = "`delivery_order_active`.`assignment_date` = '%s' AND (`devices`.`identifier` LIKE  '%s' OR  `couriers`.`fullname` LIKE  '%s' ) ";
+        $sql = "`delivery_order_active`.`assignment_date` LIKE '%s' AND (`devices`.`identifier` LIKE  '%s' OR  `couriers`.`fullname` LIKE  '%s' ) ";
 
-        $sql = sprintf($sql,'%'.$asdate.'%', '%'.$idvar.'%','%'.$idvar.'%');
+        $sql = sprintf($sql,'%'.$asdate, '%'.$idvar.'%','%'.$idvar.'%');
 
         $order = Order::whereRaw($sql)
                     ->leftJoin('devices', 'devices.id', '=', 'device_id')
@@ -97,7 +97,11 @@ Route::group(array('prefix'=>'c'),function(){
         $log = array_merge($in, array( 'c'=>'trackdetail' ));
         Helpers::log($log);
 
-        return View::make('c.tracklist')->with('order',$order)->with('device',$idvar)->with('more',null);
+        return View::make('c.tracklist')
+            ->with('reportdate',$asdate)
+            ->with('order',$order)
+            ->with('device',$idvar)
+            ->with('more',null);
     });
 
     Route::get('item/{did}/{phone}/{more?}',function($did,$phone,$more = null){
@@ -175,7 +179,10 @@ Route::post('track',function(){
     $log = array_merge($in, array( 'c'=>'trackdetail' ));
     Helpers::log($log);
 
-    return View::make('tracklist')->with('order',$order)->with('phone',$idvar)->with('more',null);
+    return View::make('tracklist')
+        ->with('order',$order)
+        ->with('phone',$idvar)
+        ->with('more',null);
 });
 
 Route::get('item/{did}/{phone}/{more?}',function($did,$phone,$more = null){
