@@ -17,8 +17,9 @@
             <span class="tmerchant">{{ $r['merchantname']}}</span>
             <span class="tid"> Kode Toko (akhiran) : {{ short_id($r['merchant_trans_id']) }}</span>
             <span class="tdate">{{ $r['status']}}</span>
-            <span class="tdate">{{ $pics }}</span>
-            <span class="tdate">{{ $sign }}</span>
+            <span class="tdate">Photo: {{ $pics }}</span>
+            <span class="tdate">Sign: {{ $sign }}</span>
+            <span class="tdate">Note: {{ $r['delivery_note'] }}</span>
         </a>
     </div>
 @endforeach
