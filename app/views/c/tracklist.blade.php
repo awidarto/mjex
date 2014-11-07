@@ -1,6 +1,11 @@
 @extends('layout.front')
 
 @section('content')
+    <style type="text/css">
+        table{
+            font-size: 12px;
+        }
+    </style>
     <div class="track-list-item">
         <p>Klik untuk melihat rincian
         </p>
@@ -17,17 +22,17 @@
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Total</th>
+                        <th></th>
                         <th colspan="3">Status</th>
-                        <th>Kosong</th>
+                        <th></th>
                     </tr>
                     <tr>
                         <th></th>
-                        <th></th>
+                        <th>Total</th>
                         <th>Delivered</th>
                         <th>Pending</th>
                         <th>Status Lain</th>
-                        <th></th>
+                        <th>Kosong</th>
                     </tr>
                 </thead>
                 <tbody>
