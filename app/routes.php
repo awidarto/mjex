@@ -16,6 +16,104 @@ Route::get('/', function()
 	return View::make('track');
 });
 
+Route::group(array('prefix'=>'c'),function(){
+
+    Route::get('/', function()
+    {
+        return View::make('c.track');
+    });
+
+    Route::get('track/{id?}/{more?}',function($id = null,$more = null){
+        if(is_null($id)){
+            return View::make('c.track')->with('ordernumber',$id);
+        }else{
+
+            if(is_null($more)){
+                $idvar = phonenumber( trim($id),'21','62' );
+                //print_r($idvar);
+
+                if(date('G',time()) <= 3){
+                    $asdate = date( 'Y-m-d',time() - ( 6 * 60 * 60 )  );
+                }else{
+                    $asdate = date('Y-m-d',time());
+                }
+
+
+                $sql = " `delivery_order_active`.`assignment_date` = '%s' AND (`delivery_order_active`.`phone` LIKE  '%s' OR  `delivery_order_active`.`mobile1` LIKE  '%s' OR  `delivery_order_active`.`mobile2` LIKE  '%s' OR  `delivery_order_active`.`merchant_trans_id` LIKE  '%s' )  ";
+
+                $sql = sprintf($sql,'%'.$asdate.'%', '%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%');
+
+                $order = Order::whereRaw($sql)
+                    ->leftJoin('members', 'members.id', '=', 'merchant_id')
+                    ->orderBy('assignment_date','desc')
+                    ->take(3)
+                    ->skip(0)
+                    ->get()->toArray();
+            }else{
+
+                $idvar = phonenumber( trim($id),'21','62' );
+        //print_r($idvar);
+
+                $sql = "`delivery_order_active`.`phone` LIKE  '%s' OR  `delivery_order_active`.`mobile1` LIKE  '%s' OR  `delivery_order_active`.`mobile2` LIKE  '%s' OR  `delivery_order_active`.`merchant_trans_id` LIKE  '%s'  ";
+
+                $sql = sprintf($sql, '%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%');
+
+                $order = Order::whereRaw($sql)
+                    ->leftJoin('members', 'members.id', '=', 'merchant_id')
+                    ->orderBy('assignment_date','desc')
+                    ->get()->toArray();
+            }
+
+            return View::make('c.tracklist')->with('order',$order)->with('phone',$id)->with('more',$more);
+        }
+    });
+
+    Route::post('track',function(){
+        $in = Input::get();
+
+        $idvar = trim($in['device']);
+
+        if(date('G',time()) <= 3){
+            $asdate = date( 'Y-m-d',time() - ( 3 * 60 * 60 )  );
+        }else{
+            $asdate = date('Y-m-d',time());
+        }
+
+        //print_r($idvar);
+        //$sql = "`delivery_order_active`.`phone` LIKE  '%s%' OR  `delivery_order_active`.`mobile1` LIKE  '%s' OR  `delivery_order_active`.`mobile2` LIKE  '%s' OR  `delivery_order_active`.`merchant_trans_id` LIKE  '%s' ";
+        $sql = "`delivery_order_active`.`assignment_date` = '%s' AND (`devices`.`identifier` LIKE  '%s' OR  `couriers`.`fullname` LIKE  '%s' ) ";
+
+        $sql = sprintf($sql,'%'.$asdate.'%', '%'.$idvar.'%','%'.$idvar.'%');
+
+        $order = Order::whereRaw($sql)
+                    ->leftJoin('devices', 'devices.id', '=', 'device_id')
+                    ->leftJoin('couriers', 'couriers.id', '=', 'courier_id')
+                    ->leftJoin('members', 'members.id', '=', 'merchant_id')
+                    ->orderBy('assignment_date','desc')
+                    ->get()->toArray();
+
+        $queries = DB::getQueryLog();
+
+        $log = array_merge($in, array( 'c'=>'trackdetail' ));
+        Helpers::log($log);
+
+        return View::make('c.tracklist')->with('order',$order)->with('device',$idvar)->with('more',null);
+    });
+
+    Route::get('item/{did}/{phone}/{more?}',function($did,$phone,$more = null){
+        $order = Order::where('delivery_id',$did)->first()->toArray();
+
+        $log = array(
+            'c'=>'trackdetail',
+            'delivery_id'=>$did
+             );
+        Helpers::log($log);
+
+        return View::make('c.trackresult')->with('order',$order)->with('phone',$phone)->with('more',$more);
+    });
+
+});
+
 Route::get('track/{id?}/{more?}',function($id = null,$more = null){
     if(is_null($id)){
         return View::make('track')->with('ordernumber',$id);
@@ -74,11 +172,21 @@ Route::post('track',function(){
 
     $queries = DB::getQueryLog();
 
+    $log = array_merge($in, array( 'c'=>'trackdetail' ));
+    Helpers::log($log);
+
     return View::make('tracklist')->with('order',$order)->with('phone',$idvar)->with('more',null);
 });
 
 Route::get('item/{did}/{phone}/{more?}',function($did,$phone,$more = null){
     $order = Order::where('delivery_id',$did)->first()->toArray();
+
+    $log = array(
+        'c'=>'trackdetail',
+        'delivery_id'=>$did
+         );
+    Helpers::log($log);
+
     return View::make('trackresult')->with('order',$order)->with('phone',$phone)->with('more',$more);
 });
 
@@ -152,3 +260,4 @@ function normalphone($phone,$type = 'international', $country = '+62')
     }
 
 }
+

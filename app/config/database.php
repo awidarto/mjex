@@ -52,6 +52,15 @@ return array(
 			'prefix'   => '',
 		),
 
+        'mongodb' => array(
+            'driver'   => 'mongodb',
+            'host'     => 'localhost',
+            'port'     => 27017,
+            'username' => 'jayonexpress',
+            'password' => 'jayon123',
+            'database' => 'jm'
+        ),
+
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',

@@ -80,4 +80,46 @@ class Helpers {
         return $thumbnail;
     }
 
+    public static function picexists($delivery_id)
+    {
+            $fullpath = public_path().Config::get('ks.picture_path').$delivery_id.'*.jpg';
+            $files = glob($fullpath);
+
+            $count = 0;
+            if(is_array($files) && count($files) > 0){
+                foreach($files as $file){
+                    if(preg_match('/_sign/', $file) == false){
+                        $count++;
+                    }
+                }
+
+                if($count == 0){
+                    return false;
+                }else{
+                    return $count;
+                }
+
+            }else{
+                return false;
+            }
+    }
+
+    public static function signexists($delivery_id)
+    {
+            $fullpath = public_path().Config::get('ks.picture_path').$delivery_id.'_sign*.jpg';
+            $files = glob($fullpath);
+
+            $count = 0;
+            if(is_array($files) && count($files) > 0){
+                return count($files);
+            }else{
+                return false;
+            }
+
+    }
+
+    public static function log($input){
+        Logger::insert($input);
+    }
+
 }
