@@ -18,7 +18,7 @@
         <p>
             Tanggal : {{ $reportdate }}<br />
             Device / Courier : {{ $device }}<br />
-            <table class="responsive">
+            <table >
                 <thead>
                     <tr>
                         <th></th>
