@@ -18,7 +18,7 @@
         <p>
             Tanggal : {{ $reportdate }}<br />
             Device / Courier : {{ $device }}<br />
-            <table >
+            <table class="responsive">
                 <thead>
                     <tr>
                         <th></th>
@@ -69,6 +69,11 @@
                         <td>{{ $total_no_notes }}</td>
                     </tr>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="6">Geser tabel untuk melihat lebih lengkap</td>
+                    </tr>
+                </tfoot>
             </table>
             {{--
             Total : {{ $total }}<br />
