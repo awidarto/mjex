@@ -17,7 +17,7 @@
 </div>
 @foreach($order as $r)
     <div class="track-list-item">
-        <a href="{{ URL::to('item/'.$r['delivery_id'].'/'.$phone.'/'.$more ) }}">
+        <a href="{{ URL::to('item/'.$r['delivery_id'].'/'.$device.'/'.$more ) }}">
             {{-- print_r($r) --}}
             <?php
                 $pics = (Helpers::picexists($r['delivery_id']))?Helpers::picexists($r['delivery_id']):'Tidak ada';
