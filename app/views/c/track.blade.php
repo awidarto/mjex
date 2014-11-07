@@ -4,7 +4,7 @@
 
 <div class="row">
   <div class="login-form">
-    <h3>Delivery Status</h3>
+    <h3>Daily Delivery Summary</h3>
     <hr />
     <form action="{{ URL::to('c/track')}}" method="post" accept-charset="utf-8">
       <label for="device">Device Name / Courier Name:</label>

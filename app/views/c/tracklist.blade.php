@@ -12,6 +12,7 @@
         <hr />
         <p>
             Tanggal : {{ $reportdate }}<br />
+            Device / Courier : {{ $device }}<br />
             <table class="responsive">
                 <thead>
                     <tr>
