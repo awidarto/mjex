@@ -95,6 +95,7 @@ Route::group(array('prefix'=>'c'),function(){
         $total = 0;
         $total_delivered = 0;
         $total_pending = 0;
+        $total_other = 0;
 
         $total_delivered_pics = 0;
         $total_pending_pics = 0;
@@ -113,6 +114,10 @@ Route::group(array('prefix'=>'c'),function(){
         $total_no_sign = 0;
         $total_no_notes = 0;
 
+        $total_other_pics = 0;
+        $total_other_sign = 0;
+        $total_other_notes = 0;
+
         for($i = 0;$i < count($order);$i++){
             $total++;
             $order[$i]['sign'] = '';
@@ -122,6 +127,8 @@ Route::group(array('prefix'=>'c'),function(){
                 $total_delivered++;
             }elseif($order[$i]['status'] == 'pending'){
                 $total_pending++;
+            }else{
+                $total_other++;
             }
 
             if($p = Helpers::picexists($order[$i]['delivery_id'])){
@@ -131,6 +138,8 @@ Route::group(array('prefix'=>'c'),function(){
                     $total_delivered_pics++;
                 }elseif($order[$i]['status'] == 'pending'){
                     $total_pending_pics++;
+                }else{
+                    $total_other_pics++;
                 }
 
             }else{
@@ -145,6 +154,8 @@ Route::group(array('prefix'=>'c'),function(){
                     $total_delivered_sign++;
                 }elseif($order[$i]['status'] == 'pending'){
                     $total_pending_sign++;
+                }else{
+                    $total_other_sign++;
                 }
             }else{
                 $order[$i]['sign'] = 'Tidak Ada';
@@ -157,6 +168,8 @@ Route::group(array('prefix'=>'c'),function(){
                     $total_delivered_notes++;
                 }elseif($order[$i]['status'] == 'pending'){
                     $total_pending_notes++;
+                }else{
+                    $total_other_notes++;
                 }
             }else{
                 $total_no_notes++;
@@ -175,6 +188,8 @@ Route::group(array('prefix'=>'c'),function(){
             ->with('total', $total )
             ->with('total_delivered',$total_delivered )
             ->with('total_pending',$total_pending )
+            ->with('total_other',$total_other )
+
             ->with('total_delivered_pics',$total_delivered_pics )
             ->with('total_pending_pics',$total_pending_pics )
 
@@ -183,6 +198,10 @@ Route::group(array('prefix'=>'c'),function(){
 
             ->with('total_delivered_notes',$total_delivered_notes )
             ->with('total_pending_notes',$total_pending_notes )
+
+            ->with('total_other_pics',$total_other_pics )
+            ->with('total_other_sign',$total_other_sign )
+            ->with('total_other_notes',$total_other_notes )
 
             ->with('total_pics',$total_pics )
             ->with('total_sign',$total_sign )

@@ -15,11 +15,15 @@
             <table class="responsive">
                 <thead>
                     <tr>
-                        <th></th>
-                        <th>Total</th>
+                        <th rowspan="2"></th>
+                        <th rowspan="2">Total</th>
+                        <th colspan="3">Status</th>
+                        <th rowspan="2">Kosong</th>
+                    </tr>
+                    <tr>
                         <th>Delivered</th>
                         <th>Pending</th>
-                        <th>Kosong</th>
+                        <th>Status Lain</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -28,6 +32,7 @@
                         <td>{{ $total }}</td>
                         <td>{{ $total_delivered }}</td>
                         <td>{{ $total_pending }}</td>
+                        <td>{{ $total_other }}</td>
                         <td></td>
                     </tr>
                     <tr>
@@ -35,6 +40,7 @@
                         <td>{{ $total_pics }}</td>
                         <td>{{ $total_delivered_pics }}</td>
                         <td>{{ $total_pending_pics }}</td>
+                        <td>{{ $total_other_pics }}</td>
                         <td>{{ $total_no_pics }}</td>
                     </tr>
                     <tr>
@@ -42,6 +48,7 @@
                         <td>{{ $total_sign }}</td>
                         <td>{{ $total_delivered_sign }}</td>
                         <td>{{ $total_pending_sign }}</td>
+                        <td>{{ $total_other_sign }}</td>
                         <td>{{ $total_no_sign }}</td>
                     </tr>
                     <tr>
@@ -49,6 +56,7 @@
                         <td>{{ $total_notes }}</td>
                         <td>{{ $total_delivered_notes }}</td>
                         <td>{{ $total_pending_notes }}</td>
+                        <td>{{ $total_other_notes }}</td>
                         <td>{{ $total_no_notes }}</td>
                     </tr>
                 </tbody>
