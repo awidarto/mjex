@@ -71,10 +71,14 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="6">Geser tabel untuk melihat lebih lengkap</td>
+                        <td colspan="6"></td>
                     </tr>
                 </tfoot>
             </table>
+            <p>
+                Geser tabel untuk melihat lebih lengkap
+            </p>
+            <hr />
             {{--
             Total : {{ $total }}<br />
             Delivered : {{ $total_delivered }}<br />
