@@ -136,7 +136,7 @@ Route::group(array('prefix'=>'c'),function(){
 
             $queries = DB::getQueryLog();
 
-            $log = array_merge($in, array( 'c'=>'trackdetail' ));
+            $log = array_merge(array( 'c'=>'tracklist','device'=>$idvar ));
             Helpers::log($log);
 
             return View::make('c.tracklist')
