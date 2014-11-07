@@ -16,15 +16,18 @@
             <table class="responsive">
                 <thead>
                     <tr>
-                        <th rowspan="2"></th>
-                        <th rowspan="2">Total</th>
+                        <th></th>
+                        <th>Total</th>
                         <th colspan="3">Status</th>
-                        <th rowspan="2">Kosong</th>
+                        <th>Kosong</th>
                     </tr>
                     <tr>
+                        <th></th>
+                        <th></th>
                         <th>Delivered</th>
                         <th>Pending</th>
                         <th>Status Lain</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
