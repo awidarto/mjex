@@ -23,50 +23,50 @@
                     <tr>
                         <th></th>
                         <th></th>
-                        <th colspan="3">Status</th>
                         <th></th>
+                        <th colspan="3">Status</th>
                     </tr>
                     <tr>
                         <th></th>
                         <th>Total</th>
+                        <th>Tidak Ada</th>
                         <th>Delivered</th>
                         <th>Pending</th>
                         <th>Status Lain</th>
-                        <th>Kosong</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>Order</td>
                         <td>{{ $total }}</td>
+                        <td>-</td>
                         <td>{{ $total_delivered }}</td>
                         <td>{{ $total_pending }}</td>
                         <td>{{ $total_other }}</td>
-                        <td></td>
                     </tr>
                     <tr>
                         <td>Photo</td>
                         <td>{{ $total_pics }}</td>
+                        <td>{{ $total_no_pics }}</td>
                         <td>{{ $total_delivered_pics }}</td>
                         <td>{{ $total_pending_pics }}</td>
                         <td>{{ $total_other_pics }}</td>
-                        <td>{{ $total_no_pics }}</td>
                     </tr>
                     <tr>
                         <td>Sign</td>
                         <td>{{ $total_sign }}</td>
+                        <td>{{ $total_no_sign }}</td>
                         <td>{{ $total_delivered_sign }}</td>
                         <td>{{ $total_pending_sign }}</td>
                         <td>{{ $total_other_sign }}</td>
-                        <td>{{ $total_no_sign }}</td>
                     </tr>
                     <tr>
                         <td>Notes</td>
                         <td>{{ $total_notes }}</td>
+                        <td>{{ $total_no_notes }}</td>
                         <td>{{ $total_delivered_notes }}</td>
                         <td>{{ $total_pending_notes }}</td>
                         <td>{{ $total_other_notes }}</td>
-                        <td>{{ $total_no_notes }}</td>
                     </tr>
                 </tbody>
                 <tfoot>
