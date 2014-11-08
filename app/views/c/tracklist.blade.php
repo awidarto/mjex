@@ -97,6 +97,8 @@
             {{-- print_r($r) --}}
             <span class="tdate">{{ $r['assignment_date']}}</span>
             <span class="tmerchant">{{ $r['merchantname']}}</span>
+            <span class="tmerchant">Pembeli: {{ $r['buyer_name']}}</span>
+            <span class="tmerchant">Ditujukan : {{ $r['recipient_name']}}</span>
             <span class="tid"> Kode Toko (akhiran) : {{ short_id($r['merchant_trans_id']) }}</span>
             <span class="tdate">{{ $r['status']}}</span>
             <span class="tdate">Photo: {{ $r['pics'] }}</span>
