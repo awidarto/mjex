@@ -65,6 +65,8 @@
         $point = $order['latitude'].','.$order['longitude']
       ?>
       <br />
+      Lokasi :<br />
+      {{ $point }}<br />
       <a  href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$point}}&ie=UTF8&hq=&hnear={{$point}}" target="blank">Lihat peta</a>
       <br />
 
