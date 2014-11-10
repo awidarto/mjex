@@ -65,7 +65,13 @@
         $point = $order['latitude'].','.$order['longitude']
       ?>
       <br />
+      <a href="http://maps.google.com/maps?daddr={{$point}}&amp;ll=">Lihat peta</a>
+      <br />
+
+      {{--
+
       <img class="responsive" src="https://maps.googleapis.com/maps/api/staticmap?center={{$point}}&zoom=13&size=600x300&maptype=roadmap&markers=color:green%7C{{$point}}&key={{ Config::get('ks.static_map_key')}}" alt="{{ $order['delivery_id'] }}"><br />
+      --}}
       <p class="disclaimer">
         <strong>Disclaimer :</strong><br />
         Location accuracy within 500 meters radius, depending on device GPS, telecom provider network, and map provider data accuracy.
