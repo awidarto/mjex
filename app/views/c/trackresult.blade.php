@@ -65,7 +65,7 @@
         $point = $order['latitude'].','.$order['longitude']
       ?>
       <br />
-      <a href="https://www.google.com/maps/@{{$point}}?hl=en">Lihat peta</a>
+      <a  href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$point}}&ie=UTF8&hq=&hnear={{$point}}" target="blank">Lihat peta</a>
       <br />
 
       {{--
