@@ -410,6 +410,10 @@ Route::get('item/{did}/{phone}/{more?}',function($did,$phone,$more = null){
          );
     Helpers::log($log);
 
+    if(in_array($order['status'], Config::get('ks.inprocess') )){
+        $order['status'] = 'Dalam proses pengiriman';
+    }
+
     return View::make('trackresult')->with('order',$order)->with('phone',$phone)->with('more',$more);
 });
 
