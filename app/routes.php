@@ -343,9 +343,9 @@ Route::get('track/{id?}/{more?}',function($id = null,$more = null){
             $idvar = phonenumber( trim($id),'21','62' );
             //print_r($idvar);
 
-            $sql = "`delivery_order_active`.`phone` LIKE  '%s' OR  `delivery_order_active`.`mobile1` LIKE  '%s' OR  `delivery_order_active`.`mobile2` LIKE  '%s' OR  `delivery_order_active`.`merchant_trans_id` LIKE  '%s'  ";
+            $sql = "`delivery_order_active`.`phone` LIKE  '%s' OR  `delivery_order_active`.`mobile1` LIKE  '%s' OR  `delivery_order_active`.`mobile2` LIKE  '%s' OR  `delivery_order_active`.`merchant_trans_id` LIKE  '%s' OR  `delivery_order_active`.`delivery_id` LIKE  '%s'  ";
 
-            $sql = sprintf($sql, '%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%');
+            $sql = sprintf($sql, '%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%');
 
             $order = Order::whereRaw($sql)
                 ->leftJoin('members', 'members.id', '=', 'merchant_id')
@@ -358,9 +358,9 @@ Route::get('track/{id?}/{more?}',function($id = null,$more = null){
             $idvar = phonenumber( trim($id),'21','62' );
     //print_r($idvar);
 
-            $sql = "`delivery_order_active`.`phone` LIKE  '%s' OR  `delivery_order_active`.`mobile1` LIKE  '%s' OR  `delivery_order_active`.`mobile2` LIKE  '%s' OR  `delivery_order_active`.`merchant_trans_id` LIKE  '%s'  ";
+            $sql = "`delivery_order_active`.`phone` LIKE  '%s' OR  `delivery_order_active`.`mobile1` LIKE  '%s' OR  `delivery_order_active`.`mobile2` LIKE  '%s' OR  `delivery_order_active`.`merchant_trans_id` LIKE  '%s' OR  `delivery_order_active`.`delivery_id` LIKE  '%s'  ";
 
-            $sql = sprintf($sql, '%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%');
+            $sql = sprintf($sql, '%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%');
 
             $order = Order::whereRaw($sql)
                 ->leftJoin('members', 'members.id', '=', 'merchant_id')
@@ -379,9 +379,9 @@ Route::post('track',function(){
 
     $idvar = phonenumber( trim($in['phone']),'21','62' );
     //print_r($idvar);
-    $sql = "`delivery_order_active`.`phone` LIKE  '%s' OR  `delivery_order_active`.`mobile1` LIKE  '%s' OR  `delivery_order_active`.`mobile2` LIKE  '%s' OR  `delivery_order_active`.`merchant_trans_id` LIKE  '%s' ";
+    $sql = "`delivery_order_active`.`phone` LIKE  '%s' OR  `delivery_order_active`.`mobile1` LIKE  '%s' OR  `delivery_order_active`.`mobile2` LIKE  '%s' OR  `delivery_order_active`.`merchant_trans_id` LIKE  '%s' OR  `delivery_order_active`.`delivery_id` LIKE  '%s'   ";
 
-    $sql = sprintf($sql, '%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%');
+    $sql = sprintf($sql, '%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%');
 
     $order = Order::whereRaw($sql)
                 ->leftJoin('members', 'members.id', '=', 'merchant_id')
