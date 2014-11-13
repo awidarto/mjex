@@ -15,7 +15,7 @@
         </a>
     </div>
 @endforeach
-@if(is_null($more))
+@if(!is_null($more))
     <div class="track-list-item">
         <a href="{{ URL::to('track/'.$phone.'/more') }}">Show more</a>
     </div>

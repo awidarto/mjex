@@ -15,6 +15,9 @@
       No Kode Toko :<br />
       {{ short_id($order['merchant_trans_id']) }}
       <br />
+      Jayon Express ID :<br />
+      {{ $order['delivery_id'] }}
+      <br />
       Delivered to :<br />
       {{ $order['recipient_name'] }}<br />
       {{ $order['shipping_address'] }}
