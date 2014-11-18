@@ -32,3 +32,8 @@ span.tdate{
 span.tid{
     font-size: .82em;
 }
+
+table{
+    color:#000;
+    font-size: 12px;
+}

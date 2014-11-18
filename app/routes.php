@@ -63,22 +63,37 @@ Route::group(array('prefix'=>'c'),function(){
             $total_delivered_notes = 0;
             $total_pending_notes = 0;
 
+            $total_delivered_coord = 0;
+            $total_pending_coord = 0;
+
             $total_pics = 0;
             $total_sign = 0;
             $total_notes = 0;
+            $total_coord = 0;
 
             $total_no_pics = 0;
             $total_no_sign = 0;
             $total_no_notes = 0;
+            $total_no_coord = 0;
 
             $total_other_pics = 0;
             $total_other_sign = 0;
             $total_other_notes = 0;
+            $total_other_coord = 0;
 
             for($i = 0;$i < count($order);$i++){
                 $total++;
                 $order[$i]['sign'] = '';
                 $order[$i]['pics'] = '';
+                $order[$i]['has_sign'] = false;
+                $order[$i]['has_pic'] = false;
+                $order[$i]['has_coord'] = false;
+                $order[$i]['has_note'] = false;
+                $order[$i]['near_origin'] = false;
+
+                if( Helpers::nearOrigin( $order[$i]['latitude'], $order[$i]['longitude'])){
+                    $order[$i]['near_origin'] = true;
+                }
 
                 if($order[$i]['status'] == 'delivered'){
                     $total_delivered++;
@@ -98,7 +113,7 @@ Route::group(array('prefix'=>'c'),function(){
                     }else{
                         $total_other_pics++;
                     }
-
+                    $order[$i]['has_pic'] = true;
                 }else{
                     $order[$i]['pics'] = 'Tidak ada';
                     $total_no_pics++;
@@ -114,6 +129,7 @@ Route::group(array('prefix'=>'c'),function(){
                     }else{
                         $total_other_sign++;
                     }
+                    $order[$i]['has_sign'] = true;
                 }else{
                     $order[$i]['sign'] = 'Tidak Ada';
                     $total_no_sign++;
@@ -128,9 +144,25 @@ Route::group(array('prefix'=>'c'),function(){
                     }else{
                         $total_other_notes++;
                     }
+                    $order[$i]['has_note'] = true;
                 }else{
                     $total_no_notes++;
                 }
+
+                if( ($order[$i]['latitude'] != '' && $order[$i]['longitude'] != '') || ($order[$i]['latitude'] != 0 && $order[$i]['longitude'] != 0)  ){
+                    $total_coord++;
+                    if($order[$i]['status'] == 'delivered'){
+                        $total_delivered_coord++;
+                    }elseif($order[$i]['status'] == 'pending'){
+                        $total_pending_coord++;
+                    }else{
+                        $total_other_coord++;
+                    }
+                    $order[$i]['has_coord'] = true;
+                }else{
+                    $total_no_coord++;
+                }
+
 
             }
 
@@ -156,17 +188,23 @@ Route::group(array('prefix'=>'c'),function(){
                 ->with('total_delivered_notes',$total_delivered_notes )
                 ->with('total_pending_notes',$total_pending_notes )
 
+                ->with('total_delivered_coord',$total_delivered_coord )
+                ->with('total_pending_coord',$total_pending_coord )
+
                 ->with('total_other_pics',$total_other_pics )
                 ->with('total_other_sign',$total_other_sign )
                 ->with('total_other_notes',$total_other_notes )
+                ->with('total_other_coord',$total_other_coord )
 
                 ->with('total_pics',$total_pics )
                 ->with('total_sign',$total_sign )
                 ->with('total_notes',$total_notes )
+                ->with('total_coord',$total_coord )
 
                 ->with('total_no_pics',$total_no_pics )
                 ->with('total_no_sign',$total_no_sign )
                 ->with('total_no_notes',$total_no_notes )
+                ->with('total_no_coord',$total_no_coord )
 
                 ->with('device',$idvar)
                 ->with('more',null);
@@ -183,6 +221,9 @@ Route::group(array('prefix'=>'c'),function(){
         }else{
             $asdate = date('Y-m-d',time());
         }
+
+        //test only
+            $asdate = '2014-03-05';
 
         //print_r($idvar);
         //$sql = "`delivery_order_active`.`phone` LIKE  '%s%' OR  `delivery_order_active`.`mobile1` LIKE  '%s' OR  `delivery_order_active`.`mobile2` LIKE  '%s' OR  `delivery_order_active`.`merchant_trans_id` LIKE  '%s' ";
@@ -211,22 +252,37 @@ Route::group(array('prefix'=>'c'),function(){
         $total_delivered_notes = 0;
         $total_pending_notes = 0;
 
+        $total_delivered_coord = 0;
+        $total_pending_coord = 0;
+
         $total_pics = 0;
         $total_sign = 0;
         $total_notes = 0;
+        $total_coord = 0;
 
         $total_no_pics = 0;
         $total_no_sign = 0;
         $total_no_notes = 0;
+        $total_no_coord = 0;
 
         $total_other_pics = 0;
         $total_other_sign = 0;
         $total_other_notes = 0;
+        $total_other_coord = 0;
 
         for($i = 0;$i < count($order);$i++){
             $total++;
             $order[$i]['sign'] = '';
             $order[$i]['pics'] = '';
+            $order[$i]['has_sign'] = false;
+            $order[$i]['has_pic'] = false;
+            $order[$i]['has_coord'] = false;
+            $order[$i]['has_note'] = false;
+            $order[$i]['near_origin'] = false;
+
+            if( Helpers::nearOrigin( $order[$i]['latitude'], $order[$i]['longitude'])){
+                $order[$i]['near_origin'] = true;
+            }
 
             if($order[$i]['status'] == 'delivered'){
                 $total_delivered++;
@@ -246,7 +302,7 @@ Route::group(array('prefix'=>'c'),function(){
                 }else{
                     $total_other_pics++;
                 }
-
+                $order[$i]['has_pic'] = true;
             }else{
                 $order[$i]['pics'] = 'Tidak ada';
                 $total_no_pics++;
@@ -262,6 +318,7 @@ Route::group(array('prefix'=>'c'),function(){
                 }else{
                     $total_other_sign++;
                 }
+                $order[$i]['has_sign'] = true;
             }else{
                 $order[$i]['sign'] = 'Tidak Ada';
                 $total_no_sign++;
@@ -276,9 +333,25 @@ Route::group(array('prefix'=>'c'),function(){
                 }else{
                     $total_other_notes++;
                 }
+                $order[$i]['has_note'] = true;
             }else{
                 $total_no_notes++;
             }
+
+            if( ($order[$i]['latitude'] != '' && $order[$i]['longitude'] != '') || ($order[$i]['latitude'] != 0 && $order[$i]['longitude'] != 0)  ){
+                $total_coord++;
+                if($order[$i]['status'] == 'delivered'){
+                    $total_delivered_coord++;
+                }elseif($order[$i]['status'] == 'pending'){
+                    $total_pending_coord++;
+                }else{
+                    $total_other_coord++;
+                }
+                $order[$i]['has_coord'] = true;
+            }else{
+                $total_no_coord++;
+            }
+
 
         }
 
@@ -304,17 +377,23 @@ Route::group(array('prefix'=>'c'),function(){
             ->with('total_delivered_notes',$total_delivered_notes )
             ->with('total_pending_notes',$total_pending_notes )
 
+            ->with('total_delivered_coord',$total_delivered_coord )
+            ->with('total_pending_coord',$total_pending_coord )
+
             ->with('total_other_pics',$total_other_pics )
             ->with('total_other_sign',$total_other_sign )
             ->with('total_other_notes',$total_other_notes )
+            ->with('total_other_coord',$total_other_coord )
 
             ->with('total_pics',$total_pics )
             ->with('total_sign',$total_sign )
             ->with('total_notes',$total_notes )
+            ->with('total_coord',$total_coord )
 
             ->with('total_no_pics',$total_no_pics )
             ->with('total_no_sign',$total_no_sign )
             ->with('total_no_notes',$total_no_notes )
+            ->with('total_no_coord',$total_no_coord )
 
             ->with('device',$idvar)
             ->with('more',null);

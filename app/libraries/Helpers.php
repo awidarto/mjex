@@ -122,4 +122,70 @@ class Helpers {
         Logger::insert($input);
     }
 
+    public static function colorizelatlon($lat, $lon, $field = 'lat'){
+
+        $d = 0;
+        $loc_set = true;
+
+        if($lat == 'Set Loc'){
+            $loc_set = false;
+        }else{
+            $d = self::vincentyGreatCircleDistance( Config::get('ks.origin_lat'), Config::get('ks.origin_lon'), $lat, $lon );
+        }
+
+        if($d < 3000 && $loc_set == true){
+
+            if($field == 'lat'){
+                return sprintf('<span class="%s">%s</span>','redblock',$lat);
+            }elseif ($field == 'lon') {
+                return sprintf('<span class="%s">%s</span>','redblock',$lon);
+            }else{
+                return sprintf('<span class="%s">%s</span>','redblock',$lat.','.$lon);
+            }
+        }else{
+            if($field == 'lat'){
+                return $lat;
+            }elseif ($field == 'lon') {
+                return $lon;
+            }else{
+                return $lat.','.$lon;
+            }
+
+        }
+
+    }
+
+    public static function nearOrigin($lat, $lon)
+    {
+        if(($lat != 0 && $lat != 0) || ($lat != ''  && $lat != '' ) ){
+            $d = self::vincentyGreatCircleDistance( Config::get('ks.origin_lat'), Config::get('ks.origin_lon'), $lat, $lon );
+            if($d < 3000){
+                return true;
+            }else{
+               return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
+
+    public static function vincentyGreatCircleDistance( $latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $earthRadius = 6371000)
+    {
+      // convert from degrees to radians
+      $latFrom = deg2rad($latitudeFrom);
+      $lonFrom = deg2rad($longitudeFrom);
+      $latTo = deg2rad($latitudeTo);
+      $lonTo = deg2rad($longitudeTo);
+
+      $lonDelta = $lonTo - $lonFrom;
+      $a = pow(cos($latTo) * sin($lonDelta), 2) +
+        pow(cos($latFrom) * sin($latTo) - sin($latFrom) * cos($latTo) * cos($lonDelta), 2);
+      $b = sin($latFrom) * sin($latTo) + cos($latFrom) * cos($latTo) * cos($lonDelta);
+
+      $angle = atan2(sqrt($a), $b);
+      return $angle * $earthRadius;
+    }
+
+
 }

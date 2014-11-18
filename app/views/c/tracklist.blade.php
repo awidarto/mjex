@@ -3,8 +3,39 @@
 @section('content')
     <style type="text/css">
         table{
-            font-size: 12px;
+            color: #000;
+            font-size: 14px;
+            font-weight: bold;
         }
+
+        table thead tr th{
+            font-weight: bold;
+        }
+
+        .orange{
+            background-color: orange;
+            color: black;
+        }
+
+        .dark_green{
+            background-color: #006400;
+            color: white;
+        }
+
+        .green{
+            background-color: #008000;
+            color: white;
+        }
+
+        .red, .redblock{
+            background-color: red;
+            color: white;
+        }
+
+        .block{
+            padding: 2px 4px;
+        }
+
     </style>
     <div class="track-list-item">
         <p>Klik untuk melihat rincian
@@ -68,6 +99,14 @@
                         <td>{{ $total_pending_notes }}</td>
                         <td>{{ $total_other_notes }}</td>
                     </tr>
+                    <tr>
+                        <td>Kordinat Lokasi</td>
+                        <td>{{ $total_coord }}</td>
+                        <td>{{ $total_no_coord }}</td>
+                        <td>{{ $total_delivered_coord }}</td>
+                        <td>{{ $total_pending_coord }}</td>
+                        <td>{{ $total_other_coord }}</td>
+                    </tr>
                 </tbody>
                 <tfoot>
                     <tr>
@@ -100,10 +139,11 @@
             <span class="tmerchant">Pembeli: {{ $r['buyer_name']}}</span>
             <span class="tmerchant">Ditujukan : {{ $r['recipient_name']}}</span>
             <span class="tid"> Kode Toko (akhiran) : {{ short_id($r['merchant_trans_id']) }}</span>
-            <span class="tdate">{{ $r['status']}}</span>
-            <span class="tdate">Photo: {{ $r['pics'] }}</span>
-            <span class="tdate">Sign: {{ $r['sign'] }}</span>
+            <span class="tdate">Status: <span class=" {{ ($r['status'] == 'pending')?'orange block':'' }}">{{ $r['status'] }}</span></span>
+            <span class="tdate">Photo: <span class=" {{ ($r['has_pic'])?'':'dark_green block' }}">{{ $r['pics'] }}</span></span>
+            <span class="tdate">Sign: <span class=" {{ ($r['has_pic'])?'':'dark_green block' }}">{{ $r['sign'] }}</span></span>
             <span class="tdate">Note: {{ $r['delivery_note'] }}</span>
+            <span class="tdate {{ ($r['near_origin'])?'red':'' }}">Kordinat Lokasi: <span class=" {{ ($r['near_origin'])?'red block':'' }}">{{ $r['latitude'],$r['longitude'] }}</span></span>
         </a>
     </div>
 @endforeach
