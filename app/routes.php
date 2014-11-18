@@ -163,6 +163,9 @@ Route::group(array('prefix'=>'c'),function(){
                     $total_no_coord++;
                 }
 
+                $thumbs = Helpers::get_multifullpic($order[$i]['delivery_id']);
+
+                $order[$i]['thumb'] = $thumb[0];
 
             }
 
@@ -352,6 +355,9 @@ Route::group(array('prefix'=>'c'),function(){
                 $total_no_coord++;
             }
 
+            $thumbs = Helpers::get_multifullpic($order[$i]['delivery_id']);
+
+            $order[$i]['thumb'] = $thumb[0];
 
         }
 

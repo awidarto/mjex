@@ -149,6 +149,7 @@
             <span class="tdate">Sign: <span class=" {{ ($r['has_pic'])?'':'dark_green block' }}">{{ $r['sign'] }}</span></span>
             <span class="tdate">Note: {{ $r['delivery_note'] }}</span>
             <span class="tdate">Kordinat Lokasi: <span class=" {{ ($r['near_origin'])?'red block':'' }}">{{ $r['latitude'],$r['longitude'] }}</span></span>
+            <img src="{{ $r['thumb'] }}" style="width:50%;height:auto;" alt="{{ $r['thumb'] }}" />
         </a>
     </div>
 @endforeach
