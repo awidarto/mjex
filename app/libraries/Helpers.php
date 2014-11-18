@@ -47,8 +47,11 @@ class Helpers {
                     $thumbnail[] = URL::to('/').$file;
                 }
             }
-        }elseif (is_array($files) && count($files) == 0) {
-            $thumbnail[] = URL::to('img/th_nopic.jpg');
+
+            if(count($thumbnail) == 0){
+                $thumbnail[] = URL::to('img/th_nopic.jpg');
+            }
+
         }else{
 
             $fullpath = public_path().Config::get('ks.picture_path').$delivery_id.'.jpg';
