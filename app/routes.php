@@ -99,7 +99,7 @@ Route::group(array('prefix'=>'c'),function(){
                 $order[$i]['thumb'] = $thumbs[0];
 
                 $signs = Helpers::get_multisign($order[$i]['delivery_id']);
-                $order[$i]['sign'] = $signs[0];
+                $order[$i]['signpic'] = $signs[0];
 
                 if($order[$i]['status'] == 'delivered'){
                     $total_delivered++;
@@ -293,7 +293,7 @@ Route::group(array('prefix'=>'c'),function(){
             $order[$i]['thumb'] = $thumbs[0];
 
             $signs = Helpers::get_multisign($order[$i]['delivery_id']);
-            $order[$i]['sign'] = $signs[0];
+            $order[$i]['signpic'] = $signs[0];
 
             if($order[$i]['status'] == 'delivered'){
                 $total_delivered++;
