@@ -118,6 +118,36 @@ class Helpers {
 
     }
 
+    public static function multisign($delivery_id)
+    {
+            $fullpath = public_path().Config::get('ks.picture_path').$delivery_id.'_sign*.jpg';
+            $files = glob($fullpath);
+
+            $thumbnail = array();
+
+            if(is_array($files) && count($files) > 0){
+                foreach($files as $file){
+                    $file = str_replace(public_path(), '', $file);
+                    $thumbnail[] = URL::to('/').$file;
+                }
+            }else{
+
+                $fullpath = public_path().Config::get('ks.picture_path').$delivery_id.'_sign.jpg';
+
+                if(file_exists($fullpath)){
+                    $thumbnail[] = URL::to('/').Config::get('ks.picture_path').$delivery_id.'_sign.jpg';
+                    //$thumbnail = sprintf('<img style="cursor:pointer;" class="thumb" alt="'.$delivery_id.'" src="%s?'.time().'" />',$thumbnail);
+                }else{
+                    //$thumbnail = 'nopic';
+                    $thumbnail[] = false;
+                }
+
+            }
+
+            return $thumbnail;
+
+    }
+
     public static function log($input){
         Logger::insert($input);
     }

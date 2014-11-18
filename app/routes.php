@@ -98,6 +98,9 @@ Route::group(array('prefix'=>'c'),function(){
                 $thumbs = Helpers::get_multifullpic($order[$i]['delivery_id']);
                 $order[$i]['thumb'] = $thumbs[0];
 
+                $signs = Helpers::get_multisign($order[$i]['delivery_id']);
+                $order[$i]['sign'] = $signs[0];
+
                 if($order[$i]['status'] == 'delivered'){
                     $total_delivered++;
                 }elseif($order[$i]['status'] == 'pending'){
@@ -288,6 +291,9 @@ Route::group(array('prefix'=>'c'),function(){
 
             $thumbs = Helpers::get_multifullpic($order[$i]['delivery_id']);
             $order[$i]['thumb'] = $thumbs[0];
+
+            $signs = Helpers::get_multisign($order[$i]['delivery_id']);
+            $order[$i]['sign'] = $signs[0];
 
             if($order[$i]['status'] == 'delivered'){
                 $total_delivered++;
