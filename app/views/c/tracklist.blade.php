@@ -148,7 +148,7 @@
             <span class="tdate">Photo: <span class=" {{ ($r['has_pic'])?'':'dark_green block' }}">{{ $r['pics'] }}</span></span>
             <span class="tdate">Sign: <span class=" {{ ($r['has_pic'])?'':'dark_green block' }}">{{ $r['sign'] }}</span></span>
             <span class="tdate">Note: {{ $r['delivery_note'] }}</span>
-            <span class="tdate {{ ($r['near_origin'])?'red':'' }}">Kordinat Lokasi: <span class=" {{ ($r['near_origin'])?'red block':'' }}">{{ $r['latitude'],$r['longitude'] }}</span></span>
+            <span class="tdate">Kordinat Lokasi: <span class=" {{ ($r['near_origin'])?'red block':'' }}">{{ $r['latitude'],$r['longitude'] }}</span></span>
         </a>
     </div>
 @endforeach
