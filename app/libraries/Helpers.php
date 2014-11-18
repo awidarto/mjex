@@ -118,7 +118,7 @@ class Helpers {
 
     }
 
-    public static function multisign($delivery_id)
+    public static function get_multisign($delivery_id)
     {
             $fullpath = public_path().Config::get('ks.picture_path').$delivery_id.'_sign*.jpg';
             $files = glob($fullpath);
