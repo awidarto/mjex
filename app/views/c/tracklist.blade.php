@@ -36,6 +36,11 @@
             padding: 2px 4px;
         }
 
+        .tdate{
+            margin-top: 5px;
+            padding: 2px;
+        }
+
     </style>
     <div class="track-list-item">
         <p>Klik untuk melihat rincian

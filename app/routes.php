@@ -223,7 +223,7 @@ Route::group(array('prefix'=>'c'),function(){
         }
 
         //test only
-            //$asdate = '2014-03-05';
+            $asdate = '2014-03-05';
 
         //print_r($idvar);
         //$sql = "`delivery_order_active`.`phone` LIKE  '%s%' OR  `delivery_order_active`.`mobile1` LIKE  '%s' OR  `delivery_order_active`.`mobile2` LIKE  '%s' OR  `delivery_order_active`.`merchant_trans_id` LIKE  '%s' ";
