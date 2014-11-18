@@ -47,6 +47,8 @@ class Helpers {
                     $thumbnail[] = URL::to('/').$file;
                 }
             }
+        }elseif (is_array($files) && count($files) == 0) {
+            $thumbnail[] = URL::to('img/th_nopic.jpg');
         }else{
 
             $fullpath = public_path().Config::get('ks.picture_path').$delivery_id.'.jpg';
@@ -130,6 +132,8 @@ class Helpers {
                     $file = str_replace(public_path(), '', $file);
                     $thumbnail[] = URL::to('/').$file;
                 }
+            }elseif (is_array($files) && count($files) == 0) {
+                $thumbnail[] = false;
             }else{
 
                 $fullpath = public_path().Config::get('ks.picture_path').$delivery_id.'_sign.jpg';
