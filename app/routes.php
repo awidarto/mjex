@@ -95,6 +95,9 @@ Route::group(array('prefix'=>'c'),function(){
                     $order[$i]['near_origin'] = true;
                 }
 
+                $thumbs = Helpers::get_multifullpic($order[$i]['delivery_id']);
+                $order[$i]['thumb'] = $thumbs[0];
+
                 if($order[$i]['status'] == 'delivered'){
                     $total_delivered++;
                 }elseif($order[$i]['status'] == 'pending'){
@@ -162,10 +165,6 @@ Route::group(array('prefix'=>'c'),function(){
                 }else{
                     $total_no_coord++;
                 }
-
-                $thumbs = Helpers::get_multifullpic($order[$i]['delivery_id']);
-
-                $order[$i]['thumb'] = $thumb[0];
 
             }
 
@@ -287,6 +286,9 @@ Route::group(array('prefix'=>'c'),function(){
                 $order[$i]['near_origin'] = true;
             }
 
+            $thumbs = Helpers::get_multifullpic($order[$i]['delivery_id']);
+            $order[$i]['thumb'] = $thumbs[0];
+
             if($order[$i]['status'] == 'delivered'){
                 $total_delivered++;
             }elseif($order[$i]['status'] == 'pending'){
@@ -354,10 +356,6 @@ Route::group(array('prefix'=>'c'),function(){
             }else{
                 $total_no_coord++;
             }
-
-            $thumbs = Helpers::get_multifullpic($order[$i]['delivery_id']);
-
-            $order[$i]['thumb'] = $thumb[0];
 
         }
 
