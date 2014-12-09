@@ -11,7 +11,6 @@
     <a href="{{ URL::to('track/'.$phone.'/'.$more) }}">&laquo; Back to Track List</a>
     <h3>Order Status</h3>
     <hr />
-    {{ print_r($order)}}
     <p>
       No Kode Toko :<br />
       {{ short_id($order['merchant_trans_id']) }}
