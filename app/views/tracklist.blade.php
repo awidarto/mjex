@@ -12,6 +12,7 @@
             <span class="tdate">{{ $r['assignment_date']}}</span>
             <span class="tmerchant">{{ $r['merchantname']}}</span>
             <span class="tid"> Kode Toko (akhiran) : {{ short_id($r['merchant_trans_id']) }}</span>
+            <span class="tid">{{ $r['delivery_type']}}</span>
         </a>
     </div>
 @endforeach

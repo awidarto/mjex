@@ -1,5 +1,10 @@
 <?php
 class Helpers {
+
+    public static function idr($in){
+        return number_format((double) $in,2,',','.');
+    }
+
     public static function get_thumbnail($delivery_id){
         $fullpath = public_path().Config::get('ks.thumb_path').'th_'.$delivery_id.'.jpg';
 
@@ -223,6 +228,7 @@ class Helpers {
       $angle = atan2(sqrt($a), $b);
       return $angle * $earthRadius;
     }
+
 
 
 }
