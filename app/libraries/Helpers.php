@@ -161,6 +161,7 @@ class Helpers {
     }
 
     public static function log($input){
+        $input['timestamp'] = new MongoDate();
         Logger::insert($input);
     }
 
@@ -201,7 +202,7 @@ class Helpers {
     {
         if(($lat != 0 && $lat != 0) || ($lat != ''  && $lat != '' ) ){
             $d = self::vincentyGreatCircleDistance( Config::get('ks.origin_lat'), Config::get('ks.origin_lon'), $lat, $lon );
-            if($d < 3000){
+            if($d < 1000){
                 return true;
             }else{
                return false;
