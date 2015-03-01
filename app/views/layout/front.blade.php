@@ -45,6 +45,7 @@
 
     @yield('content')
 
+
 <!--includes javascript at the bottom so the page loads faster-->
 {{ HTML::script('js/jquery-1.11.0.min.js')}}
 {{ HTML::script('js/furatto.min.js')}}

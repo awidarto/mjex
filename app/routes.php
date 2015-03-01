@@ -16,6 +16,23 @@ Route::get('/', function()
 	return View::make('track');
 });
 
+Route::get('testad/{mid}',function($mid){
+    print(Jayonad::ad($mid));
+});
+
+Route::get('ad/redir/{id}',function($id){
+    $ad = Ad::find($id);
+    //print($ad->extURL);
+
+    Jayonad::logclick($ad);
+
+    if(preg_match('/^http:\/\//', $ad->extURL) == false){
+        $ad->extURL = 'http://'.$ad->extURL;
+    }
+
+    return Redirect::to($ad->extURL);
+});
+
 Route::group(array('prefix'=>'c'),function(){
 
     Route::get('/', function()
@@ -464,6 +481,9 @@ Route::get('track/{id?}/{more?}',function($id = null,$more = null){
             $more = null;
 
         }
+
+        $log = array_merge(array( 'c'=>'tracklist','buyer'=>$idvar ));
+        Helpers::log($log);
 
         return View::make('tracklist')->with('order',$order)->with('phone',$id)->with('more',$more);
     }

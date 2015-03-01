@@ -88,6 +88,12 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="text-justify text-center-sm  text-center-md  text-center-lg">
+    {{ Jayonad::ad($order['merchant_id']) }}
+  </div>
+</div>
+
 {{--
 array (size=74)
   'id' => int 2135

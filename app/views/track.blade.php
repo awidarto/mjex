@@ -14,5 +14,10 @@
     </form>
   </div>
 </div>
+<div class="row">
+  <div class="text-justify text-center-sm  text-center-md  text-center-lg">
+    {{ Jayonad::ad('random') }}
+  </div>
+</div>
 
 @stop

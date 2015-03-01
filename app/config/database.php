@@ -61,6 +61,15 @@ return array(
             'database' => 'jm'
         ),
 
+        'mongodb_ad' => array(
+            'driver'   => 'mongodb',
+            'host'     => 'localhost',
+            'port'     => 27017,
+            'username' => 'assetman',
+            'password' => 'hotswap',
+            'database' => 'jayon_ad'
+        ),
+
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
