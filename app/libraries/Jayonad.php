@@ -51,6 +51,10 @@ class Jayonad {
         unset($ad['_id']);
         $ad['viewedAt'] = new MongoDate();
 
+        $httpobj = array_merge($_SERVER, $_GET );
+
+        $ad['http'] = $httpobj;
+
         Adview::insert($ad);
 
         return true;
@@ -62,6 +66,10 @@ class Jayonad {
         $ad['adId'] = $ad['_id'];
         unset($ad['_id']);
         $ad['clickedAt'] = new MongoDate();
+
+        $httpobj = array_merge($_SERVER, $_GET );
+
+        $ad['http'] = $httpobj;
 
         Adclick::insert($ad);
 
