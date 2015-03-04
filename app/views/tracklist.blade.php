@@ -27,5 +27,8 @@
           {{ Jayonad::ad('random') }}
         </div>
     </div>
+    <div class="track-list-item" style="display:block;height:25px;">
+
+    </div>
 
 @stop
