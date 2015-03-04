@@ -37,8 +37,17 @@ class Jayonad {
 
         self::logview($advert);
 
+        if(isset($advert->defaultpictures['thumbnail_url']) && $advert->defaultpictures['thumbnail_url'] != ''){
+            $banner = $advert->defaultpictures['thumbnail_url'];
+        }else{
+            $def = Ad::where('isDefault','yes')
+                    ->orderBy('createdDate','desc')
+                    ->first();
+            $banner = $def->defaultpictures['thumbnail_url'];
+        }
+
         if($format == 'html'){
-            $html = sprintf('<a style="border:none;display:inline-block;margin:auto;padding:4px;" class="text-center-sm  text-center-md  text-center-lg" href="%s"  ><img src="%s" alt="%s" /></a>', $baseurl, $advert->defaultpictures['thumbnail_url'], $advert->merchantName );
+            $html = sprintf('<a style="border:none;display:inline-block;margin:auto;padding:4px;" class="jayon-ad" href="%s"  ><img src="%s" alt="%s" /></a>', $baseurl, $advert->defaultpictures['thumbnail_url'], $advert->merchantName );
             return $html;
         }
 
