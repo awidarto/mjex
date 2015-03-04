@@ -74,7 +74,6 @@ return array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
 			'database'  => 'jayonexpress_main',
-
 			'username'  => 'jayon',
 			'password'  => 'bosseddy123',
 			'charset'   => 'utf8',
