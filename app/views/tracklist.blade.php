@@ -23,7 +23,7 @@
 @endif
 
     <div class="track-list-item">
-        <div class="text-justify text-center-sm  text-center-md  text-center-lg">
+        <div class="text-center">
           {{ Jayonad::ad('random') }}
         </div>
     </div>
