@@ -1,6 +1,16 @@
 @extends('layout.front')
 
 @section('content')
+      <?php
+        $ad_1 = Jayonad::ad('random',null,'redir','array');
+        $ad_2 = Jayonad::ad('random',$ad_1['id'],'redir','array');
+        $ad_3 = Jayonad::ad('random',$ad_2['id'],'redir','array');
+      ?>
+    <div class="track-list-item">
+        <div class="text-center">
+          {{ $ad_1['html'] }}
+        </div>
+    </div>
     <div class="track-list-item">
         <p>Klik untuk melihat rincian
         </p>
@@ -24,7 +34,7 @@
 
     <div class="track-list-item">
         <div class="text-center">
-          {{ Jayonad::ad('random') }}
+          {{ $ad_2['html'].'<br />'.$ad_3['html'] }}
         </div>
     </div>
     <div class="track-list-item" style="display:block;height:25px;">

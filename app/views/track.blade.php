@@ -3,7 +3,15 @@
 @section('content')
 
 <div class="row">
+      <?php
+        $ad_1 = Jayonad::ad('random',null,'redir','array');
+        $ad_2 = Jayonad::ad('random',$ad_1['id'],'redir','array');
+        $ad_3 = Jayonad::ad('random',$ad_2['id'],'redir','array');
+      ?>
   <div class="login-form">
+    <div class="text-center">
+      {{ $ad_1['html'] }}
+    </div>
     <h3>Order Status</h3>
     <hr />
     <form action="{{ URL::to('track')}}" method="post" accept-charset="utf-8">
@@ -16,12 +24,7 @@
 </div>
 <div class="row">
   <div class="text-center">
-      <?php
-        $ad_1 = Jayonad::ad('random',null,'redir','array');
-        $ad_2 = Jayonad::ad('random',$ad_1['id'],'redir','array');
-        $ad_3 = Jayonad::ad('random',$ad_2['id'],'redir','array');
-      ?>
-      {{ $ad_1['html'].'<br />'.$ad_2['html'].'<br />'.$ad_3['html'] }}
+      {{ $ad_2['html'].'<br />'.$ad_3['html'] }}
   </div>
 
 </div>

@@ -7,6 +7,11 @@
   }
 </style>
 <div class="row">
+  <div class="text-center">
+    {{ Jayonad::ad($order['merchant_id']) }}
+  </div>
+</div>
+<div class="row">
   <div class="login-form">
     <a href="{{ URL::to('track/'.$phone.'/'.$more) }}">&laquo; Back to Track List</a>
     <h3>Order Status</h3>

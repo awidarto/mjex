@@ -23,14 +23,24 @@ Route::get('testad/{mid}',function($mid){
 Route::get('ad/redir/{id}',function($id){
     $ad = Ad::find($id);
     //print($ad->extURL);
+    $u = Input::get('u');
+    if(isset($u) && $u != ''){
+        $extURL = base64_decode($u);
+        if(preg_match('/^http:\/\//', $extURL) == false){
+            $extURL = 'http://'.$extURL;
+        }
+    }else{
+
+        if(preg_match('/^http:\/\//', $ad->extURL) == false){
+            $extURL = 'http://'.$ad->extURL;
+        }else{
+            $extURL = $ad->extURL;
+        }
+    }
 
     Jayonad::logclick($ad);
 
-    if(preg_match('/^http:\/\//', $ad->extURL) == false){
-        $ad->extURL = 'http://'.$ad->extURL;
-    }
-
-    return Redirect::to($ad->extURL);
+    return Redirect::to($extURL);
 });
 
 Route::group(array('prefix'=>'c'),function(){

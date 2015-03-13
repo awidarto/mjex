@@ -59,6 +59,7 @@ class Jayonad {
             $banner = $advert->defaultpictures['thumbnail_url'];
         }
 
+        $baseurl = $baseurl.'?u='.base64_encode($advert->extURL);
         $html = sprintf('<a style="border:none;display:inline-block;margin:auto;padding:4px;" class="jayon-ad" href="%s"  ><img src="%s" alt="%s" /></a>', $baseurl, $banner, $advert->merchantName );
 
         if($format == 'html'){
