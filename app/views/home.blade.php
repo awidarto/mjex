@@ -36,9 +36,9 @@
   <div class="row">
     <div class="text-center">
       <?php
-        $ad_1 = Jayonad::ad('random',null,'redir','array');
-        $ad_2 = Jayonad::ad('random',$ad_1['id'],'redir','array');
-        $ad_3 = Jayonad::ad('random',$ad_2['id'],'redir','array');
+        $ad_1 = Jayonad::ad('random',null,'redir','array','top1');
+        $ad_2 = Jayonad::ad('random',$ad_1['id'],'redir','array','bottom1');
+        $ad_3 = Jayonad::ad('random',$ad_2['id'],'redir','array','bottom2');
       ?>
       {{ $ad_1['html'].'<br />'.$ad_2['html'].'<br />'.$ad_3['html'] }}
     </div>

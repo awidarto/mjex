@@ -1,8 +1,11 @@
 <?php
 class Jayonad {
 
-    public static function ad($merchant_id = 'random', $exclude = null ,$baseurl = 'redir' ,$format = 'html')
+    public static function ad($merchant_id = 'random', $exclude = null ,$baseurl = 'redir' ,$format = 'html',$spot = null)
     {
+        if(is_null($spot)){
+            $spot = 'def';
+        }
 
         if($merchant_id == 'random'){
 
@@ -43,7 +46,7 @@ class Jayonad {
             $baseurl = $advert->extURL;
         }
 
-        self::logview($advert);
+        self::logview($advert, $spot);
 
         if(isset($advert->defaultpictures['thumbnail_url']) && $advert->defaultpictures['thumbnail_url'] != ''){
             $banner = $advert->defaultpictures['thumbnail_url'];
@@ -59,7 +62,7 @@ class Jayonad {
             $banner = $advert->defaultpictures['thumbnail_url'];
         }
 
-        $baseurl = $baseurl.'?u='.base64_encode($advert->extURL);
+        $baseurl = $baseurl.'?u='.base64_encode($advert->extURL).'&s='.$spot;
         $html = sprintf('<a style="border:none;display:inline-block;margin:auto;padding:4px;" class="jayon-ad" href="%s"  ><img src="%s" alt="%s" /></a>', $baseurl, $banner, $advert->merchantName );
 
         if($format == 'html'){
@@ -70,10 +73,11 @@ class Jayonad {
 
     }
 
-    public static function logview($ad)
+    public static function logview($ad, $spot)
     {
         $ad = $ad->toArray();
         $ad['adId'] = $ad['_id'];
+        $ad['spot'] = $spot;
         unset($ad['_id']);
         $ad['viewedAt'] = new MongoDate();
 
@@ -81,21 +85,26 @@ class Jayonad {
 
         $ad['http'] = $httpobj;
 
+        $ad['pageUri'] = $httpobj['REDIRECT_URL'];
+
         Adview::insert($ad);
 
         return true;
     }
 
-    public static function logclick($ad)
+    public static function logclick($ad, $spot)
     {
         $ad = $ad->toArray();
         $ad['adId'] = $ad['_id'];
+        $ad['spot'] = $spot;
         unset($ad['_id']);
         $ad['clickedAt'] = new MongoDate();
 
         $httpobj = array_merge($_SERVER, $_GET );
 
         $ad['http'] = $httpobj;
+
+        $ad['pageUri'] = $httpobj['REDIRECT_URL'];
 
         Adclick::insert($ad);
 

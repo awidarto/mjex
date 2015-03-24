@@ -8,7 +8,11 @@
 </style>
 <div class="row">
   <div class="text-center">
-    {{ Jayonad::ad($order['merchant_id']) }}
+    <?php
+      $ad1 = Jayonad::ad($order['merchant_id'], null, 'redir', 'array','top1' );
+      $ad2 = Jayonad::ad($order['merchant_id'], null, 'redir', 'array','top1' );
+    ?>
+    {{ $ad1['html'] }}
   </div>
 </div>
 <div class="row">
@@ -95,7 +99,7 @@
 
 <div class="row">
   <div class="text-center">
-    {{ Jayonad::ad($order['merchant_id']) }}
+    {{ $ad2['html'] }}
   </div>
 </div>
 

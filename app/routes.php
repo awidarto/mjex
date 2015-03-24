@@ -24,6 +24,7 @@ Route::get('ad/redir/{id}',function($id){
     $ad = Ad::find($id);
     //print($ad->extURL);
     $u = Input::get('u');
+    $s = Input::get('s');
     if(isset($u) && $u != ''){
         $extURL = base64_decode($u);
         if(preg_match('/^http:\/\//', $extURL) == false){
@@ -38,7 +39,7 @@ Route::get('ad/redir/{id}',function($id){
         }
     }
 
-    Jayonad::logclick($ad);
+    Jayonad::logclick($ad,$s);
 
     return Redirect::to($extURL);
 });
