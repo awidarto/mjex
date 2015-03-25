@@ -85,7 +85,7 @@ class Jayonad {
 
         $ad['http'] = $httpobj;
 
-        $ad['pageUri'] = $httpobj['REDIRECT_URL'];
+        $ad['pageUri'] = isset($httpobj['REDIRECT_URL'])?$httpobj['REDIRECT_URL']:'';
 
         Adview::insert($ad);
 
@@ -104,7 +104,7 @@ class Jayonad {
 
         $ad['http'] = $httpobj;
 
-        $ad['pageUri'] = $httpobj['REDIRECT_URL'];
+        $ad['pageUri'] = isset($httpobj['REDIRECT_URL'])?$httpobj['REDIRECT_URL']:'';
 
         Adclick::insert($ad);
 
