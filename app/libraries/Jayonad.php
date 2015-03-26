@@ -62,7 +62,12 @@ class Jayonad {
             $banner = $advert->defaultpictures['thumbnail_url'];
         }
 
-        $baseurl = $baseurl.'?u='.base64_encode($advert->extURL).'&s='.$spot;
+        if(isset($advert->externalLink) && $advert->externalLink == 'yes'){
+            $baseurl = $baseurl.'?u='.base64_encode($advert->extURL).'&s='.$spot;
+        }else{
+            $baseurl = $baseurl.'?u='.base64_encode( URL::to( 'advert/'.$advert->_id ) ).'&s='.$spot;
+        }
+
         $html = sprintf('<a style="border:none;display:inline-block;margin:auto;padding:4px;" class="jayon-ad" href="%s"  ><img src="%s" alt="%s" /></a>', $baseurl, $banner, $advert->merchantName );
 
         if($format == 'html'){

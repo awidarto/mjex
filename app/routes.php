@@ -533,6 +533,20 @@ Route::post('track',function(){
         ->with('more',$more);
 });
 
+Route::get('advert/{id}',function($id){
+
+    $ad = Ad::find($id);
+
+    if($ad){
+
+    }else{
+        $ad = false;
+    }
+
+    return View::make('advert')
+        ->with('ad',$ad);
+});
+
 Route::get('item/{did}/{phone}/{more?}',function($did,$phone,$more = null){
     $order = Order::where('delivery_id',$did)->first()->toArray();
 
