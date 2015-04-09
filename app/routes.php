@@ -520,6 +520,12 @@ Route::post('track',function(){
 
         $in = Input::get();
 
+        setcookie(
+            'jextrack',
+            $in['phone'],
+            time() + (10 * 365 * 24 * 60 * 60)
+        );
+
         $idvar = normalphone(trim($in['phone']),'all');
 
         $idvar = phonenumber( trim($in['phone']),'21','62' );
