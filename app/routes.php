@@ -451,6 +451,8 @@ Route::group(array('prefix'=>'c'),function(){
 
 });
 
+
+//tracker
 Route::get('track/{id?}/{more?}',function($id = null,$more = null){
     if(is_null($id)){
         return View::make('track')->with('ordernumber',$id);
@@ -501,36 +503,132 @@ Route::get('track/{id?}/{more?}',function($id = null,$more = null){
 });
 
 Route::post('track',function(){
-    $in = Input::get();
 
-    $idvar = normalphone(trim($in['phone']),'all');
+    $rule = array('phone'=>'required');
 
-    $idvar = phonenumber( trim($in['phone']),'21','62' );
-    //print_r($idvar);
-    $sql = "`delivery_order_active`.`phone` LIKE  '%s' OR  `delivery_order_active`.`mobile1` LIKE  '%s' OR  `delivery_order_active`.`mobile2` LIKE  '%s' OR  `delivery_order_active`.`merchant_trans_id` LIKE  '%s' OR  `delivery_order_active`.`delivery_id` = '%s'   ";
+    $validation = Validator::make(Input::all(), $rule);
 
-    $sql = sprintf($sql, '%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%', trim($in['phone']));
+    if($validation->fails()){
 
-    $order = Order::whereRaw($sql)
-                ->leftJoin('members', 'members.id', '=', 'merchant_id')
-                ->orderBy('assignment_date','desc')
-                ->take(3)
-                ->skip(0)
-                ->get()->toArray();
+        $log = array_merge(array( 'c'=>'track','s'=>'validation failed' ));
 
-    $queries = DB::getQueryLog();
+        Helpers::log($log);
 
-    $ordercount = Order::whereRaw($sql)->count();
-    $more = ($ordercount <= 3)?null:'more';
+        return Redirect::to('track')->withInput(Input::all())->withErrors($validation);
 
-    $log = array_merge($in, array( 'c'=>'trackdetail' ));
+    }else{
+
+        $in = Input::get();
+
+        $idvar = normalphone(trim($in['phone']),'all');
+
+        $idvar = phonenumber( trim($in['phone']),'21','62' );
+        //print_r($idvar);
+        $sql = "`delivery_order_active`.`phone` LIKE  '%s' OR  `delivery_order_active`.`mobile1` LIKE  '%s' OR  `delivery_order_active`.`mobile2` LIKE  '%s' OR  `delivery_order_active`.`merchant_trans_id` LIKE  '%s' OR  `delivery_order_active`.`delivery_id` = '%s'   ";
+
+        $sql = sprintf($sql, '%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%', trim($in['phone']));
+
+        $order = Order::whereRaw($sql)
+                    ->leftJoin('members', 'members.id', '=', 'merchant_id')
+                    ->orderBy('assignment_date','desc')
+                    ->take(3)
+                    ->skip(0)
+                    ->get()->toArray();
+
+        $queries = DB::getQueryLog();
+
+        $ordercount = Order::whereRaw($sql)->count();
+        $more = ($ordercount <= 3)?null:'more';
+
+        $log = array_merge($in, array( 'c'=>'trackdetail', 'p'=>$in['phone'] ));
+        Helpers::log($log);
+
+
+        return View::make('tracklist')
+            ->with('order',$order)
+            ->with('phone',$idvar)
+            ->with('more',$more);
+
+    }
+
+
+
+});
+
+
+//offer
+Route::get('offers/{keyword?}/{more?}',function($keyword = null,$more = null){
+
+    if(is_null($keyword)){
+        $offers = Offer::orderBy('shopcategory','asc')->orderBy('merchantId','asc')->get();
+    }else{
+        $offers = Offer::orderBy('shopcategory','asc')->orderBy('merchantId','asc')->get();
+    }
+
+    $offers2 = array();
+
+    foreach($offers as $of){
+
+        $baseurl = URL::to('ad/redir').'/'.$of->_id;
+
+        if(isset($of->useImage) && $of->useImage == 'linked'){
+            $of->banner = $of->extImageURL;
+        }else{
+            $of->banner = $of->defaultpictures['thumbnail_url'];
+        }
+
+        if(isset($of->externalLink) && $of->externalLink == 'yes'){
+            $of->baseurl = $baseurl.'?u='.base64_encode($of->extURL).'&s='.$spot;
+        }else{
+            $of->baseurl = $baseurl.'?u='.base64_encode( URL::to( 'advert/'.$of->_id ) ).'&s=list';
+        }
+
+        $of->html = sprintf('<a style="border:none;display:inline-block;margin:auto;padding:4px;" class="jayon-ad" href="%s"  ><img src="%s" alt="%s" /></a>', $of->baseurl, $of->banner, $of->merchantName );
+
+        $offers2[] = $of;
+    }
+
+    //print_r($offers2);
+
+    $log = array_merge(array( 'c'=>'offerlist' ));
     Helpers::log($log);
 
-
-    return View::make('tracklist')
-        ->with('order',$order)
-        ->with('phone',$idvar)
+    return View::make('offerlist')
+        ->with('offers',$offers2)
+        ->with('keyword',$keyword)
         ->with('more',$more);
+});
+
+//shops
+Route::get('shops/{keyword?}/{more?}',function($keyword = null,$more = null){
+
+    if(is_null($keyword)){
+        $shops = Shop::where('group_id',4)->get();
+    }else{
+        $shops = Shop::where('group_id',4)->get();
+    }
+
+    $log = array_merge(array( 'c'=>'shoplist' ));
+    Helpers::log($log);
+
+    return View::make('shoplist')
+        ->with('shops',$shops)
+        ->with('keyword',$keyword)
+        ->with('more',$more);
+});
+
+Route::get('shop/{id?}',function($id = null){
+    if(is_null($id)){
+        $shop = false;
+    }else{
+        $shop = Shop::where('id', intval($id) )->first();
+    }
+
+    $log = array_merge(array( 'c'=>'shopdetail', 'sid'=>$id, 'msid'=>$shop->_id ));
+    Helpers::log($log);
+
+    return View::make('shopdetail')
+        ->with('shop',$shop);
 });
 
 Route::get('advert/{id}',function($id){

@@ -2,7 +2,7 @@ div.track-list-item, div.track-list-item a {
     display: block;
 }
 
-div.track-list-item a, div.track-list-item p {
+div.track-list-item a, div.track-list-item p , div.track-list-item .offer{
     display: block;
     padding: 10px 14px;
     border-bottom: thin solid #CCC;
