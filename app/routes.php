@@ -11,40 +11,7 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('track');
-});
-
-Route::get('testad/{mid}',function($mid){
-    print(Jayonad::ad($mid));
-});
-
-Route::get('ad/redir/{id}',function($id){
-    $ad = Ad::find($id);
-    //print($ad->extURL);
-    $u = Input::get('u');
-    $s = Input::get('s');
-    if(isset($u) && $u != ''){
-        $extURL = base64_decode($u);
-        if(preg_match('/^http:\/\//', $extURL) == false){
-            $extURL = 'http://'.$extURL;
-        }
-    }else{
-
-        if(preg_match('/^http:\/\//', $ad->extURL) == false){
-            $extURL = 'http://'.$ad->extURL;
-        }else{
-            $extURL = $ad->extURL;
-        }
-    }
-
-    Jayonad::logclick($ad,$s);
-
-    return Redirect::to($extURL);
-});
-
-Route::group(array('domain'=>'c.jayonexpress.com','prefix'=>'c'),function(){
+Route::group(array('prefix'=>'c'),function(){
 
     Route::get('/', function()
     {
@@ -450,6 +417,41 @@ Route::group(array('domain'=>'c.jayonexpress.com','prefix'=>'c'),function(){
     });
 
 });
+
+
+Route::get('/', function()
+{
+	return View::make('track');
+});
+
+Route::get('testad/{mid}',function($mid){
+    print(Jayonad::ad($mid));
+});
+
+Route::get('ad/redir/{id}',function($id){
+    $ad = Ad::find($id);
+    //print($ad->extURL);
+    $u = Input::get('u');
+    $s = Input::get('s');
+    if(isset($u) && $u != ''){
+        $extURL = base64_decode($u);
+        if(preg_match('/^http:\/\//', $extURL) == false){
+            $extURL = 'http://'.$extURL;
+        }
+    }else{
+
+        if(preg_match('/^http:\/\//', $ad->extURL) == false){
+            $extURL = 'http://'.$ad->extURL;
+        }else{
+            $extURL = $ad->extURL;
+        }
+    }
+
+    Jayonad::logclick($ad,$s);
+
+    return Redirect::to($extURL);
+});
+
 
 
 //tracker
