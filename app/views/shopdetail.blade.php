@@ -7,6 +7,9 @@
     <div class="text-center">
       {{-- print_r($shop) --}}
     </div>
+
+    @if($shop)
+
     <h3>{{ $shop->merchantname }}</h3>
       <table>
          <tbody>
@@ -40,6 +43,10 @@
           </p>
         @endif
     </div>
+
+    @else
+      <p>No detail found for this shop</p>>
+    @endif
   </div>
 </div>
 <div class="row">
