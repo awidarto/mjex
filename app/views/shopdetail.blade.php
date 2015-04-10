@@ -46,6 +46,9 @@
 
     @else
       <p>No detail found for this shop</p>
+      <p>
+        <a href="{{ URL::to('shops')}}">&raquo; Back to Shops</a>
+      </p>
     @endif
   </div>
 </div>
