@@ -609,7 +609,7 @@ Route::get('offers/{keyword?}/{more?}',function($keyword = null,$more = null){
 Route::get('shops/{keyword?}/{more?}',function($keyword = null,$more = null){
 
     if(is_null($keyword)){
-        $shops = Shop::get();
+        $shops = Shop::orderBy('shopcategory','asc')->orderBy('merchantname','asc')->get();
     }else{
         $shops = Shop::get();
     }

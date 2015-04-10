@@ -21,6 +21,13 @@ div.track-list-item p {
     margin-bottom: 0px;
 }
 
+div.merchant-cat{
+    height:35px;
+    padding: 10px;
+    font-weight: bold;
+    background-color: #ccc;
+}
+
 span.tdate, span.tid, span.tmerchant{
     display: block;
 }
