@@ -47,7 +47,7 @@
     @else
       <p>No detail found for this shop</p>
       <p>
-        <a href="{{ URL::to('shops')}}">&raquo; Back to Shops</a>
+        <a href="{{ URL::to('shops')}}">&laquo; Back to Shops</a>
       </p>
     @endif
   </div>
