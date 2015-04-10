@@ -44,7 +44,7 @@ Route::get('ad/redir/{id}',function($id){
     return Redirect::to($extURL);
 });
 
-Route::group(array('prefix'=>'c'),function(){
+Route::group(array('domain'=>'c.jayonexpress.com','prefix'=>'c'),function(){
 
     Route::get('/', function()
     {
