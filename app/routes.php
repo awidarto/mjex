@@ -630,7 +630,9 @@ Route::get('shop/{id?}',function($id = null){
         $shop = Shop::where('id', intval($id) )->first();
     }
 
-    $log = array_merge(array( 'c'=>'shopdetail', 'sid'=>$id, 'msid'=>$shop->_id ));
+    $logshop = ($shop && isset($shop->_id))?$shop->_id:$shop;
+
+    $log = array_merge(array( 'c'=>'shopdetail', 'sid'=>$id, 'msid'=>$logshop ));
     Helpers::log($log);
 
     return View::make('shopdetail')
