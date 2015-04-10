@@ -609,9 +609,9 @@ Route::get('offers/{keyword?}/{more?}',function($keyword = null,$more = null){
 Route::get('shops/{keyword?}/{more?}',function($keyword = null,$more = null){
 
     if(is_null($keyword)){
-        $shops = Shop::where('group_id',4)->get();
+        $shops = Shop::get();
     }else{
-        $shops = Shop::where('group_id',4)->get();
+        $shops = Shop::get();
     }
 
     $log = array_merge(array( 'c'=>'shoplist' ));
