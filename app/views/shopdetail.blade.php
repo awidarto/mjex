@@ -45,7 +45,7 @@
     </div>
 
     @else
-      <p>No detail found for this shop</p>>
+      <p>No detail found for this shop</p>
     @endif
   </div>
 </div>
