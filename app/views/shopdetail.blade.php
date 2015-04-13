@@ -45,6 +45,23 @@
     </div>
 
     @else
+        <h3> No Name Shop </h3>
+        <table>
+           <tbody>
+             <tr>
+               <td> - </td>
+             </tr>
+             <tr>
+               <td> - </td>
+             </tr>
+             <tr>
+               <td> - </td>
+             </tr>
+             <tr>
+               <td>{{-- $shop->url --}}</td>
+             </tr>
+           </tbody>
+        </table>
         <p>
           Halvah candy cupcake. I love bonbon tiramisu cake oat cake I love cupcake tootsie roll caramels. Caramels caramels tart pudding. Chupa chups candy canes muffin sweet liquorice. I love gummi bears powder toffee sweet danish sweet. Jelly beans macaroon donut oat cake gummies ice cream.
         </p>
