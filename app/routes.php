@@ -629,7 +629,8 @@ Route::get('shop/{id?}',function($id = null){
     if(is_null($id)){
         $shop = false;
     }else{
-        $shop = Shop::where('id', intval($id) )->whereOr('id', strval($id))->first();
+        //$shop = Shop::where('id', intval($id) )->whereOr('id', strval($id))->first();
+        $shop = Shop::where('id', strval($id))->first();
     }
 
     $logshop = ($shop && isset($shop->_id))?$shop->_id:$shop;
