@@ -1,6 +1,34 @@
 <?php
 class Jayonad {
 
+    public static function getShopCategory(){
+        $c = Shopcategory::get();
+        self::$shopcategory = $c;
+        return new self;
+    }
+
+    public function ShopCatToSelection($value, $label, $all = true)
+    {
+        if($all){
+            $ret = array(''=>'All');
+        }else{
+            $ret = array();
+        }
+
+        foreach (self::$shopcategory as $c) {
+            $ret[$c->{$value}] = $c->{$label};
+        }
+
+
+        return $ret;
+    }
+
+    public function shopcatToArray()
+    {
+        return self::$shopcategory;
+    }
+
+
     public static function ad($merchant_id = 'random', $exclude = null ,$baseurl = 'redir' ,$format = 'html',$spot = null)
     {
         if(is_null($spot)){

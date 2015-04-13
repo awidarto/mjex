@@ -13,6 +13,19 @@
     </div>
     */
       ?>
+    <div class="login-form">
+        <div class="text-center">
+            <form action="{{ URL::to('track')}}" method="post" accept-charset="utf-8">
+                <label for="phone">Search</label>
+                <input type="text" name="keyword" id="phone" value="" />
+                @if($errors->has('keyword'))
+                {{ $errors->first('keyword', '<div class="alert"><a href="#" class="close">x</a>:message</div>'); }}
+                @endif
+                <input type="submit" name="search" id="" value="Search" class="button" />
+                <p style="font-size:11px;">Untuk AWB / Nomor Paket, mohon tuliskan persis sesuai yang tertera di invoice / resi</p>
+            </form>
+        </div>
+    </div>
     <div class="track-list-item">
         <p>Klik untuk melihat detail toko
         </p>
