@@ -72,10 +72,10 @@
         <p>
           Caramels soufflé biscuit. Muffin tiramisu I love I love liquorice. Jujubes icing jelly jelly. Topping cake cotton candy cupcake. Sugar plum oat cake macaroon marzipan danish I love liquorice donut I love. Cupcake candy canes biscuit marzipan.
         </p>
+    @endif
       <p>
         <a href="{{ URL::to('shops')}}">&laquo; Back to Shops</a>
       </p>
-    @endif
   </div>
 </div>
 <div class="row">
