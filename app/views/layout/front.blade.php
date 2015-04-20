@@ -15,6 +15,7 @@
     {{ HTML::style('css/examples.css') }}
     {{ HTML::style('css/style.css') }}
 
+    {{ HTML::script('js/jquery-1.11.0.min.js')}}
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -49,7 +50,6 @@
 
 
 <!--includes javascript at the bottom so the page loads faster-->
-{{ HTML::script('js/jquery-1.11.0.min.js')}}
 {{ HTML::script('js/furatto.min.js')}}
 
 </body>

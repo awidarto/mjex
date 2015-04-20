@@ -610,6 +610,47 @@ Route::get('offers/{keyword?}/{more?}',function($keyword = null,$more = null){
 //shops
 Route::get('shops/{keyword?}/{more?}',function($keyword = null,$more = null){
 
+    $keyword = Input::get('keyword');
+    $category = Input::get('cat');
+
+    if(is_null($keyword) || $keyword == ''){
+        if($category != ''){
+            $shops = Shop::where('shopcategoryLink',$category)
+                        ->orderBy('shopcategory','asc')
+                        ->orderBy('merchantname','asc')->get();
+        }else{
+            $shops = Shop::orderBy('shopcategory','asc')
+                        ->orderBy('merchantname','asc')->get();
+        }
+    }else{
+        if($category == ''){
+            $shops = Shop::where('merchantname','like','%'.$keyword.'%')
+                ->orWhere('street','like','%'.$keyword.'%')
+                ->orWhere('mc_street','like','%'.$keyword.'%')
+                ->orderBy('shopcategory','asc')->orderBy('merchantname','asc')->get();
+        }else{
+            $shops = Shop::where('shopcategoryLink',$category)
+                ->where(function($query) use($keyword){
+                    $query->where('merchantname','like','%'.$keyword.'%')
+                        ->orWhere('street','like','%'.$keyword.'%')
+                        ->orWhere('mc_street','like','%'.$keyword.'%');
+                })
+                ->orderBy('shopcategory','asc')->orderBy('merchantname','asc')->get();
+        }
+    }
+
+    $log = array_merge(array( 'c'=>'shoplist' ));
+    Helpers::log($log);
+
+    return View::make('shoplist')
+        ->with('shops',$shops)
+        ->with('keyword',$keyword)
+        ->with('category',$category)
+        ->with('more',$more);
+});
+
+Route::post('shops/{keyword?}/{more?}',function($keyword = null,$more = null){
+
     if(is_null($keyword)){
         $shops = Shop::orderBy('shopcategory','asc')->orderBy('merchantname','asc')->get();
     }else{
@@ -624,6 +665,7 @@ Route::get('shops/{keyword?}/{more?}',function($keyword = null,$more = null){
         ->with('keyword',$keyword)
         ->with('more',$more);
 });
+
 
 Route::get('shop/{id?}',function($id = null){
     if(is_null($id)){

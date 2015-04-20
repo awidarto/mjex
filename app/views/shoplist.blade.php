@@ -1,6 +1,14 @@
 @extends('layout.front')
 
 @section('content')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#category-filter').on('change',function(){
+                $('#search-form').submit();
+            });
+        });
+    </script>
+
       <?php
         $ad_1 = Jayonad::ad('random',null,'redir','array', 'top1');
         $ad_2 = Jayonad::ad('random',$ad_1['id'],'redir','array', 'bottom1');
@@ -14,15 +22,23 @@
     */
       ?>
     <div class="login-form">
-        <div class="text-center">
-            <form action="{{ URL::to('track')}}" method="post" accept-charset="utf-8">
+        <div class="text-left">
+            <form action="{{ URL::to('shops')}}" method="get" id="search-form" accept-charset="utf-8">
                 <label for="phone">Search</label>
-                <input type="text" name="keyword" id="phone" value="" />
+                <input type="text" name="keyword" id="phone" value="{{$keyword}}" />
                 @if($errors->has('keyword'))
                 {{ $errors->first('keyword', '<div class="alert"><a href="#" class="close">x</a>:message</div>'); }}
                 @endif
-                <input type="submit" name="search" id="" value="Search" class="button" />
-                <p style="font-size:11px;">Untuk AWB / Nomor Paket, mohon tuliskan persis sesuai yang tertera di invoice / resi</p>
+                {{ Former::select('cat', 'Category : ')
+                        ->options(Jayonad::getShopCategory()->shopcatToSelection('slug', 'name' ) )->selected($category)
+                        ->id('category-filter');
+                }}&nbsp;&nbsp;<br />
+                <p style="font-size:11px;">
+                    <input type="submit" name="search" id="" value="Search" class="button" />
+                    @if($keyword != '')
+                        &nbsp;&nbsp;&nbsp;&nbsp;<a href="{{ URL::to('shops') }}">Clear search</a>
+                    @endif
+                </p>
             </form>
         </div>
     </div>

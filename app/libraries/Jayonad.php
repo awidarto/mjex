@@ -1,6 +1,8 @@
 <?php
 class Jayonad {
 
+    public static $shopcategory;
+
     public static function getShopCategory(){
         $c = Shopcategory::get();
         self::$shopcategory = $c;
