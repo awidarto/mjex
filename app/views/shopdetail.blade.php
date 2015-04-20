@@ -14,15 +14,19 @@
       <table>
          <tbody>
            <tr>
+              <td>Category</td>
              <td>{{ $shop->shopcategory }}</td>
            </tr>
            <tr>
+              <td>Phone</td>
              <td>{{$shop->mc_phone}}</td>
            </tr>
            <tr>
+              <td>Address</td>
              <td>{{$shop->mc_street}}<br /> {{ $shop->mc_district}}<br /> {{ $shop->mc_city}} {{ $shop->mc_zip}} </td>
            </tr>
            <tr>
+              <td>Website</td>
              <td>{{-- $shop->url --}}</td>
            </tr>
          </tbody>
@@ -42,15 +46,19 @@
         <table>
            <tbody>
              <tr>
+              <td>Category</td>
                <td> - </td>
              </tr>
              <tr>
+              <td>Phone</td>
                <td> - </td>
              </tr>
              <tr>
+              <td>Address</td>
                <td> - </td>
              </tr>
              <tr>
+              <td>Website</td>
                <td>{{-- $shop->url --}}</td>
              </tr>
            </tbody>
