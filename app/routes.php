@@ -630,7 +630,7 @@ Route::get('shops/{keyword?}/{more?}',function($keyword = null,$more = null){
                 ->where(function($query){
                     $query->where('merchantname','like','%'.$keyword.'%')
                     ->orWhere('street','like','%'.$keyword.'%')
-                    ->orWhere('mc_street','like','%'.$keyword.'%')
+                    ->orWhere('mc_street','like','%'.$keyword.'%');
                 })
                 ->orderBy('shopcategory','asc')->orderBy('merchantname','asc')->get();
         }else{
