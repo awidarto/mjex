@@ -627,7 +627,7 @@ Route::get('shops/{keyword?}/{more?}',function($keyword = null,$more = null){
     }else{
         if($category == ''){
             $shops = Shop::where('status','active')
-                ->where(function($query){
+                ->where(function($query) use($keyword){
                     $query->where('merchantname','like','%'.$keyword.'%')
                     ->orWhere('street','like','%'.$keyword.'%')
                     ->orWhere('mc_street','like','%'.$keyword.'%');
