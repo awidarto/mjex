@@ -27,7 +27,11 @@
            </tr>
            <tr>
               <td>Website</td>
-             <td>{{-- $shop->url --}}</td>
+             <td>
+                @if( isset($shop->url) && $shop->url != '' )
+                  {{ $shop->url }}
+                @endif
+            </td>
            </tr>
          </tbody>
       </table>
@@ -59,19 +63,12 @@
              </tr>
              <tr>
               <td>Website</td>
-               <td>{{-- $shop->url --}}</td>
+               <td> - </td>
              </tr>
            </tbody>
         </table>
         <p>
-          Halvah candy cupcake. I love bonbon tiramisu cake oat cake I love cupcake tootsie roll caramels. Caramels caramels tart pudding. Chupa chups candy canes muffin sweet liquorice. I love gummi bears powder toffee sweet danish sweet. Jelly beans macaroon donut oat cake gummies ice cream.
-        </p>
-        <p>
-          Croissant biscuit tiramisu chocolate jelly beans gummies.
-          I love cake donut. Tiramisu lemon drops chocolate bar biscuit sesame snaps. Marzipan lollipop danish topping gummi bears marzipan jelly beans. Cupcake icing wafer sugar plum jelly beans gummies wafer. Tart chocolate cake marzipan sesame snaps pastry I love I love. I love tootsie roll chocolate cake carrot cake lemon drops.
-        </p>
-        <p>
-          Caramels soufflé biscuit. Muffin tiramisu I love I love liquorice. Jujubes icing jelly jelly. Topping cake cotton candy cupcake. Sugar plum oat cake macaroon marzipan danish I love liquorice donut I love. Cupcake candy canes biscuit marzipan.
+            Description coming soon
         </p>
     @endif
       <p>

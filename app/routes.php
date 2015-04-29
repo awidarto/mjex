@@ -616,20 +616,26 @@ Route::get('shops/{keyword?}/{more?}',function($keyword = null,$more = null){
     if(is_null($keyword) || $keyword == ''){
         if($category != ''){
             $shops = Shop::where('shopcategoryLink',$category)
+                        ->where('status','active')
                         ->orderBy('shopcategory','asc')
                         ->orderBy('merchantname','asc')->get();
         }else{
-            $shops = Shop::orderBy('shopcategory','asc')
+            $shops = Shop::where('status','active')
+                        ->orderBy('shopcategory','asc')
                         ->orderBy('merchantname','asc')->get();
         }
     }else{
         if($category == ''){
-            $shops = Shop::where('merchantname','like','%'.$keyword.'%')
-                ->orWhere('street','like','%'.$keyword.'%')
-                ->orWhere('mc_street','like','%'.$keyword.'%')
+            $shops = Shop::where('status','active')
+                ->where(function($query){
+                    $query->where('merchantname','like','%'.$keyword.'%')
+                    ->orWhere('street','like','%'.$keyword.'%')
+                    ->orWhere('mc_street','like','%'.$keyword.'%')
+                })
                 ->orderBy('shopcategory','asc')->orderBy('merchantname','asc')->get();
         }else{
             $shops = Shop::where('shopcategoryLink',$category)
+                ->where('status','active')
                 ->where(function($query) use($keyword){
                     $query->where('merchantname','like','%'.$keyword.'%')
                         ->orWhere('street','like','%'.$keyword.'%')
