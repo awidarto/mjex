@@ -23,25 +23,29 @@
       ?>
     <div class="login-form">
         <div class="text-left">
-            <form action="{{ URL::to('shops')}}" method="get" id="search-form" accept-charset="utf-8">
+            <p>
+                <a href="{{ URL::to('shopcat')}}">&laquo; Back to Shop Category</a>
+            </p>
+            <form action="{{ URL::to('shops/'.$category)}}" method="get" id="search-form" accept-charset="utf-8">
                 <label for="phone">Search</label>
                 <input type="text" name="keyword" id="phone" value="{{$keyword}}" />
                 @if($errors->has('keyword'))
                 {{ $errors->first('keyword', '<div class="alert"><a href="#" class="close">x</a>:message</div>'); }}
                 @endif
-                {{ Former::select('cat', 'Category : ')
+                {{-- Former::select('cat', 'Category : ')
                         ->options(Jayonad::getShopCategory()->shopcatToSelection('slug', 'name' ) )->selected($category)
                         ->id('category-filter');
-                }}&nbsp;&nbsp;<br />
+                --}}&nbsp;&nbsp;<br />
                 <p style="font-size:11px;">
                     <input type="submit" name="search" id="" value="Search" class="button" />
                     @if($keyword != '')
-                        &nbsp;&nbsp;&nbsp;&nbsp;<a href="{{ URL::to('shops') }}">Clear search</a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<a href="{{ URL::to('shops/'.$category) }}">Clear search</a>
                     @endif
                 </p>
             </form>
         </div>
     </div>
+
     <div class="track-list-item">
         <p>Klik untuk melihat detail toko
         </p>
@@ -54,7 +58,7 @@
     </div>
     @endif
     <div class="track-list-item">
-        <a href="{{ URL::to('shop/'.$r['id'] ) }}">
+        <a href="{{ URL::to('shop/'.$r->shopcategoryLink.'/'.$r['id'] ) }}">
             <span class="tmerchant">{{ $r['merchantname']}}</span>
             <span class="tid">{{ $r['street'].' '.$r['city'] }}</span>
         </a>
@@ -69,7 +73,7 @@
 
     <div class="track-list-item">
         <div class="text-center">
-          {{ $ad_2['html'].'<br />'.$ad_3['html'] }}
+          {{-- $ad_2['html'].'<br />'.$ad_3['html'] --}}
         </div>
     </div>
     <div class="track-list-item" style="display:block;height:25px;">

@@ -36,7 +36,7 @@
        </ul>
        <ul class="pull-right">
          <li class="divider"></li>
-         <li><a href="{{ URL::to('shops') }}">Shops</a></li>
+         <li><a href="{{ URL::to('shopcat') }}">Shops</a></li>
          <li class="divider"></li>
          <li><a href="{{ URL::to('track') }}">Track Order</a></li>
          {{--

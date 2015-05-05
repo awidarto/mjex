@@ -72,7 +72,7 @@
         </p>
     @endif
       <p>
-        <a href="{{ URL::to('shops')}}">&laquo; Back to Shops</a>
+        <a href="{{ URL::to('shops/'.$category)}}">&laquo; Back to Shops</a>
       </p>
   </div>
 </div>

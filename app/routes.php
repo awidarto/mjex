@@ -608,25 +608,27 @@ Route::get('offers/{keyword?}/{more?}',function($keyword = null,$more = null){
 });
 
 //shops
-Route::get('shops/{keyword?}/{more?}',function($keyword = null,$more = null){
+Route::get('shops/{catlink}/{keyword?}/{more?}',function($catlink,$keyword = null,$more = null){
 
     $keyword = Input::get('keyword');
     $category = Input::get('cat');
 
     if(is_null($keyword) || $keyword == ''){
         if($category != ''){
-            $shops = Shop::where('shopcategoryLink',$category)
+            $shops = Shop::where('shopcategoryLink',$catlink)
                         ->where('status','active')
                         ->orderBy('shopcategory','asc')
                         ->orderBy('merchantname','asc')->get();
         }else{
             $shops = Shop::where('status','active')
+                        ->where('shopcategoryLink',$catlink)
                         ->orderBy('shopcategory','asc')
                         ->orderBy('merchantname','asc')->get();
         }
     }else{
         if($category == ''){
             $shops = Shop::where('status','active')
+                ->where('shopcategoryLink',$catlink)
                 ->where(function($query) use($keyword){
                     $query->where('merchantname','like','%'.$keyword.'%')
                     ->orWhere('street','like','%'.$keyword.'%')
@@ -634,7 +636,7 @@ Route::get('shops/{keyword?}/{more?}',function($keyword = null,$more = null){
                 })
                 ->orderBy('shopcategory','asc')->orderBy('merchantname','asc')->get();
         }else{
-            $shops = Shop::where('shopcategoryLink',$category)
+            $shops = Shop::where('shopcategoryLink',$catlink)
                 ->where('status','active')
                 ->where(function($query) use($keyword){
                     $query->where('merchantname','like','%'.$keyword.'%')
@@ -651,16 +653,16 @@ Route::get('shops/{keyword?}/{more?}',function($keyword = null,$more = null){
     return View::make('shoplist')
         ->with('shops',$shops)
         ->with('keyword',$keyword)
-        ->with('category',$category)
+        ->with('category',$catlink)
         ->with('more',$more);
 });
 
-Route::post('shops/{keyword?}/{more?}',function($keyword = null,$more = null){
+Route::post('shops/{catlink}/{keyword?}/{more?}',function($catlink,$keyword = null,$more = null){
 
     if(is_null($keyword)){
-        $shops = Shop::orderBy('shopcategory','asc')->orderBy('merchantname','asc')->get();
+        $shops = Shop::where('shopcategoryLink',$catlink)->orderBy('shopcategory','asc')->orderBy('merchantname','asc')->get();
     }else{
-        $shops = Shop::get();
+        $shops = Shop::where('shopcategoryLink',$catlink)->get();
     }
 
     $log = array_merge(array( 'c'=>'shoplist' ));
@@ -672,8 +674,21 @@ Route::post('shops/{keyword?}/{more?}',function($keyword = null,$more = null){
         ->with('more',$more);
 });
 
+Route::get('shopcat',function(){
 
-Route::get('shop/{id?}',function($id = null){
+    //$shops = Jayonad::getShopCategory();
+
+    $shops = Shopcategory::orderBy('name','asc')->get();
+
+
+    $log = array_merge(array( 'c'=>'shopcatlist' ));
+    Helpers::log($log);
+
+    return View::make('shopcatlist')
+        ->with('shops',$shops);
+});
+
+Route::get('shop/{catlink}/{id?}',function($catlink,$id = null){
     if(is_null($id)){
         $shop = false;
     }else{
@@ -687,6 +702,7 @@ Route::get('shop/{id?}',function($id = null){
     Helpers::log($log);
 
     return View::make('shopdetail')
+        ->with('category',$catlink)
         ->with('shop',$shop);
 });
 
