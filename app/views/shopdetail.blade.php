@@ -4,9 +4,9 @@
 
 <div class="row">
   <div class="login-form">
-    <p>
-      <a href="{{ URL::to('shops/'.$category)}}">&laquo; Back to Shops</a>
-    </p>
+      <p>
+        <a href="{{ URL::to('shops/'.$category)}}">&laquo; Back to Shops</a>
+      </p>
 
     <div class="text-center">
       {{-- print_r($shop) --}}
@@ -32,8 +32,8 @@
            <tr>
               <td>Website</td>
              <td>
-                @if( isset($shop->url) && $shop->url != '' )
-                  {{ $shop->url }}
+                @if( isset($shop->mc_url) && $shop->mc_url != '' )
+                  {{ $shop->mc_url }}
                 @endif
             </td>
            </tr>
