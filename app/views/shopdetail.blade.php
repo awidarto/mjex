@@ -33,7 +33,9 @@
               <td>Website</td>
              <td>
                 @if( isset($shop->mc_url) && $shop->mc_url != '' )
-                  {{ $shop->mc_url }}
+                  <a href="{{ $shop->mc_url }}" alt="{{ $shop->merchantname }}" >
+                    {{ $shop->mc_url }}
+                  </a>
                 @endif
             </td>
            </tr>
