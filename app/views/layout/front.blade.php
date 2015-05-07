@@ -28,7 +28,7 @@
     <nav class="navigation-bar ">
        <ul class="brand-section">
          <li class="brand-name">
-          <a href="#" class="menu-trigger" id="trigger">{{ Config::get('site.name')}}</a>
+          <a href="{{ URL::to('/') }}" class="menu-trigger" id="trigger">{{ Config::get('site.name')}}</a>
          </li>
          <li class="menu-toggle">
           <a href="#"></a>
