@@ -36,8 +36,8 @@
          </tbody>
       </table>
     <div class="description">
-        @if( isset($shop->description) && $shop->description != '' )
-        {{ $shop->description }}
+        @if( isset($shop->shopDescription) && $shop->shopDescription != '' )
+        {{ $shop->shopDescription }}
         @else
           <p>
               Description coming soon
