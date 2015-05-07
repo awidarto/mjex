@@ -33,8 +33,8 @@
               <td>Website</td>
              <td>
                 @if( isset($shop->mc_url) && $shop->mc_url != '' )
-                  <a href="{{ $shop->mc_url }}" alt="{{ $shop->merchantname }}" >
-                    {{ $shop->mc_url }}
+                  <a href="{{ (preg_match('/^http:\/\//', $shop->mc_url))?$shop->mc_url:'http://'.$shop->mc_url }}" alt="{{ $shop->merchantname }}" >
+                    {{ (preg_match('/^http:\/\//', $shop->mc_url))?$shop->mc_url:'http://'.$shop->mc_url }}
                   </a>
                 @endif
             </td>
