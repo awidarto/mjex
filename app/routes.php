@@ -693,7 +693,8 @@ Route::get('shop/{catlink}/{id?}',function($catlink,$id = null){
         $shop = false;
     }else{
         //$shop = Shop::where('id', intval($id) )->whereOr('id', strval($id))->first();
-        $shop = Shop::where('id', strval($id))->first();
+        //$shop = Shop::where('id', strval($id))->first();
+        $shop = Shop::find($id);
     }
 
     $logshop = ($shop && isset($shop->_id))?$shop->_id:$shop;
