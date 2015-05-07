@@ -4,6 +4,10 @@
 
 <div class="row">
   <div class="login-form">
+    <p>
+      <a href="{{ URL::to('shops/'.$category)}}">&laquo; Back to Shops</a>
+    </p>
+
     <div class="text-center">
       {{-- print_r($shop) --}}
     </div>
@@ -71,9 +75,6 @@
             Description coming soon
         </p>
     @endif
-      <p>
-        <a href="{{ URL::to('shops/'.$category)}}">&laquo; Back to Shops</a>
-      </p>
   </div>
 </div>
 <div class="row">
