@@ -100,14 +100,18 @@ class Jayonad {
 
         $html = sprintf('<a style="border:none;display:inline-block;margin:auto;padding:4px;" class="jayon-ad" href="%s"  ><img src="%s" alt="%s" /></a>', $baseurl, $banner, $advert->merchantName );
 
-        if(Config::get('site.ad')){
+        if(Config::get('site.ad') ){
             if($format == 'html'){
                 return $html;
             }elseif($format == 'array'){
                 return array('id'=>$advert->_id, 'html'=>$html, 'url'=>$banner);
             }
         }else{
-            return '';
+            if($format == 'html'){
+                return '';
+            }elseif($format == 'array'){
+                return array('id'=>0, 'html'=>'', 'url'=>'');
+            }
         }
 
     }
