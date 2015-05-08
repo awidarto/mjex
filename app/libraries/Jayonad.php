@@ -33,74 +33,76 @@ class Jayonad {
 
     public static function ad($merchant_id = 'random', $exclude = null ,$baseurl = 'redir' ,$format = 'html',$spot = null)
     {
-        if(is_null($spot)){
-            $spot = 'def';
-        }
 
-        if($merchant_id == 'random'){
+        if(Config::get('site.ad') ){
 
-            $count = Ad::count();
-            $rand = mt_rand(0,$count);
+            if(is_null($spot)){
+                $spot = 'def';
+            }
 
-            $ad = Ad::take(1)
-                    ->skip($rand)
-                    ->orderBy('createdDate','desc')
-                    ->get();
+            if($merchant_id == 'random'){
 
-        }else{
-            $ad = Ad::where('merchantId',$merchant_id)
-                    ->orderBy('createdDate','desc')
-                    ->get();
-        }
+                $count = Ad::count();
+                $rand = mt_rand(0,$count);
 
-        if( count($ad->toArray() ) > 0){
-           //print_r($ad);
-           $advert = $ad[0];
+                $ad = Ad::take(1)
+                        ->skip($rand)
+                        ->orderBy('createdDate','desc')
+                        ->get();
 
-           if($advert->_id === $exclude || $advert->_id == new MongoId($exclude)){
+            }else{
+                $ad = Ad::where('merchantId',$merchant_id)
+                        ->orderBy('createdDate','desc')
+                        ->get();
+            }
+
+            if( count($ad->toArray() ) > 0){
+               //print_r($ad);
+               $advert = $ad[0];
+
+               if($advert->_id === $exclude || $advert->_id == new MongoId($exclude)){
+                    $advert = Ad::where('isDefault','yes')
+                            ->orderBy('createdDate','desc')
+                            ->first();
+               }
+
+            }else{
                 $advert = Ad::where('isDefault','yes')
                         ->orderBy('createdDate','desc')
                         ->first();
-           }
+               //print_r($ad);
+            }
 
-        }else{
-            $advert = Ad::where('isDefault','yes')
-                    ->orderBy('createdDate','desc')
-                    ->first();
-           //print_r($ad);
-        }
+            if($baseurl == 'redir'){
+                $baseurl = URL::to('ad/redir').'/'.$advert->_id;
+            }else{
+                $baseurl = $advert->extURL;
+            }
 
-        if($baseurl == 'redir'){
-            $baseurl = URL::to('ad/redir').'/'.$advert->_id;
-        }else{
-            $baseurl = $advert->extURL;
-        }
+            self::logview($advert, $spot);
 
-        self::logview($advert, $spot);
+            if(isset($advert->defaultpictures['thumbnail_url']) && $advert->defaultpictures['thumbnail_url'] != ''){
+                $banner = $advert->defaultpictures['thumbnail_url'];
+            }else{
+                $advert = Ad::where('isDefault','yes')
+                        ->orderBy('createdDate','desc')
+                        ->first();
+            }
 
-        if(isset($advert->defaultpictures['thumbnail_url']) && $advert->defaultpictures['thumbnail_url'] != ''){
-            $banner = $advert->defaultpictures['thumbnail_url'];
-        }else{
-            $advert = Ad::where('isDefault','yes')
-                    ->orderBy('createdDate','desc')
-                    ->first();
-        }
+            if(isset($advert->useImage) && $advert->useImage == 'linked'){
+                $banner = $advert->extImageURL;
+            }else{
+                $banner = $advert->defaultpictures['thumbnail_url'];
+            }
 
-        if(isset($advert->useImage) && $advert->useImage == 'linked'){
-            $banner = $advert->extImageURL;
-        }else{
-            $banner = $advert->defaultpictures['thumbnail_url'];
-        }
+            if(isset($advert->externalLink) && $advert->externalLink == 'yes'){
+                $baseurl = $baseurl.'?u='.base64_encode($advert->extURL).'&s='.$spot;
+            }else{
+                $baseurl = $baseurl.'?u='.base64_encode( URL::to( 'advert/'.$advert->_id ) ).'&s='.$spot;
+            }
 
-        if(isset($advert->externalLink) && $advert->externalLink == 'yes'){
-            $baseurl = $baseurl.'?u='.base64_encode($advert->extURL).'&s='.$spot;
-        }else{
-            $baseurl = $baseurl.'?u='.base64_encode( URL::to( 'advert/'.$advert->_id ) ).'&s='.$spot;
-        }
+            $html = sprintf('<a style="border:none;display:inline-block;margin:auto;padding:4px;" class="jayon-ad" href="%s"  ><img src="%s" alt="%s" /></a>', $baseurl, $banner, $advert->merchantName );
 
-        $html = sprintf('<a style="border:none;display:inline-block;margin:auto;padding:4px;" class="jayon-ad" href="%s"  ><img src="%s" alt="%s" /></a>', $baseurl, $banner, $advert->merchantName );
-
-        if(Config::get('site.ad') ){
             if($format == 'html'){
                 return $html;
             }elseif($format == 'array'){
