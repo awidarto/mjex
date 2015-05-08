@@ -24,7 +24,7 @@
     <div class="login-form">
         <div class="text-left">
             <p>
-                <a href="{{ URL::to('shopcat')}}">&laquo; Back to Shop Category</a>
+                <a href="{{ URL::to('/')}}">&laquo; Back to Shop Category</a>
             </p>
             <form action="{{ URL::to('shops/'.$category)}}" method="get" id="search-form" accept-charset="utf-8">
                 <label for="phone">Search</label>

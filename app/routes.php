@@ -421,7 +421,15 @@ Route::group(array('prefix'=>'c'),function(){
 
 Route::get('/', function()
 {
-	return View::make('track');
+    $shops = Shopcategory::orderBy('name','asc')->get();
+
+    $log = array_merge(array( 'c'=>'hometrac' ));
+    Helpers::log($log);
+
+    return View::make('track')
+        ->with('shops',$shops);
+
+	//return View::make('track');
 });
 
 Route::get('testad/{mid}',function($mid){

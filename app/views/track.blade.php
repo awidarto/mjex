@@ -33,6 +33,24 @@
   </div>
 </div>
 <div class="row">
+    <div class="track-list-item">
+      <p>
+        Shops
+      </p>
+    </div>
+
+@foreach($shops as $r)
+
+    <div class="track-list-item">
+        <a href="{{ URL::to('shops/'.$r['slug'] ) }}">
+            <span class="tmerchant">{{ $r['name']}}</span>
+            <span class="tid">{{ $r['description'] }}</span>
+        </a>
+    </div>
+
+@endforeach
+
+
   <div class="text-center">
       {{-- $ad_2['html'].'<br />'.$ad_3['html'] --}}
   </div>
