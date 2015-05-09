@@ -61,3 +61,18 @@ ul.breadcrumb li{
     float: left;
     margin-left: 4px;
 }
+
+.jayon-bg{
+    background: url('../img/head_bg.png') top left no-repeat;
+    color: #006400;
+}
+
+.navigation-bar ul li a {
+    color: #006400 !important;
+    font-weight: bolder;
+}
+
+.navigation-bar ul li a:hover {
+    color: #003300 !important;
+    background: transparent !important;
+}

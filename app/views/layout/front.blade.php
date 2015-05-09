@@ -25,7 +25,7 @@
   </head>
 
 <body>
-    <nav class="navigation-bar ">
+    <nav class="navigation-bar jayon-bg">
        <ul class="brand-section">
          <li class="brand-name">
           <a href="{{ URL::to('/') }}" class="menu-trigger" id="trigger">{{ Config::get('site.name')}}</a>
