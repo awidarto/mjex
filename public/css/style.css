@@ -70,6 +70,7 @@ ul.breadcrumb li{
 .navigation-bar ul li a {
     color: #006400 !important;
     font-weight: bolder;
+    font-size: 24px;
 }
 
 .navigation-bar ul li a:hover {
