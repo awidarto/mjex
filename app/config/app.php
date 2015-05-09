@@ -108,6 +108,7 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
         'Jenssegers\Mongodb\MongodbServiceProvider',
         'Former\FormerServiceProvider',
+        'Creitive\Breadcrumbs\BreadcrumbsServiceProvider',
 
 	),
 
@@ -176,6 +177,7 @@ return array(
 		'View'            => 'Illuminate\Support\Facades\View',
         'Moloquent'       => 'Jenssegers\Mongodb\Model',
         'Former'          => 'Former\Facades\Former',
+        'Breadcrumbs'     => 'Creitive\Breadcrumbs\Facades\Breadcrumbs',
 
 	),
 

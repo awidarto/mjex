@@ -6,6 +6,7 @@
 	"require": {
 		"laravel/framework": "4.2.*",
         "anahkiasen/former": "dev-master",
+        "creitive/laravel4-breadcrumbs": "dev-master",
         "jenssegers/mongodb": "*"
 	},
 	"autoload": {

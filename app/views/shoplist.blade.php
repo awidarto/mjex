@@ -21,11 +21,12 @@
     </div>
     */
       ?>
+    <div class="track-list-item">
+
+    </div>
+
     <div class="login-form">
         <div class="text-left">
-            <p>
-                <a href="{{ URL::to('/')}}">&laquo; Back to Shop Category</a>
-            </p>
             <form action="{{ URL::to('shops/'.$category)}}" method="get" id="search-form" accept-charset="utf-8">
                 <label for="phone">Search</label>
                 <input type="text" name="keyword" id="phone" value="{{$keyword}}" />
@@ -60,7 +61,7 @@
     <div class="track-list-item">
         <a href="{{ URL::to('shop/'.$r->shopcategoryLink.'/'.$r['id'] ) }}">
             <span class="tmerchant">{{ $r['merchantname']}}</span>
-            <span class="tid">{{ $r['street'].' '.$r['city'] }}</span>
+            {{--<span class="tid">{{ $r['street'].' '.$r['city'] }}</span>--}}
         </a>
     </div>
     <?php $cat = $r->shopcategoryLink ?>

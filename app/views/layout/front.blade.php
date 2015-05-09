@@ -45,6 +45,12 @@
          --}}
        </ul>
     </nav>
+    <div class="row">
+        <div class="login-form">
+            {{ Breadcrumbs::render() }}
+        </div>
+    </div>
+
 
     @yield('content')
 

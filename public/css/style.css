@@ -44,3 +44,20 @@ table{
     color:#000;
     font-size: 12px;
 }
+
+ul.breadcrumb{
+    list-style: none;
+    margin-left: 0px !important;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    display: inline-block;
+}
+
+ul.breadcrumb li:first-child{
+    margin-left: 0px !important;
+}
+
+ul.breadcrumb li{
+    float: left;
+    margin-left: 4px;
+}

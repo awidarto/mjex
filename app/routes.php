@@ -421,7 +421,10 @@ Route::group(array('prefix'=>'c'),function(){
 
 Route::get('/', function()
 {
+    homecrumb();
+
     $shops = Shopcategory::orderBy('name','asc')->get();
+
 
     $log = array_merge(array( 'c'=>'hometrac' ));
     Helpers::log($log);
@@ -464,6 +467,15 @@ Route::get('ad/redir/{id}',function($id){
 
 //tracker
 Route::get('track/{id?}/{more?}',function($id = null,$more = null){
+
+    homecrumb();
+
+    if(is_null($more) || $more == ''){
+        Breadcrumbs::addCrumb('Track Result','track/'.$id);
+    }else{
+        Breadcrumbs::addCrumb('Track Result','track/'.$id.'/'.$more);
+    }
+
     if(is_null($id)){
         return View::make('track')->with('ordernumber',$id);
     }else{
@@ -508,11 +520,15 @@ Route::get('track/{id?}/{more?}',function($id = null,$more = null){
         $log = array_merge(array( 'c'=>'tracklist','buyer'=>$idvar ));
         Helpers::log($log);
 
+
+
         return View::make('tracklist')->with('order',$order)->with('phone',$id)->with('more',$more);
     }
 });
 
 Route::post('track',function(){
+
+    homecrumb();
 
     $rule = array('phone'=>'required');
 
@@ -559,6 +575,7 @@ Route::post('track',function(){
         $log = array_merge($in, array( 'c'=>'trackdetail', 'p'=>$in['phone'] ));
         Helpers::log($log);
 
+        Breadcrumbs::addCrumb('Track Result',URL::to('/'));
 
         return View::make('tracklist')
             ->with('order',$order)
@@ -658,6 +675,15 @@ Route::get('shops/{catlink}/{keyword?}/{more?}',function($catlink,$keyword = nul
     $log = array_merge(array( 'c'=>'shoplist' ));
     Helpers::log($log);
 
+    if(isset($shops) && count($shops) > 0){
+        $catname = $shops[0]->shopcategory;
+    }else{
+        $catname = 'Shops';
+    }
+
+    homecrumb();
+    Breadcrumbs::addCrumb($catname,'shops/'.$catlink.'/'.$keyword.'/'.$more);
+
     return View::make('shoplist')
         ->with('shops',$shops)
         ->with('keyword',$keyword)
@@ -675,6 +701,9 @@ Route::post('shops/{catlink}/{keyword?}/{more?}',function($catlink,$keyword = nu
 
     $log = array_merge(array( 'c'=>'shoplist' ));
     Helpers::log($log);
+
+    homecrumb();
+    Breadcrumbs::addCrumb('Shops','shops/'.$catlink.'/'.$keyword.'/'.$more);
 
     return View::make('shoplist')
         ->with('shops',$shops)
@@ -710,6 +739,10 @@ Route::get('shop/{catlink}/{id?}',function($catlink,$id = null){
     $log = array_merge(array( 'c'=>'shopdetail', 'sid'=>$id, 'msid'=>$logshop ));
     Helpers::log($log);
 
+    homecrumb();
+    Breadcrumbs::addCrumb($shop->shopcategory,'shops/'.$catlink);
+    Breadcrumbs::addCrumb($shop->merchantname,'shop/'.$catlink.'/'.$id);
+
     return View::make('shopdetail')
         ->with('category',$catlink)
         ->with('shop',$shop);
@@ -730,6 +763,18 @@ Route::get('advert/{id}',function($id){
 });
 
 Route::get('item/{did}/{phone}/{more?}',function($did,$phone,$more = null){
+    homecrumb();
+    //    <a href="{{ URL::to('track/'.$phone.'/'.$more) }}">&laquo; Back to Track List</a>
+
+    if(is_null($more) || $more == ''){
+        Breadcrumbs::addCrumb('Track Result','track/'.$phone);
+    }else{
+        Breadcrumbs::addCrumb('Track Result','track/'.$phone.'/'.$more);
+    }
+
+    //Breadcrumbs::addCrumb('Track Result','track/'.$phone.'/'.$more);
+
+    Breadcrumbs::addCrumb('Order Status','/');
     $order = Order::where('delivery_id',$did)->first()->toArray();
 
     $log = array(
@@ -816,3 +861,8 @@ function normalphone($phone,$type = 'international', $country = '+62')
 
 }
 
+function homecrumb(){
+        Breadcrumbs::setDivider('/');
+        Breadcrumbs::setCssClasses('breadcrumb');
+        Breadcrumbs::addCrumb('Home',URL::to('/'));
+}
