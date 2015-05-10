@@ -15,10 +15,6 @@
       <table>
          <tbody>
            <tr>
-              <td>Category</td>
-             <td>{{ $shop->shopcategory }}</td>
-           </tr>
-           <tr>
               <td>Phone</td>
              <td>{{$shop->mc_phone}}</td>
            </tr>

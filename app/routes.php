@@ -638,6 +638,8 @@ Route::get('shops/{catlink}/{keyword?}/{more?}',function($catlink,$keyword = nul
     $keyword = Input::get('keyword');
     $category = Input::get('cat');
 
+    $is_search = false;
+
     if(is_null($keyword) || $keyword == ''){
         if($category != ''){
             $shops = Shop::where('shopcategoryLink',$catlink)
@@ -651,9 +653,12 @@ Route::get('shops/{catlink}/{keyword?}/{more?}',function($catlink,$keyword = nul
                         ->orderBy('merchantname','asc')->get();
         }
     }else{
+
+        $is_search = true;
+
         if($category == ''){
             $shops = Shop::where('status','active')
-                ->where('shopcategoryLink',$catlink)
+                //->where('shopcategoryLink',$catlink)
                 ->where(function($query) use($keyword){
                     $query->where('merchantname','like','%'.$keyword.'%')
                     ->orWhere('street','like','%'.$keyword.'%')
@@ -661,8 +666,8 @@ Route::get('shops/{catlink}/{keyword?}/{more?}',function($catlink,$keyword = nul
                 })
                 ->orderBy('shopcategory','asc')->orderBy('merchantname','asc')->get();
         }else{
-            $shops = Shop::where('shopcategoryLink',$catlink)
-                ->where('status','active')
+            $shops = Shop::where('status','active')
+                //->where('shopcategoryLink',$catlink)
                 ->where(function($query) use($keyword){
                     $query->where('merchantname','like','%'.$keyword.'%')
                         ->orWhere('street','like','%'.$keyword.'%')
@@ -682,10 +687,15 @@ Route::get('shops/{catlink}/{keyword?}/{more?}',function($catlink,$keyword = nul
     }
 
     homecrumb();
-    Breadcrumbs::addCrumb($catname,'shops/'.$catlink.'/'.$keyword.'/'.$more);
+    if($is_search){
+        Breadcrumbs::addCrumb('Search Result','shops/'.$catlink.'/'.$keyword.'/'.$more);
+    }else{
+        Breadcrumbs::addCrumb($catname,'shops/'.$catlink.'/'.$keyword.'/'.$more);
+    }
 
     return View::make('shoplist')
         ->with('shops',$shops)
+        ->with('is_search',$is_search)
         ->with('keyword',$keyword)
         ->with('category',$catlink)
         ->with('more',$more);
