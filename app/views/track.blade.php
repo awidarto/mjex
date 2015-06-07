@@ -51,8 +51,9 @@
     <div class="track-list-item logo-item">
         <a href="{{ URL::to('shop/'.$r->shopcategoryLink.'/'.$r['id'] ) }}">
           @if(isset($r->useImage) && $r->useImage == 'upload' )
+
             @if(isset($r->defaultpictures) && is_array($r->defaultpictures) )
-                <img class="logo" src="{{$r->defaultpictures['medium_url']}}" alt="{{ $r->merchantname}}" />
+              <img class="logo" src="{{$r->defaultpictures['medium_url']}}" alt="{{ $r->merchantname}}" />
             @else
               <span class="tmerchant">{{ $r->merchantname }}</span>
             @endif

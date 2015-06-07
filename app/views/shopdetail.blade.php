@@ -10,10 +10,23 @@
     </div>
 
     @if($shop)
-      @if(isset($shop->defaultpictures) && is_array($shop->defaultpictures) && isset($shop->defaultpictures['medium_url']) )
+
+      @if(isset( $shop->useImage) )
+        @if($shop->useImage == 'linked')
+
           <div class="text-center">
-            <img class="text-center" src="{{$shop->defaultpictures['medium_url']}}" alt="{{ $shop->merchantname}}" />
+            <img class="text-center" src="{{$shop->extImageURL }}" alt="{{ $shop->merchantname}}" />
           </div>
+
+        @else
+
+          @if(isset($shop->defaultpictures) && is_array($shop->defaultpictures) && isset($shop->defaultpictures['medium_url']) )
+            <div class="text-center">
+              <img class="text-center" src="{{$shop->defaultpictures['medium_url']}}" alt="{{ $shop->merchantname}}" />
+            </div>
+          @endif
+
+        @endif
 
       @else
         <h3>{{ $shop->merchantname }}</h3>
