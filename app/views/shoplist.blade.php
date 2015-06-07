@@ -59,7 +59,7 @@
     </div>
     @endif
     <div class="track-list-item">
-        <a href="{{ URL::to('shop/'.$r->shopcategoryLink.'/'.$r['id'] ) }}">
+        <a href="{{ URL::to('shop/'.$r['id'] ) }}">
             <span class="tmerchant">{{ $r['merchantname']}}</span>
             {{--<span class="tid">{{ $r['street'].' '.$r['city'] }}</span>--}}
         </a>

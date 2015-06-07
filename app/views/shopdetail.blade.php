@@ -10,8 +10,16 @@
     </div>
 
     @if($shop)
+      @if(isset($shop->defaultpictures) && is_array($shop->defaultpictures) && isset($shop->defaultpictures['medium_url']) )
+          <div class="text-center">
+            <img class="text-center" src="{{$shop->defaultpictures['medium_url']}}" alt="{{ $shop->merchantname}}" />
+          </div>
 
-    <h3>{{ $shop->merchantname }}</h3>
+      @else
+        <h3>{{ $shop->merchantname }}</h3>
+      @endif
+
+      {{--
       <table>
          <tbody>
            <tr>
@@ -34,6 +42,9 @@
            </tr>
          </tbody>
       </table>
+
+      --}}
+
     <div class="description">
         @if( isset($shop->shopDescription) && $shop->shopDescription != '' )
         {{ $shop->shopDescription }}

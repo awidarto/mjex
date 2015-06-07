@@ -39,6 +39,29 @@
       </p>
     </div>
 
+<?php $cat = '';
+    //print_r($shops);
+ ?>
+@foreach($shops as $r)
+    @if($cat != $r->shopcategoryLink)
+      <div class="track-list-item merchant-cat logo">
+          <span class="tmerchant">{{ $r->shopcategory }}</span>
+      </div>
+    @endif
+    <div class="track-list-item logo-item">
+        <a href="{{ URL::to('shop/'.$r->shopcategoryLink.'/'.$r['id'] ) }}">
+            @if(isset($r->defaultpictures) && is_array($r->defaultpictures) )
+                <img class="logo" src="{{$r->defaultpictures['medium_url']}}" alt="{{ $r->merchantname}}" />
+            @else
+              <span class="tmerchant">{{ $r->merchantname }}</span>
+            @endif
+            {{--<span class="tid">{{ $r['street'].' '.$r['city'] }}</span>--}}
+        </a>
+    </div>
+    <?php $cat = $r->shopcategoryLink ?>
+@endforeach
+
+{{--
 @foreach($shops as $r)
 
     <div class="track-list-item">
@@ -49,6 +72,7 @@
     </div>
 
 @endforeach
+--}}
 
 
   <div class="text-center">

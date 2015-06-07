@@ -77,3 +77,23 @@ ul.breadcrumb li{
     color: #003300 !important;
     background: transparent !important;
 }
+
+img.logo{
+    width: 100px;
+    height: auto;
+}
+
+
+div.logo-item{
+    float: left;
+    display: inline-block;
+}
+
+div.merchant-cat.logo{
+    clear: both;
+    display: block;
+}
+
+div.logo-item a{
+    border: none;
+}

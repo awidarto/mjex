@@ -425,12 +425,17 @@ Route::get('/', function()
 
     $shops = Shopcategory::orderBy('name','asc')->get();
 
+    $shoplist = Shop::where('status','active')
+                    ->orderBy('shopcategoryLink','asc')
+                    ->orderBy('name','asc')
+                    ->get();
+
 
     $log = array_merge(array( 'c'=>'hometrac' ));
     Helpers::log($log);
 
     return View::make('track')
-        ->with('shops',$shops);
+        ->with('shops',$shoplist);
 
 	//return View::make('track');
 });
@@ -736,6 +741,7 @@ Route::get('shopcat',function(){
 });
 
 Route::get('shop/{catlink}/{id?}',function($catlink,$id = null){
+//Route::get('shop/{catlink}/{id?}',function($catlink,$id = null){
     if(is_null($id)){
         $shop = false;
     }else{
@@ -750,7 +756,7 @@ Route::get('shop/{catlink}/{id?}',function($catlink,$id = null){
     Helpers::log($log);
 
     homecrumb();
-    Breadcrumbs::addCrumb($shop->shopcategory,'shops/'.$catlink);
+    //Breadcrumbs::addCrumb($shop->shopcategory,'shops/'.$catlink);
     Breadcrumbs::addCrumb($shop->merchantname,'shop/'.$catlink.'/'.$id);
 
     return View::make('shopdetail')
