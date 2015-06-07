@@ -97,3 +97,7 @@ div.merchant-cat.logo{
 div.logo-item a{
     border: none;
 }
+
+div.logo-item a:hover{
+    background-color: transparent;
+}
