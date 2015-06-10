@@ -440,6 +440,129 @@ Route::get('/', function()
 	//return View::make('track');
 });
 
+Route::group(array('prefix'=>'api'),function(){
+
+    Route::post('track',function(){
+
+        $sout = array();
+
+        if(Input::has('q')){
+
+            $in = Input::get();
+
+            $idvar = normalphone(trim($in['q']),'all');
+
+            $idvar = phonenumber( trim($in['q']),'21','62' );
+            //print_r($idvar);
+            $sql = "`delivery_order_active`.`phone` LIKE  '%s' OR  `delivery_order_active`.`mobile1` LIKE  '%s' OR  `delivery_order_active`.`mobile2` LIKE  '%s' OR  `delivery_order_active`.`merchant_trans_id` LIKE  '%s' OR  `delivery_order_active`.`delivery_id` = '%s'   ";
+
+            $sql = sprintf($sql, '%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%','%'.$idvar.'%', trim($in['q']));
+
+            $order = Order::whereRaw($sql)
+                        ->leftJoin('members', 'members.id', '=', 'merchant_id')
+                        ->orderBy('assignment_date','desc')
+                        ->get();
+
+            $queries = DB::getQueryLog();
+
+            $ordercount = Order::whereRaw($sql)->count();
+
+            $log = array_merge($in, array( 'c'=>'trackdetail', 'p'=>$in['q'] ));
+            Helpers::log($log);
+
+
+            if(count($order) > 0){
+                for($i = 0;$i < count($order); $i++){
+
+                    $sout[$i]['assignmentDate'] = $order[$i]->assignment_date;
+                    $sout[$i]['merchantname'] = $order[$i]->merchantname;
+                    $sout[$i]['merchantTrans_id'] = $order[$i]->merchant_trans_id;
+                    $sout[$i]['deliveryType'] = $order[$i]->delivery_type;
+                    $sout[$i]['deliveryId'] = $order[$i]->delivery_id;
+
+                }
+                return Response::json( $sout );
+            }else{
+
+                return Response::json( $sout );
+            }
+
+
+        }else{
+            return Response::json( $sout );
+
+        }
+    });
+
+    Route::get('shops',function(){
+            $shops = Shop::where('status','active')
+                        ->orderBy('shopcategory','asc')
+                        ->orderBy('merchantname','asc')->get();
+
+            $sout = array();
+            for($i = 0;$i < count($shops);$i++){
+                $sout[$i]['extId'] = $shops[$i]->_id;
+                $sout[$i]['district']= $shops[$i]->district;
+                $sout[$i]['email']= $shops[$i]->email;
+                $sout[$i]['extImage'] = $shops[$i]->extImage;
+                $sout[$i]['fullname ']= $shops[$i]->fullname;
+                $sout[$i]['groupId'] = $shops[$i]->group_id;
+                $sout[$i]['identifier ']= $shops[$i]->identifier;
+                $sout[$i]['legacyId'] = $shops[$i]->legacyId;
+                $sout[$i]['mcCity'] = $shops[$i]->mc_city;
+                $sout[$i]['mcCountry'] = $shops[$i]->mc_country;
+                $sout[$i]['mcDistrict'] = $shops[$i]->mc_district;
+                $sout[$i]['mcEmail'] = $shops[$i]->mc_email;
+                $sout[$i]['mcFirst'] = $shops[$i]->mc_first;
+                $sout[$i]['mcLast'] = $shops[$i]->mc_last;
+                $sout[$i]['mcMobile'] = $shops[$i]->mc_mobile;
+                $sout[$i]['mcPhone'] = $shops[$i]->mc_phone;
+                $sout[$i]['mcPickup'] = $shops[$i]->mc_pickup;
+                $sout[$i]['mcProvince'] = $shops[$i]->mc_province;
+                $sout[$i]['mcStreet'] = $shops[$i]->mc_street;
+                $sout[$i]['mcToscan'] = $shops[$i]->mc_toscan;
+                $sout[$i]['mcUnlimited'] = $shops[$i]->mc_unlimited;
+                $sout[$i]['mcUrl'] = $shops[$i]->mc_url;
+                $sout[$i]['mcZip'] = $shops[$i]->mc_zip;
+                $sout[$i]['merchantname'] = $shops[$i]->merchantname;
+                $sout[$i]['mobile'] = $shops[$i]->mobile;
+                $sout[$i]['mobile1'] = $shops[$i]->mobile1;
+                $sout[$i]['mobile2'] = $shops[$i]->mobile2;
+                $sout[$i]['phone'] = $shops[$i]->phone;
+                $sout[$i]['province'] = $shops[$i]->province;
+                //$sout[$i]['shopDescription'] = $shops[$i]->shopDescription;
+                $sout[$i]['shopcategory'] = $shops[$i]->shopcategory;
+                $sout[$i]['shopcategoryLink'] = $shops[$i]->shopcategoryLink;
+                $sout[$i]['shortcode'] = $shops[$i]->shortcode;
+                $sout[$i]['status'] = $shops[$i]->status;
+                $sout[$i]['street'] = $shops[$i]->street;
+                $sout[$i]['url'] = $shops[$i]->url;
+                $sout[$i]['useImage'] = $shops[$i]->useImage;
+                $sout[$i]['username'] = $shops[$i]->username;
+                $sout[$i]['zip'] = $shops[$i]->zip;
+
+                if(isset($shops[$i]->defaultpictures) && $shops[$i]->defaultpictures != '' ){
+                    $dp = $shops[$i]->defaultpictures;
+                    $sout[$i]['thumbnailUrl'] = $dp['thumbnail_url'];
+                    $sout[$i]['largeUrl'] = $dp['large_url'];
+                    $sout[$i]['mediumUrl'] = $dp['medium_url'];
+                    $sout[$i]['fullUrl'] = $dp['full_url'];
+                    $sout[$i]['fileUrl'] = $dp['fileurl'];
+                }else{
+                    $sout[$i]['thumbnailUrl'] = '';
+                    $sout[$i]['largeUrl'] = '';
+                    $sout[$i]['mediumUrl'] = '';
+                    $sout[$i]['fullUrl'] = '';
+                    $sout[$i]['fileUrl'] = '';
+                }
+            }
+
+        return Response::json($sout);
+
+    });
+
+});
+
 Route::get('testad/{mid}',function($mid){
     print(Jayonad::ad($mid));
 });
