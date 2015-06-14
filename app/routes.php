@@ -541,20 +541,40 @@ Route::group(array('prefix'=>'api'),function(){
                 $sout[$i]['username'] = $shops[$i]->username;
                 $sout[$i]['zip'] = $shops[$i]->zip;
 
-                if(isset($shops[$i]->defaultpictures) && $shops[$i]->defaultpictures != '' ){
-                    $dp = $shops[$i]->defaultpictures;
-                    $sout[$i]['thumbnailUrl'] = $dp['thumbnail_url'];
-                    $sout[$i]['largeUrl'] = $dp['large_url'];
-                    $sout[$i]['mediumUrl'] = $dp['medium_url'];
-                    $sout[$i]['fullUrl'] = $dp['full_url'];
-                    $sout[$i]['fileUrl'] = $dp['fileurl'];
+
+                if(isset($shops[$i]->useImage) && $shops[$i]->useImage == 'upload' ){
+
+                    if(isset($shops[$i]->defaultpictures) && $shops[$i]->defaultpictures != '' ){
+                        $dp = $shops[$i]->defaultpictures;
+                        $sout[$i]['thumbnailUrl'] = $dp['thumbnail_url'];
+                        $sout[$i]['largeUrl'] = $dp['large_url'];
+                        $sout[$i]['mediumUrl'] = $dp['medium_url'];
+                        $sout[$i]['fullUrl'] = $dp['full_url'];
+                        $sout[$i]['fileUrl'] = $dp['fileurl'];
+                    }else{
+                        $sout[$i]['thumbnailUrl'] = '';
+                        $sout[$i]['largeUrl'] = '';
+                        $sout[$i]['mediumUrl'] = '';
+                        $sout[$i]['fullUrl'] = '';
+                        $sout[$i]['fileUrl'] = '';
+                    }
+
+                }else if(isset($shops[$i]->useImage) && $shops[$i]->useImage == 'linked' && isset($shops[$i]->extImageURL) && $shops[$i]->extImageURL != ''){
+                    $sout[$i]['thumbnailUrl'] = $shops[$i]->extImageURL;
+                    $sout[$i]['largeUrl'] = $shops[$i]->extImageURL;
+                    $sout[$i]['mediumUrl'] = $shops[$i]->extImageURL;
+                    $sout[$i]['fullUrl'] = $shops[$i]->extImageURL;
+                    $sout[$i]['fileUrl'] = $shops[$i]->extImageURL;
                 }else{
                     $sout[$i]['thumbnailUrl'] = '';
                     $sout[$i]['largeUrl'] = '';
                     $sout[$i]['mediumUrl'] = '';
                     $sout[$i]['fullUrl'] = '';
                     $sout[$i]['fileUrl'] = '';
+
                 }
+
+
             }
 
         return Response::json($sout);
