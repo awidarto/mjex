@@ -52,6 +52,13 @@
         </div>
     </div>
 
+    @else
+    <div class="row">
+        <div class="login-form">
+            &nbsp;
+        </div>
+    </div>
+
     @endif
 
     @yield('content')
