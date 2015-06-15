@@ -25,6 +25,7 @@
   </head>
 
 <body>
+    @if(Input::get('t') != 'app' )
     <nav class="navigation-bar jayon-bg">
        <ul class="brand-section">
          <li class="brand-name">
@@ -51,6 +52,7 @@
         </div>
     </div>
 
+    @endif
 
     @yield('content')
 
