@@ -15,14 +15,14 @@
         @if($shop->useImage == 'linked')
 
           <div class="text-center">
-            <img class="text-center" src="{{$shop->extImageURL }}" alt="{{ $shop->merchantname}}" />
+            <img style="width:75%;height:auto !important;" class="text-center" src="{{$shop->extImageURL }}" alt="{{ $shop->merchantname}}" />
           </div>
 
         @else
 
           @if(isset($shop->defaultpictures) && is_array($shop->defaultpictures) && isset($shop->defaultpictures['medium_url']) )
             <div class="text-center">
-              <img class="text-center" src="{{$shop->defaultpictures['medium_url']}}" alt="{{ $shop->merchantname}}" />
+              <img style="width:75%;height:auto !important;" class="text-center" src="{{$shop->defaultpictures['medium_url']}}" alt="{{ $shop->merchantname}}" />
             </div>
           @endif
 
