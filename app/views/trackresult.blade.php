@@ -33,9 +33,74 @@
     <p>
       Delivery Type :<br />
       <b>{{ $order['delivery_type'] }}</b><br />
+
+<?php
+      $gt = 0;
+
+      $details = Orderitem::where('delivery_id',$order['delivery_id'])->orderBy('unit_sequence','asc')->get();
+
+      $details = $details->toArray();
+
+      $d = 0;
+      $gt = 0;
+
+      foreach($details as $value => $key)
+      {
+
+        //$u_total = str_replace(array(',','.'), '', $key['unit_total']);
+        //$u_discount = str_replace(array(',','.'), '', $key['unit_discount']);
+        $u_total =  $key['unit_total'];
+        $u_discount =  $key['unit_discount'];
+        $gt += (is_nan((double)$u_total))?0:(double)$u_total;
+        $d += (is_nan((double)$u_discount))?0:(double)$u_discount;
+
+      }
+
+      $total = $order['total_price'];
+      $total = (is_nan((double)$total))?0:(double)$total;
+
+      $dsc = $order['total_discount'];
+      $tax = $order['total_tax'];
+      $dc = $order['delivery_cost'];
+      $cod = $order['cod_cost'];
+
+      $dsc = (is_nan((double)$dsc))?0:(double)$dsc;
+      $tax = (is_nan((double)$tax))?0:(double)$tax;
+      $dc = (is_nan((double)$dc))?0:(double)$dc;
+      $cod = (is_nan((double)$cod))?0:(double)$cod;
+
+      if($gt == 0){
+          $gt = $total;
+      }
+
+      if($order['delivery_bearer'] == 'merchant'){
+          $dc = 0;
+      }
+
+
+      if($order['cod_bearer'] == 'merchant'){
+          $cod = 0;
+      }
+
+      if($order['delivery_type'] == 'COD' || $order['delivery_type'] == 'CCOD'){
+          $chg = ($gt - $dsc) + $tax + $dc + $cod;
+      }else{
+          $cod = 0;
+          $chg = $dc;
+      }
+
+      if($order['delivery_type'] == 'COD' || $order['delivery_type'] == 'CCOD'){
+          $cclass = ' bigtype';
+      }else{
+          $cclass = '';
+      }
+
+?>
+
+
       @if($order['delivery_type'] == 'COD' || $order['delivery_type'] == 'CCOD')
         Total Charge :<br />
-        <b>IDR {{ Helpers::idr( $order['chargeable_amount'] )}}</b>
+        <b>IDR {{ Helpers::idr( $chg )}}</b>
       @endif
     </p>
     <p>
