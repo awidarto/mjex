@@ -115,8 +115,11 @@
       {{ $order['pickup_status'] }} dari toko online
     </p>
     <p>
-      Recipient & Note :<br />
-      {{ $order['delivery_note'] }}<br />
+      Intended Recipient / Addressed To :<br />
+      {{ $order['recipient_name'] }}
+
+      Actual Recipient & Note :<br />
+      {{ ($order['delivery_note'] == '')?'-':$order['delivery_note'] }}<br />
       @if( $order['status'] == 'delivered' || ($order['status'] == 'pending' && $order['pending_count'] > 0) )
         <?php
 
