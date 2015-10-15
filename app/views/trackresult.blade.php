@@ -117,7 +117,7 @@
     <p>
       Intended Recipient / Addressed To :<br />
       {{ $order['recipient_name'] }}
-
+      <br /><br />
       Actual Recipient & Note :<br />
       {{ ($order['delivery_note'] == '')?'-':$order['delivery_note'] }}<br />
       @if( $order['status'] == 'delivered' || ($order['status'] == 'pending' && $order['pending_count'] > 0) )
