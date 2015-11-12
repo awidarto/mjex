@@ -120,7 +120,9 @@
       <br /><br />
       Actual Recipient & Note :<br />
       {{ ($order['delivery_note'] == '')?'-':$order['delivery_note'] }}<br />
+      {{--
       @if( $order['status'] == 'delivered' || ($order['status'] == 'pending' && $order['pending_count'] > 0) )
+      --}}
         <?php
 
           $pics = Helpers::get_multifullpic($order['delivery_id']);
@@ -145,8 +147,10 @@
       <br />
       Signature :<br />
       <img class="responsive" src="{{ Helpers::get_signpic($order['delivery_id']) }}" alt="{{ $order['delivery_id'] }}"><br />
-
+    {{--
       @endif
+    --}}
+
       @if( $order['latitude'] != '' && $order['longitude'] )
       <?php
         $point = $order['latitude'].','.$order['longitude']
