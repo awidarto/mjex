@@ -33,8 +33,8 @@ class Helpers {
 
         $out_db = false;
         if($pics_db){
-            if(isset($pics_db->large_url)){
-                $thumbnail = $pics_db->large_url;
+            if(isset($pics_db->full_url)){
+                $thumbnail = $pics_db->full_url;
             }else{
                 $out_db = true;
             }
@@ -82,7 +82,7 @@ class Helpers {
             if(count($pics_db->toArray()) > 0){
                 foreach($pics_db as $pic){
                     $pic_count++;
-                    $thumbnail[] = $pic->large_url;
+                    $thumbnail[] = $pic->full_url;
                 }
             }
 
@@ -136,8 +136,8 @@ class Helpers {
 
         $out_db = false;
         if($pics_db){
-            if(isset($pics_db->large_url)){
-                $thumbnail = $pics_db->large_url;
+            if(isset($pics_db->full_url)){
+                $thumbnail = $pics_db->full_url;
             }else{
                 $out_db = true;
             }
@@ -252,7 +252,7 @@ class Helpers {
             if(count($pics_db->toArray()) > 0){
 
                 foreach($pics_db as $pic){
-                    $thumbnail[] = $pic->large_url;
+                    $thumbnail[] = $pic->full_url;
                     $sign_count++;
                 }
 
