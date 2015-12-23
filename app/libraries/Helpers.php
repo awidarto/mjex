@@ -271,7 +271,7 @@ class Helpers {
 
         }
 
-        if($sign_count == 0){
+        if($pic_count == 0){
 
             $fullpath = public_path().Config::get('ks.picture_path').$delivery_id.'_sign*.jpg';
             $files = glob($fullpath);
