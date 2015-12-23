@@ -248,16 +248,25 @@ class Helpers {
                     ->get();
 
         if($pics_db){
-
+            /*
             if(count($pics_db->toArray()) > 0){
 
+
                 foreach($pics_db as $pic){
-                    $thumbnail[] = $pic->full_url;
                     $sign_count++;
+                    $thumbnail[] = $pic->full_url;
                 }
 
             }else{
                 $thumbnail[] = URL::to('img/th_nopic.jpg');
+            }
+            */
+
+            if(count($pics_db->toArray()) > 0){
+                foreach($pics_db as $pic){
+                    $pic_count++;
+                    $thumbnail[] = $pic->full_url;
+                }
             }
 
         }
