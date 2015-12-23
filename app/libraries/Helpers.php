@@ -266,6 +266,9 @@ class Helpers {
                     }
                 }
 
+            }else{
+                    $thumbnail[] = URL::to('img/th_nopic.jpg');
+
             }
 
         }
