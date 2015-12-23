@@ -70,6 +70,15 @@ return array(
             'database' => 'jayon_ad'
         ),
 
+        'mongodb_delivery' => array(
+            'driver'   => 'mongodb',
+            'host'     => 'localhost',
+            'port'     => 27017,
+            'username' => 'jayonexpress',
+            'password' => 'bosseddy234',
+            'database' => 'jayonexpress'
+        ),
+
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',

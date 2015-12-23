@@ -22,14 +22,36 @@ class Helpers {
     }
 
     public static function get_fullpic($delivery_id){
-        $fullpath = public_path().Config::get('ks.picture_path').$delivery_id.'.jpg';
 
-        if(file_exists($fullpath)){
-            $thumbnail = URL::to('/').Config::get('ks.picture_path').$delivery_id.'.jpg';
-            //$thumbnail = sprintf('<img style="cursor:pointer;" class="thumb" alt="'.$delivery_id.'" src="%s?'.time().'" />',$thumbnail);
+
+        $pics_db = Uploaded::where('parent_id','=',$delivery_id)
+                    ->where(function($q){
+                        $q->where('is_signature','=',0)
+                            ->orWhere('is_signature','=',strval(0));
+                    })
+                    ->first();
+
+        $out_db = false;
+        if($pics_db){
+            if(isset($pics_db->large_url)){
+                $thumbnail = $pics_db->large_url;
+            }else{
+                $out_db = true;
+            }
         }else{
-            //$thumbnail = 'nopic';
-            $thumbnail = URL::to('img/th_nopic.jpg');
+                $out_db = true;
+        }
+
+        if($out_db){
+            $fullpath = public_path().Config::get('ks.picture_path').$delivery_id.'.jpg';
+
+            if(file_exists($fullpath)){
+                $thumbnail = URL::to('/').Config::get('ks.picture_path').$delivery_id.'.jpg';
+                //$thumbnail = sprintf('<img style="cursor:pointer;" class="thumb" alt="'.$delivery_id.'" src="%s?'.time().'" />',$thumbnail);
+            }else{
+                //$thumbnail = 'nopic';
+                $thumbnail = URL::to('img/th_nopic.jpg');
+            }
         }
 
         //$thumbnail = URL::to('/').'/storage/receiver_thumb/th_'.$delivery_id.'.jpg';
@@ -39,34 +61,66 @@ class Helpers {
 
     public static function get_multifullpic($delivery_id){
 
-        $fullpath = public_path().Config::get('ks.picture_path').$delivery_id.'*.jpg';
+        $pic_count = 0;
 
-        $files = glob($fullpath);
+        $sign_count = 0;
+
+        $app = 'app v 1.0';
+
 
         $thumbnail = array();
 
-        if(is_array($files) && count($files) > 0){
-            foreach($files as $file){
-                if(preg_match('/_sign/', $file) == false){
-                    $file = str_replace(public_path(), '', $file);
-                    $thumbnail[] = URL::to('/').$file;
+        $pics_db = Uploaded::where('parent_id','=',$delivery_id)
+                    ->get();
+
+        if($pics_db){
+
+            if(count($pics_db->toArray()) > 0){
+                $app = 'app v 2.0';
+
+                foreach($pics_db as $pic){
+                    if( intval($pic->is_signature) == 1){
+                        $sign_count++;
+                    }else{
+                        $pic_count++;
+                        $thumbnail[] = $pic->large_url;
+                    }
                 }
+
             }
 
-            if(count($thumbnail) == 0){
-                $thumbnail[] = URL::to('img/th_nopic.jpg');
-            }
+        }
 
-        }else{
+        if($pic_count == 0 && $sign_count == 0){
 
-            $fullpath = public_path().Config::get('ks.picture_path').$delivery_id.'.jpg';
+            $fullpath = public_path().Config::get('ks.picture_path').$delivery_id.'*.jpg';
 
-            if(file_exists($fullpath)){
-                $thumbnail[] = URL::to('/').Config::get('ks.picture_path').$delivery_id.'.jpg';
-                //$thumbnail = sprintf('<img style="cursor:pointer;" class="thumb" alt="'.$delivery_id.'" src="%s?'.time().'" />',$thumbnail);
+            $files = glob($fullpath);
+
+            if(is_array($files) && count($files) > 0){
+                foreach($files as $file){
+                    if(preg_match('/_sign/', $file) == false){
+                        $file = str_replace(public_path(), '', $file);
+                        $thumbnail[] = URL::to('/').$file;
+                    }
+                }
+
+                if(count($thumbnail) == 0){
+                    $thumbnail[] = URL::to('img/th_nopic.jpg');
+                }
+
             }else{
-                //$thumbnail = 'nopic';
-                $thumbnail[] = URL::to('img/th_nopic.jpg');
+
+                $fullpath = public_path().Config::get('ks.picture_path').$delivery_id.'.jpg';
+
+                if(file_exists($fullpath)){
+                    $thumbnail[] = URL::to('/').Config::get('ks.picture_path').$delivery_id.'.jpg';
+                    //$thumbnail = sprintf('<img style="cursor:pointer;" class="thumb" alt="'.$delivery_id.'" src="%s?'.time().'" />',$thumbnail);
+                }else{
+                    //$thumbnail = 'nopic';
+                    $thumbnail[] = URL::to('img/th_nopic.jpg');
+                }
+
             }
 
         }
@@ -75,14 +129,35 @@ class Helpers {
     }
 
     public static function get_signpic($delivery_id){
-        $fullpath = public_path().Config::get('ks.picture_path').$delivery_id.'_sign.jpg';
 
-        if(file_exists($fullpath)){
-            $thumbnail = URL::to('/').Config::get('ks.picture_path').$delivery_id.'_sign.jpg';
-            //$thumbnail = sprintf('<img style="cursor:pointer;" class="thumb" alt="'.$delivery_id.'" src="%s?'.time().'" />',$thumbnail);
+        $pics_db = Uploaded::where('parent_id','=',$delivery_id)
+                    ->where(function($q){
+                        $q->where('is_signature','=',1)
+                            ->orWhere('is_signature','=',strval(1));
+                    })
+                    ->first();
+
+        $out_db = false;
+        if($pics_db){
+            if(isset($pics_db->large_url)){
+                $thumbnail = $pics_db->large_url;
+            }else{
+                $out_db = true;
+            }
         }else{
-            //$thumbnail = 'nopic';
-            $thumbnail = URL::to('img/th_nopic.jpg');
+                $out_db = true;
+        }
+
+        if($out_db){
+            $fullpath = public_path().Config::get('ks.picture_path').$delivery_id.'_sign.jpg';
+
+            if(file_exists($fullpath)){
+                $thumbnail = URL::to('/').Config::get('ks.picture_path').$delivery_id.'_sign.jpg';
+                //$thumbnail = sprintf('<img style="cursor:pointer;" class="thumb" alt="'.$delivery_id.'" src="%s?'.time().'" />',$thumbnail);
+            }else{
+                //$thumbnail = 'nopic';
+                $thumbnail = URL::to('img/th_nopic.jpg');
+            }
         }
 
         //$thumbnail = URL::to('/').'/storage/receiver_thumb/th_'.$delivery_id.'.jpg';
@@ -92,6 +167,17 @@ class Helpers {
 
     public static function picexists($delivery_id)
     {
+        $pics_count = Uploaded::where('parent_id','=',$delivery_id)
+                    ->where(function($q){
+                        $q->where('is_signature','=',0)
+                            ->orWhere('is_signature','=',strval(0));
+                    })
+                    ->count();
+
+        if($pics_count > 0){
+            return $pics_count;
+        }else{
+
             $fullpath = public_path().Config::get('ks.picture_path').$delivery_id.'*.jpg';
             $files = glob($fullpath);
 
@@ -112,10 +198,27 @@ class Helpers {
             }else{
                 return false;
             }
+
+
+        }
+
+
     }
 
     public static function signexists($delivery_id)
     {
+        $pics_count = Uploaded::where('parent_id','=',$delivery_id)
+                    ->where(function($q){
+                        $q->where('is_signature','=',1)
+                            ->orWhere('is_signature','=',strval(1));
+                    })
+                    ->count();
+
+        if($pics_count > 0){
+            return $pics_count;
+        }else{
+
+
             $fullpath = public_path().Config::get('ks.picture_path').$delivery_id.'_sign*.jpg';
             $files = glob($fullpath);
 
@@ -125,15 +228,50 @@ class Helpers {
             }else{
                 return false;
             }
+        }
 
     }
 
     public static function get_multisign($delivery_id)
     {
+        $pic_count = 0;
+
+        $sign_count = 0;
+
+        $app = 'app v 1.0';
+
+
+        $thumbnail = array();
+
+        $pics_db = Uploaded::where('parent_id','=',$delivery_id)
+                    ->where(function($q){
+                        $q->where('is_signature','=',1)
+                            ->orWhere('is_signature','=',strval(1));
+                    })
+                    ->get();
+
+        if($pics_db){
+
+            if(count($pics_db->toArray()) > 0){
+                $app = 'app v 2.0';
+
+                foreach($pics_db as $pic){
+                    if( intval($pic->is_signature) == 1){
+                        $thumbnail[] = $pic->large_url;
+                        $sign_count++;
+                    }else{
+                        $pic_count++;
+                    }
+                }
+
+            }
+
+        }
+
+        if($pic_count == 0 && $sign_count == 0){
+
             $fullpath = public_path().Config::get('ks.picture_path').$delivery_id.'_sign*.jpg';
             $files = glob($fullpath);
-
-            $thumbnail = array();
 
             if(is_array($files) && count($files) > 0){
                 foreach($files as $file){
@@ -156,7 +294,9 @@ class Helpers {
 
             }
 
-            return $thumbnail;
+        }
+
+        return $thumbnail;
 
     }
 
