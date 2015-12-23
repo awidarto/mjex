@@ -247,8 +247,8 @@ class Helpers {
 
         $pics_db = Uploaded::where('parent_id','=',$delivery_id)
                     ->where(function($q){
-                        $q->where('is_signature','=',0)
-                            ->orWhere('is_signature','=',strval(0));
+                        $q->where('is_signature','=',1)
+                            ->orWhere('is_signature','=',strval(1));
                     })
                     ->get();
 
