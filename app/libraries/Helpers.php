@@ -71,29 +71,24 @@ class Helpers {
         $thumbnail = array();
 
         $pics_db = Uploaded::where('parent_id','=',$delivery_id)
+                    ->where(function($q){
+                        $q->where('is_signature','=',0)
+                            ->orWhere('is_signature','=',strval(0));
+                    })
                     ->get();
 
         if($pics_db){
 
             if(count($pics_db->toArray()) > 0){
-                $app = 'app v 2.0';
-
                 foreach($pics_db as $pic){
-                    if( intval($pic->is_signature) == 1){
-                        $sign_count++;
-                    }else{
-                        $pic_count++;
-                        $thumbnail[] = $pic->large_url;
-                    }
+                    $pic_count++;
+                    $thumbnail[] = $pic->large_url;
                 }
-
-            }else{
-                $thumbnail[] = URL::to('img/th_nopic.jpg');
             }
 
         }
 
-        if($pic_count == 0 && $sign_count == 0){
+        if($pic_count == 0 ){
 
             $fullpath = public_path().Config::get('ks.picture_path').$delivery_id.'*.jpg';
 
@@ -255,25 +250,19 @@ class Helpers {
         if($pics_db){
 
             if(count($pics_db->toArray()) > 0){
-                $app = 'app v 2.0';
 
                 foreach($pics_db as $pic){
-                    if( intval($pic->is_signature) == 1){
-                        $thumbnail[] = $pic->large_url;
-                        $sign_count++;
-                    }else{
-                        $pic_count++;
-                    }
+                    $thumbnail[] = $pic->large_url;
+                    $sign_count++;
                 }
 
             }else{
-                    $thumbnail[] = URL::to('img/th_nopic.jpg');
-
+                $thumbnail[] = URL::to('img/th_nopic.jpg');
             }
 
         }
 
-        if($pic_count == 0 && $sign_count == 0){
+        if($sign_count == 0){
 
             $fullpath = public_path().Config::get('ks.picture_path').$delivery_id.'_sign*.jpg';
             $files = glob($fullpath);
