@@ -113,6 +113,11 @@
     <p>
       Package Status :<br />
       {{ $order['pickup_status'] }} dari toko online
+      @if($order['pickuptime'] != '' && $order['pickuptime'] != '0000-00-00 00:00:00' )
+        <br />
+        waktu pengambilan dari toko online<br />
+        {{ $order['pickuptime'] }}
+      @endif
     </p>
     <p>
       Intended Recipient / Addressed To :<br />
