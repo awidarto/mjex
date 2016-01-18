@@ -33,7 +33,7 @@ Route::group(array('prefix'=>'c'),function(){
 
             //print_r($idvar);
             //$sql = "`delivery_order_active`.`phone` LIKE  '%s%' OR  `delivery_order_active`.`mobile1` LIKE  '%s' OR  `delivery_order_active`.`mobile2` LIKE  '%s' OR  `delivery_order_active`.`merchant_trans_id` LIKE  '%s' ";
-            $sql = "`delivery_order_active`.`assignment_date` = '%s' AND (`devices`.`identifier` LIKE  '%s' OR  `couriers`.`fullname` LIKE  '%s' ) ";
+            $sql = "date(`delivery_order_active`.`assignment_date`) = '%s' AND (`devices`.`identifier` LIKE  '%s' OR  `couriers`.`fullname` LIKE  '%s' ) ";
 
             $sql = sprintf($sql, $asdate, '%'.$idvar.'%','%'.$idvar.'%');
 
