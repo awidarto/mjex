@@ -40,7 +40,7 @@ Route::group(array('prefix'=>'c'),function(){
             $order = Order::whereRaw($sql)
                         ->leftJoin('devices', 'devices.id', '=', 'device_id')
                         ->leftJoin('couriers', 'couriers.id', '=', 'courier_id')
-                        ->leftJoin('members', 'members.id', '=', 'merchant_id')
+                        //->leftJoin('members', 'members.id', '=', 'merchant_id')
                         ->orderBy('assignment_date','desc')
                         ->get()->toArray();
 
