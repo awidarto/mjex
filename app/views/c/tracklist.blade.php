@@ -41,6 +41,10 @@
             padding: 2px;
         }
 
+        td.pad{
+            padding-left: 20px;
+        }
+
     </style>
     <div class="track-list-item">
         <p>Klik untuk melihat rincian
@@ -81,7 +85,7 @@
                         <td>{{ $total_other }}</td>
                     </tr>
                     <tr>
-                        <td>COD</td>
+                        <td class="pad">COD</td>
                         <td>{{ $total_cod }}</td>
                         <td>-</td>
                         <td>{{ $total_delivered_cod }}</td>
@@ -89,7 +93,7 @@
                         <td>{{ $total_other_cod }}</td>
                     </tr>
                     <tr>
-                        <td>DO</td>
+                        <td class="pad">DO</td>
                         <td>{{ $total_do }}</td>
                         <td>-</td>
                         <td>{{ $total_delivered_do }}</td>
