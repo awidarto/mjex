@@ -81,6 +81,22 @@
                         <td>{{ $total_other }}</td>
                     </tr>
                     <tr>
+                        <td>COD</td>
+                        <td>{{ $total_cod }}</td>
+                        <td>-</td>
+                        <td>{{ $total_delivered_cod }}</td>
+                        <td>{{ $total_pending_cod }}</td>
+                        <td>{{ $total_other_cod }}</td>
+                    </tr>
+                    <tr>
+                        <td>DO</td>
+                        <td>{{ $total_do }}</td>
+                        <td>-</td>
+                        <td>{{ $total_delivered_do }}</td>
+                        <td>{{ $total_pending_do }}</td>
+                        <td>{{ $total_other_do }}</td>
+                    </tr>
+                    <tr>
                         <td>Photo</td>
                         <td>{{ $total_pics }}</td>
                         <td>{{ $total_no_pics }}</td>
@@ -139,6 +155,7 @@
     <div class="track-list-item">
         <a href="{{ URL::to('c/item/'.$r['delivery_id'].'/'.$device.'/'.$more ) }}">
             {{-- print_r($r) --}}
+            <span class="tmerchant {{ ($r['delivery_type'] == 'COD' || $r['delivery_type'] == 'CCOD'  )?'green':'orange' }} block">Type : {{ $r['delivery_type']}}</span>
             <span class="tdate">{{ $r['assignment_date']}}</span>
             <span class="tmerchant">{{ $r['merchantname']}}</span>
             <span class="tmerchant">Pembeli: {{ $r['buyer_name']}}</span>

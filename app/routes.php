@@ -23,12 +23,19 @@ Route::group(array('prefix'=>'c'),function(){
             return View::make('c.track')->with('ordernumber',$id);
         }else{
 
+            $testdate = Input::get('td');
+
             $idvar = trim($id);
 
-            if(date('G',time()) <= 3){
-                $asdate = date( 'Y-m-d',time() - ( 3 * 60 * 60 )  );
+            if(is_null($testdate) || $testdate == ''){
+                if(date('G',time()) <= 3){
+                    $asdate = date( 'Y-m-d',time() - ( 3 * 60 * 60 )  );
+                }else{
+                    $asdate = date('Y-m-d',time());
+                }
+
             }else{
-                $asdate = date('Y-m-d',time());
+                    $asdate = $testdate;
             }
 
             //print_r($idvar);
@@ -214,13 +221,27 @@ Route::group(array('prefix'=>'c'),function(){
     Route::post('track',function(){
         $in = Input::get();
 
+        $testdate = Input::get('td');
+
         $idvar = trim($in['device']);
 
+
+        if(is_null($testdate) || $testdate == ''){
+            if(date('G',time()) <= 3){
+                $asdate = date( 'Y-m-d',time() - ( 3 * 60 * 60 )  );
+            }else{
+                $asdate = date('Y-m-d',time());
+            }
+
+        }else{
+                $asdate = $testdate;
+        }
+        /*
         if(date('G',time()) <= 3){
             $asdate = date( 'Y-m-d',time() - ( 3 * 60 * 60 )  );
         }else{
             $asdate = date('Y-m-d',time());
-        }
+        }*/
 
         //test only
             //$asdate = '2015-12-28';
@@ -239,9 +260,20 @@ Route::group(array('prefix'=>'c'),function(){
                     ->get()->toArray();
 
         $total = 0;
+        $total_cod = 0;
+        $total_do = 0;
+
         $total_delivered = 0;
         $total_pending = 0;
         $total_other = 0;
+
+        $total_delivered_cod = 0;
+        $total_pending_cod = 0;
+        $total_other_cod = 0;
+
+        $total_delivered_do = 0;
+        $total_pending_do = 0;
+        $total_other_do = 0;
 
         $total_delivered_pics = 0;
         $total_pending_pics = 0;
@@ -290,11 +322,36 @@ Route::group(array('prefix'=>'c'),function(){
             $signs = Helpers::get_multisign($order[$i]['delivery_id']);
             $order[$i]['signpic'] = $signs[0];
 
+            if($order[$i]['delivery_type'] == 'COD' || $order[$i]['delivery_type']=='CCOD'){
+                $total_cod++;
+            }
+            if($order[$i]['delivery_type'] == 'Delivery Only' || $order[$i]['delivery_type']=='DO'){
+                $total_do++;
+            }
+
             if($order[$i]['status'] == 'delivered'){
+                if($order[$i]['delivery_type'] == 'COD' || $order[$i]['delivery_type']=='CCOD'){
+                    $total_delivered_cod++;
+                }
+                if($order[$i]['delivery_type'] == 'Delivery Only' || $order[$i]['delivery_type']=='DO'){
+                    $total_delivered_do++;
+                }
                 $total_delivered++;
             }elseif($order[$i]['status'] == 'pending'){
+                if($order[$i]['delivery_type'] == 'COD' || $order[$i]['delivery_type']=='CCOD'){
+                    $total_pending_cod++;
+                }
+                if($order[$i]['delivery_type'] == 'Delivery Only' || $order[$i]['delivery_type']=='DO'){
+                    $total_pending_do++;
+                }
                 $total_pending++;
             }else{
+                if($order[$i]['delivery_type'] == 'COD' || $order[$i]['delivery_type']=='CCOD'){
+                    $total_other_cod++;
+                }
+                if($order[$i]['delivery_type'] == 'Delivery Only' || $order[$i]['delivery_type']=='DO'){
+                    $total_other_do++;
+                }
                 $total_other++;
             }
 
@@ -372,6 +429,16 @@ Route::group(array('prefix'=>'c'),function(){
             ->with('total_delivered',$total_delivered )
             ->with('total_pending',$total_pending )
             ->with('total_other',$total_other )
+
+            ->with('total_cod', $total_cod )
+            ->with('total_delivered_cod',$total_delivered_cod )
+            ->with('total_pending_cod',$total_pending_cod )
+            ->with('total_other_cod',$total_other_cod )
+
+            ->with('total_do', $total_do )
+            ->with('total_delivered_do',$total_delivered_do )
+            ->with('total_pending_do',$total_pending_do )
+            ->with('total_other_do',$total_other_do )
 
             ->with('total_delivered_pics',$total_delivered_pics )
             ->with('total_pending_pics',$total_pending_pics )
