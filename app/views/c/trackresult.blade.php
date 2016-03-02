@@ -138,9 +138,12 @@
       <img class="responsive" src="{{ Helpers::get_signpic($order['delivery_id']) }}" alt="{{ $order['delivery_id'] }}"><br />
 
       @endif
-      @if( $order['latitude'] != '' && $order['longitude'] )
       <?php
-        $point = $order['latitude'].','.$order['longitude']
+        $loc = Helpers::getLoc($order);
+      ?>
+      @if( $loc['latitude'] != '' && $loc['longitude'] )
+      <?php
+        $point = $loc['latitude'].','.$loc['longitude']
       ?>
       <br />
       Lokasi :<br />

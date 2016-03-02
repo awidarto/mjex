@@ -1,6 +1,14 @@
 <?php
 class Helpers {
 
+    public statid getLoc($order){
+
+        $lat = $order['latitude'];
+        $lon = $order['longitude'];
+
+        return array('latitude'=>$lat,'longitude'=>$lon);
+    }
+
     public static function idr($in){
         return number_format((double) $in,2,',','.');
     }
