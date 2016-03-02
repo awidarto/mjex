@@ -164,7 +164,7 @@
         $point = $order['latitude'].','.$order['longitude']
       ?>
       <br />
-      <div id="map" style="display:inline-block;">
+      <div id="map" style="display:inline-block;text-align:center;">
         <img class="responsive" src="https://maps.googleapis.com/maps/api/staticmap?center={{$point}}&zoom=13&size=600x300&maptype=roadmap&markers=color:green%7C{{$point}}&key={{ Config::get('ks.static_map_key')}}" alt="{{ $order['delivery_id'] }}">
         <br /><br />
         <a  href="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q={{$point}}&ie=UTF8&hq=&hnear={{$point}}" target="blank" class="text-center">Lihat peta</a>
