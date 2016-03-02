@@ -485,6 +485,19 @@ Route::group(array('prefix'=>'c'),function(){
 
 });
 
+Route::get('gtest/{d}',function($d){
+
+
+
+    $locs = Geolog::where('deliveryId','=',$d)
+        ->whereIn('status',$statuses)
+        ->orderBy('mtimestamp','desc')
+        ->orderBy('status','desc')
+        ->get( array('datetimestamp','status','latitude','longitude'));
+
+    print_r($locs->toArray());
+
+});
 
 Route::get('/', function()
 {
