@@ -491,6 +491,8 @@ Route::get('gtest/{d}',function($d){
 
     $locs = Geolog::where('deliveryId','=',$d)
         ->whereIn('status',$statuses)
+        ->where('latitude','!=',0.0)
+        ->where('longitude','!=',0.0)
         ->orderBy('mtimestamp','desc')
         ->orderBy('status','desc')
         ->get( array('datetimestamp','status','latitude','longitude'));
