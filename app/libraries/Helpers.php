@@ -1,7 +1,7 @@
 <?php
 class Helpers {
 
-    public static getLoc($order){
+    public static function getLoc($order){
 
         $lat = $order['latitude'];
         $lon = $order['longitude'];
