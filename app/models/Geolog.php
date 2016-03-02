@@ -2,7 +2,7 @@
 use Jenssegers\Mongodb\Model as Eloquent;
 
 class Geolog extends Eloquent {
-    protected $connection = 'mongodb';
+    protected $connection = 'mongodb_delivery';
     protected $collection = 'geolog';
 
 }
