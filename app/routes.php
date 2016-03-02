@@ -495,7 +495,9 @@ Route::get('gtest/{d}',function($d){
         ->orderBy('status','desc')
         ->get( array('datetimestamp','status','latitude','longitude'));
 
-    print_r($locs->toArray());
+    var_dump($locs->toArray());
+
+
 
 });
 
