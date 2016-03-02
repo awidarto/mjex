@@ -487,7 +487,7 @@ Route::group(array('prefix'=>'c'),function(){
 
 Route::get('gtest/{d}',function($d){
 
-
+    $statuses = array('cr_assigned','delivered','pending');
 
     $locs = Geolog::where('deliveryId','=',$d)
         ->whereIn('status',$statuses)
