@@ -490,7 +490,18 @@ Route::get('gtest/{d}',function($d){
     $statuses = array('cr_assigned','delivered','pending');
 
     $locs = Geolog::where('deliveryId','=',$d)
-        ->whereIn('status',$statuses)
+        ->where(function($qx){
+            $qx->where('status','=','delivered')
+                ->orWhere(function($qc){
+                    $qc->where('event','=','capture location photo take')
+                        ->where('status','=','cr_assigned');
+                })
+                ->orWhere(function($qp){
+                    $qc->where('event','=','capture location photo take')
+                        ->where('status','=','pending');
+                });
+        })
+        //->whereIn('status',$statuses)
         ->where('latitude','!=',0.0)
         ->where('longitude','!=',0.0)
         ->orderBy('mtimestamp','desc')
