@@ -508,8 +508,15 @@ Route::get('gtest/{d}',function($d){
         ->orderBy('status','desc')
         ->get( array('datetimestamp','status','event','latitude','longitude'));
 
+    $fo = false;
     foreach($locs as $l){
         print $l->datetimestamp.' '.$l->status.' '.$l->event.' '.$l->latitude.' '.$l->longitude."<br />\r\n";
+        if($l->event == 'capture location photo take' && $fo == false){
+            $lat = $l->latitude;
+            $lon = $l->longitude;
+            $fo = true;
+        }
+
     }
 
 

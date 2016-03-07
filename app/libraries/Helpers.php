@@ -3,8 +3,46 @@ class Helpers {
 
     public static function getLoc($order){
 
-        $lat = $order['latitude'];
-        $lon = $order['longitude'];
+        $delilat = $order['latitude'];
+        $delilon = $order['longitude'];
+
+        $statuses = array('cr_assigned','delivered','pending');
+
+        $locs = Geolog::where('deliveryId','=',$d)
+            ->where(function($qx){
+                $qx->where('status','=','delivered')
+                    ->orWhere(function($qc){
+                        $qc->where('event','=','capture location photo take')
+                            ->where('status','=','cr_assigned');
+                    })
+                    ->orWhere(function($qp){
+                        $qp->where('event','=','capture location photo take')
+                            ->where('status','=','pending');
+                    });
+            })
+            //->whereIn('status',$statuses)
+            ->where('latitude','!=',0.0)
+            ->where('longitude','!=',0.0)
+            ->orderBy('mtimestamp','desc')
+            ->orderBy('status','desc')
+            ->get( array('datetimestamp','status','event','latitude','longitude'));
+
+        $fo = false;
+        $clat = 0;
+        $clon = 0;
+        foreach($locs as $l){
+            print $l->datetimestamp.' '.$l->status.' '.$l->event.' '.$l->latitude.' '.$l->longitude."<br />\r\n";
+            if($l->event == 'capture location photo take' && $fo == false){
+                $clat = $l->latitude;
+                $clon = $l->longitude;
+                $fo = true;
+            }
+
+        }
+
+        $lat = ($clat == 0)?$delilat:$clat;
+        $lon = ($clon == 0)?$delilon:$clon;
+
 
         return array('latitude'=>$lat,'longitude'=>$lon);
     }
