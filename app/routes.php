@@ -506,10 +506,10 @@ Route::get('gtest/{d}',function($d){
         ->where('longitude','!=',0.0)
         ->orderBy('mtimestamp','desc')
         ->orderBy('status','desc')
-        ->get( array('datetimestamp','status','latitude','longitude'));
+        ->get( array('datetimestamp','status','event','latitude','longitude'));
 
     foreach($locs as $l){
-        print $l->datetimestamp.' '.$l->status.' '.$l->latitude.' '.$l->longitude."<br />\r\n";
+        print $l->datetimestamp.' '.$l->status.' '.$l->event.' '.$l->latitude.' '.$l->longitude."<br />\r\n";
     }
 
 
