@@ -497,7 +497,7 @@ Route::get('gtest/{d}',function($d){
                         ->where('status','=','cr_assigned');
                 })
                 ->orWhere(function($qp){
-                    $qc->where('event','=','capture location photo take')
+                    $qp->where('event','=','capture location photo take')
                         ->where('status','=','pending');
                 });
         })
