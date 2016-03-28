@@ -109,6 +109,9 @@
       {{ $order['pickup_status'] }} dari toko online
     </p>
     <p>
+      {{ Helpers::getNotes($order['delivery_id'], false)}}
+    </p>
+    <p>
       Recipient & Note :<br />
       {{ $order['delivery_note'] }}<br />
       @if( $order['status'] == 'delivered' || ($order['status'] == 'pending' && $order['pending_count'] > 0) )
