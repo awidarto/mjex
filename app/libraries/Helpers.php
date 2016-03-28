@@ -1,6 +1,31 @@
 <?php
 class Helpers {
 
+    public static function getNotes($delivery_id, $as_array = true)
+    {
+        $notes = Deliverynote::where('deliveryId','=',$delivery_id)
+                    ->orderBy('mtimestamp','desc')
+                    ->get();
+
+        if($as_array){
+            return $notes->toArray();
+        }else{
+            $list = '<ul class="note_list">';
+            foreach($notes as $note){
+                $list .= '<li>';
+                $list .= '<b>'.$note->status.'</b><br />';
+                $list .= $note->datetimestamp.'<br />';
+                $list .= $note->note;
+                $list .= '</li>';
+            }
+
+            $list .= '</ul>';
+
+            return $list;
+        }
+
+    }
+
     public static function getLoc($order){
 
         $delilat = $order['latitude'];

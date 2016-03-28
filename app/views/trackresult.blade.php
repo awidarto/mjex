@@ -123,6 +123,10 @@
 
     </p>
     <p>
+      {{ Helpers::getNotes($order['delivery_id'], false)}}
+    </p>
+
+    <p>
       Intended Recipient / Addressed To :<br />
       {{ $order['recipient_name'] }}
       <br /><br />
