@@ -5,6 +5,26 @@
   .arrow {
     font-size: 48px;
   }
+
+  #pic-list-container{
+    display: block;
+  }
+
+  #pic-list-container ul{
+    list-style-type: none;
+  }
+
+  #pic-list-container ul li{
+    float: left;
+    margin:0px;
+    padding: 0px;
+  }
+
+  #pic-list-container img.sm-icon{
+    width:35px;
+    height: auto;
+  }
+
 </style>
 <div class="row">
   <div class="text-center">
@@ -138,7 +158,7 @@
         <?php
 
           $pics = Helpers::get_multifullpic($order['delivery_id']);
-
+          $piclist = array();
         ?>
         @if(count($pics) <= 1)
           <img class="responsive" src="{{ Helpers::get_fullpic($order['delivery_id']) }}" alt="{{ $order['delivery_id'] }}">
@@ -151,10 +171,17 @@
                   <p>{{ str_replace(URL::to('/').'/storage/receiver_pic/', '', $pic) }}</p>
                 </div>
               </li>
+              <?php
+                $piclist[] = '<li><img src="'.$pic.'" class="sm-icon" /></li>';
+              ?>
           @endforeach
           </ul>
+          <div id="pic-list-container">
+            <ul>{{ implode('', $piclist ) }}</ul>
+          </div>
         </div>
         @endif
+
         <br />
       <br />
       Signature :<br />
