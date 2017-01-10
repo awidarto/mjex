@@ -176,10 +176,12 @@
               ?>
           @endforeach
           </ul>
-          <div id="pic-list-container">
-            <ul>{{ implode('', $piclist ) }}</ul>
-          </div>
         </div>
+
+        <div id="pic-list-container">
+          <ul>{{ implode('', $piclist ) }}</ul>
+        </div>
+
         @endif
 
         <br />
