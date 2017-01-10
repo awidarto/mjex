@@ -17,11 +17,11 @@
   #pic-list-container ul li{
     float: left;
     margin:0px;
-    padding: 0px;
+    padding: 5px;
   }
 
   #pic-list-container img.sm-icon{
-    width:35px;
+    width:55px;
     height: auto;
   }
 
@@ -181,7 +181,7 @@
         <div id="pic-list-container">
           <ul>{{ implode('', $piclist ) }}</ul>
         </div>
-
+        <div style="clear:both;"></div>
         @endif
 
         <br />
